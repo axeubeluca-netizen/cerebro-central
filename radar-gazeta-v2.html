@@ -93,9 +93,9 @@
 
   <div class="wire">
     <div class="fonte"><span class="dot d-live"></span>PULSO DE DEMANDA (TRENDS) <span class="st">· AO VIVO</span></div>
-    <div class="fonte"><span class="dot d-soon"></span>TAGS RELACIONADAS <span class="st">· ENDPOINT INSTÁVEL — FALLBACK: NEWS RSS (ONDA 2)</span></div>
-    <div class="fonte"><span class="dot d-soon"></span>SENTIMENTO <span class="st">· CÓRTEX IA — ONDA 3</span></div>
-    <div class="fonte"><span class="dot d-wait"></span>GA4 + GSC <span class="st">· AGUARDANDO AUTORIZAÇÃO</span></div>
+    <div class="fonte"><span class="dot d-soon"></span>TAGS RELACIONADAS <span class="st">· ENDPOINT INSTÁVEL — FALLBACK EM AVALIAÇÃO</span></div>
+    <div class="fonte"><span class="dot d-soon"></span>SENTIMENTO <span class="st">· EM CONSTRUÇÃO — SEM DADOS NO AR</span></div>
+    <div class="fonte"><span class="dot d-live"></span>GA4 + SEARCH CONSOLE <span class="st">· CONECTADOS EM 03/08 — CAMADA CASA NO RADAR DE CONCORRÊNCIA</span></div>
   </div>
 
   <!-- KPIs reais -->
@@ -224,8 +224,75 @@
     </div>
   </section>
 
+  <section class="camada">
+    <div class="camada-head">
+      <span class="n">Bloco 05</span>
+      <h2>Demanda × Captura</h2>
+      <span class="q">"o Brasil busca — e quanto disso chega na Gazeta?"</span>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <h3>O cruzamento que só existe com a casa conectada</h3>
+        <div class="src">GOOGLE TRENDS (DEMANDA) × SEARCH CONSOLE (CAPTURA) · 30 DIAS</div>
+        <p class="mini" style="margin-bottom:10px"><b>Eleições/pesquisa:</b> demanda em alta (+38% na semana) e captura forte — as consultas de pesquisa eleitoral somam <b>+100 mil cliques/mês</b> com posições de topo (1,9–3,3). É o território onde a Gazeta já converte demanda em audiência.</p>
+        <p class="mini" style="margin-bottom:10px"><b>Personagens (Bolsonaro/Lula):</b> demanda altíssima, captura difusa — "lula" traz 10,8 mil cliques com CTR de 3,1% e posição 3,9; "bolsonaro" 5,8 mil a 3,3%. Território de commodity: muita impressão, pouco clique.</p>
+        <p class="mini"><b>Fé/Igreja:</b> demanda subiu e lidera Costumes (51%) — a captura correspondente ainda não aparece no top-40 de consultas. <b>Gap identificado:</b> a Gazeta produz o conteúdo (território proprietário) mas ainda não capitaliza a busca. Oportunidade direta de SEO evergreen.</p>
+      </div>
+      <div class="panel">
+        <h3>Próximo passo — Share de Demanda Capturada</h3>
+        <div class="src">INDICADOR EM CONSTRUÇÃO · PRIMEIRA VERSÃO NA ED. 3</div>
+        <p class="mini">Com GA4 e Search Console conectados, o Cérebro pode fechar a conta que estava aberta desde o blueprint: para cada um dos 40 termos da taxonomia, quanto da demanda nacional (Trends) vira clique na Gazeta (GSC).</p>
+        <p class="mini" style="margin-top:9px">O indicador vira: <b>termo → volume de busca → impressões da Gazeta → cliques → posição média</b>. Cada território ganha um placar de conversão, e as decisões de pauta passam a ter retorno estimável antes da publicação.</p>
+        <p class="mini" style="margin-top:9px">A <b>Camada Casa completa</b> (canais, audiência própria, tráfego de IA) está no Radar de Concorrência, Bloco 10.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="camada">
+    <div class="camada-head">
+      <span class="n">Bloco 06</span>
+      <h2>Share de Demanda Capturada — v1</h2>
+      <span class="q">"quanto de cada território a Gazeta converte em clique"</span>
+    </div>
+    <div class="panel">
+      <h3>Os 5 territórios da taxonomia × captura real na busca (30 dias)</h3>
+      <div class="src">SEARCH CONSOLE · 398 CONSULTAS DO TOP-400 CLASSIFICADAS NA TAXONOMIA V1 (PENDENTE VALIDAÇÃO)</div>
+      <table>
+        <thead><tr><th>Território</th><th class="num">Cliques</th><th class="num">Impressões</th><th class="num">CTR</th><th class="num">Posição</th><th class="num">Share dos cliques</th></tr></thead>
+        <tbody>
+          <tr style="background:#F6F1E4"><td><b>T1 · Política &amp; Eleições</b></td><td class="num">253.717</td><td class="num">3.140.720</td><td class="num">8,1%</td><td class="num">2,7</td><td class="num"><b>32,6%</b></td></tr>
+          <tr><td>Marca (branded)</td><td class="num">243.305</td><td class="num">318.145</td><td class="num" style="color:var(--ok);font-weight:700">76,5%</td><td class="num">1,1</td><td class="num">31,3%</td></tr>
+          <tr><td>Cauda longa / evergreen antigo</td><td class="num">187.959</td><td class="num">17.166.239</td><td class="num">1,1%</td><td class="num">3,3</td><td class="num">24,2%</td></tr>
+          <tr><td>T5 · Segurança, Educação &amp; Mundo</td><td class="num">63.380</td><td class="num">2.716.210</td><td class="num">2,3%</td><td class="num">4,3</td><td class="num">8,1%</td></tr>
+          <tr><td>T2 · Justiça &amp; Instituições</td><td class="num">21.960</td><td class="num">542.834</td><td class="num">4,1%</td><td class="num">2,7</td><td class="num">2,8%</td></tr>
+          <tr><td>T3 · Economia &amp; Bolso</td><td class="num">21.062</td><td class="num">761.108</td><td class="num">2,8%</td><td class="num">3,8</td><td class="num">2,7%</td></tr>
+          <tr style="background:#FBEFEF"><td><b>T4 · Costumes, Família &amp; Fé</b></td><td class="num">6.568</td><td class="num">200.855</td><td class="num">3,3%</td><td class="num">2,6</td><td class="num" style="color:var(--alert)"><b>0,8%</b></td></tr>
+        </tbody>
+      </table>
+      <p class="mini" style="margin-top:12px">Base: as 400 consultas de maior volume do período, classificadas pela taxonomia v1. Exclui consultas anonimizadas pelo Google (~1,1M de cliques) e a linha sem termo identificado.</p>
+    </div>
+
+    <div class="grid2" style="margin-top:16px">
+      <div class="destaque">
+        <div class="l">O paradoxo do território proprietário</div>
+        <div class="num">0,8%</div>
+        <p><b>Fé/Costumes é onde a Gazeta não tem concorrente — e onde ela menos captura.</b> Só 6,5 mil cliques em 30 dias, contra 253 mil de Política.</p>
+        <p>O território que a IA cita (única generalista ao lado do Vatican News), que ninguém do grupo cobre (católicos ×23, bispos ×12) e cuja demanda lidera Costumes no Trends (51%) rende <b>menos de 1% dos cliques de busca</b>.</p>
+        <p style="margin-top:8px">A posição média é boa (2,6) e o CTR é razoável (3,3%): <b>não é problema de ranqueamento, é de volume de conteúdo indexado</b>. Faltam páginas, não autoridade.</p>
+      </div>
+      <div class="panel">
+        <h3>As três leituras do indicador</h3>
+        <div class="src">O QUE FAZER COM CADA FAIXA</div>
+        <p class="mini" style="margin-bottom:10px"><b>1 · Defender (T1 · Política &amp; Eleições):</b> 33% dos cliques, CTR de 8,1% e posição 2,7 — a Gazeta é referência nacional em pesquisa eleitoral. Consolidar num guia canônico antes que a onda suba de vez.</p>
+        <p class="mini" style="margin-bottom:10px"><b>2 · Otimizar (Cauda longa):</b> 17,1 milhões de impressões gerando só 1,1% de CTR. É o maior estoque de atenção desperdiçada do site — títulos e conteúdo evergreen antigo pedindo revisão.</p>
+        <p class="mini" style="margin-bottom:10px"><b>3 · Ocupar (T4 · Fé, T3 · Economia):</b> demanda existe, autoridade existe, conteúdo indexado não. É exatamente a lacuna que a Linha Discover premium foi desenhada para preencher.</p>
+        <p class="mini"><b>Nota:</b> a marca converte a 76,5% — reconhecimento altíssimo. Mas 92% dos cliques identificados vêm de conteúdo: <b>a Gazeta é encontrada pelo que publica, não pelo nome</b>.</p>
+      </div>
+    </div>
+  </section>
+
   <footer>
-    RADAR GAZETA V2 · ATUALIZADO EM 03/08/2026 · GOOGLE TRENDS VIA SUPERMETRICS (BR, 04/07–02/08)<br>
+    RADAR GAZETA V2 · ATUALIZADO EM 03/08/2026 · GA4 E SEARCH CONSOLE CONECTADOS · GOOGLE TRENDS VIA SUPERMETRICS (BR, 04/07–02/08)<br>
     NOTA METODOLÓGICA: interesse do Trends é relativo DENTRO de cada consulta — shares comparáveis dentro do território, não entre territórios. "Legalização das drogas" e "ideologia de gênero" retornaram volume insuficiente (&lt;1) — mantidos na taxonomia para vigília.
   </footer>
 </div>
