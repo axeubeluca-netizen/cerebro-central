@@ -83,15 +83,12 @@
 <div class="wrap">
 
 <a href="index.html" style="display:inline-flex;align-items:center;gap:7px;margin:18px 0 -6px;padding:8px 14px;border:1.5px solid #0F2237;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;color:#0F2237;text-decoration:none;background:#fff">← Central do Cérebro</a>
-<div style="margin:14px 0 -8px;padding:12px 16px;border-left:4px solid #B07A1E;background:rgba(176,122,30,.08);border-radius:8px;font-size:13px;line-height:1.5">
-<b>⏸ Painel congelado em 15/07</b> — a fonte (Google Trends via Supermetrics) teve o período de avaliação encerrado em 30/07. Nova rota de coleta em preparação (coletor próprio de Trends, custo zero); os números abaixo seguem válidos como retrato de junho–julho.
-</div>
   <header>
     <div>
       <h1>Radar <span>Gazeta</span> V2</h1>
       <div class="sub">Território Nacional · Share de Intenção por Editoria · Economia — Política — Costumes &amp; Valores</div>
     </div>
-    <div class="periodo">período<b>16 jun – 15 jul 2026 · Brasil</b></div>
+    <div class="periodo">período<b>4 jul – 2 ago 2026 · Brasil · 30 dias</b></div>
   </header>
 
   <div class="wire">
@@ -105,28 +102,28 @@
   <div class="kpis">
     <div class="kpi">
       <div class="tag">Política · demanda por pessoas</div>
-      <div class="val">88%</div>
-      <div class="ctx">da intenção política é Bolsonaro (46%) + Lula (42%). Personalismo total.</div>
+      <div class="val">85%</div>
+      <div class="ctx">Bolsonaro (48%) + Lula (37%). Personalismo segue dominando o território.</div>
     </div>
     <div class="kpi">
-      <div class="tag">"Eleições 2026" na busca</div>
-      <div class="val">4%</div>
-      <div class="ctx">do território político. A onda ainda não subiu — janela de autoridade aberta.</div>
+      <div class="tag">Bolsonaro · última semana</div>
+      <div class="val up">+62%</div>
+      <div class="ctx">de ~43 para ~70 de interesse médio; pico 100 em 02/08. Maior movimento do período.</div>
     </div>
     <div class="kpi">
-      <div class="tag">STF · últimos 30 dias</div>
-      <div class="val down">−35%</div>
-      <div class="ctx">interesse caiu de ~20 para ~13. Tema esfriando na busca.</div>
+      <div class="tag">Igreja Católica</div>
+      <div class="val up">51%</div>
+      <div class="ctx">passou o aborto e lidera Costumes &amp; Valores — o território proprietário da Gazeta em alta.</div>
     </div>
     <div class="kpi">
-      <div class="tag">Economia · utilidade domina</div>
-      <div class="val">67%</div>
-      <div class="ctx">da intenção econômica é Imposto de Renda. Serviço &gt; macro.</div>
+      <div class="tag">Economia · utilidade</div>
+      <div class="val">59%</div>
+      <div class="ctx">Imposto de Renda segue como porta de entrada (pico 100 em 15/07).</div>
     </div>
     <div class="kpi">
-      <div class="tag">Termo nascendo</div>
-      <div class="val up">tarifaço</div>
-      <div class="ctx">apareceu na busca em 15/07 pela 1ª vez no período. Capturar agora.</div>
+      <div class="tag">Tarifaço · veredito</div>
+      <div class="val down">esfriou</div>
+      <div class="ctx">pico 13 em 16/07 e queda a ~0 desde 29/07. Onda curta — previsão da Ed. 1 encerrada.</div>
     </div>
   </div>
 
@@ -142,19 +139,19 @@
         <h3><span class="terr t-pol">POLÍTICA</span>5 termos monitorados</h3>
         <div class="src">TRENDS · BR · 30 DIAS · SHARE MÉDIO DENTRO DO TERRITÓRIO</div>
         <div class="donut-box"><canvas id="dPol"></canvas></div>
-        <p class="mini"><b>Leitura:</b> a busca política é sobre <b>pessoas, não instituições</b>. "Congresso nacional" é estatisticamente invisível (1%). Pauta institucional só ganha tráfego quando ancorada em personagem.</p>
+        <p class="mini"><b>Leitura:</b> Bolsonaro voltou a dominar — <b>+62% na última semana</b>, com pico máximo em 02/08. O STF esfriou para 9,5% do território e "eleições 2026" começou a subir (+38%): a onda eleitoral está saindo da latência.</p>
       </div>
       <div class="panel">
         <h3><span class="terr t-eco">ECONOMIA</span>5 termos monitorados</h3>
         <div class="src">TRENDS · BR · 30 DIAS · SHARE MÉDIO DENTRO DO TERRITÓRIO</div>
         <div class="donut-box"><canvas id="dEco"></canvas></div>
-        <p class="mini"><b>Leitura:</b> o leitor busca economia <b>quando mexe no bolso dele</b>: IR (picos de 84–100 nos lotes de restituição) esmaga inflação e Selic. Conteúdo de utilidade é a porta de entrada do território.</p>
+        <p class="mini"><b>Leitura:</b> utilidade segue mandando: IR é 59% do território (pico 100 em 15/07). E o <b>tarifaço teve vida curta</b> — subiu a 13 em 16/07 e voltou a zero: evento, não tendência.</p>
       </div>
       <div class="panel">
         <h3><span class="terr t-val">COSTUMES &amp; VALORES</span>5 termos monitorados</h3>
         <div class="src">TRENDS · BR · 30 DIAS · SHARE MÉDIO DENTRO DO TERRITÓRIO</div>
         <div class="donut-box"><canvas id="dVal"></canvas></div>
-        <p class="mini"><b>Leitura:</b> "aborto" tem demanda <b>alta e constante</b> (70–100 todos os dias) — estrutural, não eventual. Homeschooling é nicho fiel. É o território natural de autoridade da Gazeta.</p>
+        <p class="mini"><b>Leitura:</b> <b>"Igreja Católica" assumiu a liderança do território (51%)</b>, com picos de 100 em 26/07 e 98 em 02/08 — demanda alta, recorrente e dominical. É o fosso proprietário da Gazeta em plena alta.</p>
       </div>
     </div>
   </section>
@@ -175,10 +172,10 @@
       <div class="panel">
         <h3>O que os picos revelam</h3>
         <div class="src">ANOTAÇÕES DO PERÍODO</div>
-        <p class="mini" style="margin-bottom:12px"><b>20/06 — Lula a 100:</b> maior pico do mês, mais que o dobro da sua média (~40). Evento pontual dominou a atenção num sábado.</p>
-        <p class="mini" style="margin-bottom:12px"><b>25/06 — Bolsonaro a 97:</b> pico espelhado cinco dias depois. A atenção nacional oscila em gangorra entre os dois polos.</p>
-        <p class="mini" style="margin-bottom:12px"><b>STF em declínio suave:</b> de ~20 para ~13 no período. O noticiário jurídico esfria na busca — realocar esforço ou reancorar em personagens.</p>
-        <p class="mini"><b>"Eleições 2026" pulsa nos fins de semana</b> (10 em 21/06; 7 em 06/07): o interesse eleitoral existe, mas ainda é latente. Quem indexar o tema antes da onda captura a subida inteira.</p>
+        <p class="mini" style="margin-bottom:12px"><b>02/08 — Bolsonaro a 100:</b> pico máximo do período, fechando uma escalada de +62% em sete dias. A atenção nacional voltou a girar em torno dele.</p>
+        <p class="mini" style="margin-bottom:12px"><b>20–21/07 — Bolsonaro a 96 e 91:</b> primeiro salto do mês; desde então o patamar dele nunca mais voltou aos ~40 do início de julho.</p>
+        <p class="mini" style="margin-bottom:12px"><b>Lula também subiu (+38%)</b>, chegando a 76 em 31/07 e 01/08 — a gangorra segue, mas agora num patamar mais alto para os dois polos.</p>
+        <p class="mini"><b>"Eleições 2026" saiu da inércia:</b> +38% na semana, com 9 pontos recorrentes. Ainda é 5% do território — mas a curva mudou de direção. A janela de indexação está fechando.</p>
       </div>
     </div>
   </section>
@@ -219,46 +216,41 @@
     <div class="camada-head">
       <span class="n">Bloco 04</span>
       <h2>Share de Sentimento</h2>
-      <span class="q">"Como o Brasil se sente sobre cada território"</span>
+      <span class="q">em construção</span>
     </div>
-    <div class="senti">
-      <div class="lbl">Córtex IA · Liga na Onda 3 — prévia ilustrativa do formato</div>
-      <p>O sentimento nasce do cruzamento: <b>comentários públicos + manchetes + posts das listas monitoradas</b>, classificados diariamente pela camada de IA na taxonomia oficial. O formato abaixo é ilustrativo (valores simulados) — a régua fica pronta quando as Turbinas Editorial e Distribuição ligarem.</p>
-      <div class="bars">
-        <div class="sb"><div class="t">Política · exemplo</div><div class="track"><div class="seg-neg" style="width:52%"></div><div class="seg-n" style="width:30%"></div><div class="seg-p" style="width:18%"></div></div><div class="leg">NEG 52 · NEU 30 · POS 18 (simulado)</div></div>
-        <div class="sb"><div class="t">Economia · exemplo</div><div class="track"><div class="seg-neg" style="width:38%"></div><div class="seg-n" style="width:40%"></div><div class="seg-p" style="width:22%"></div></div><div class="leg">NEG 38 · NEU 40 · POS 22 (simulado)</div></div>
-        <div class="sb"><div class="t">Costumes · exemplo</div><div class="track"><div class="seg-neg" style="width:33%"></div><div class="seg-n" style="width:36%"></div><div class="seg-p" style="width:31%"></div></div><div class="leg">NEG 33 · NEU 36 · POS 31 (simulado)</div></div>
-      </div>
+    <div class="panel" style="border-style:dashed;background:rgba(255,255,255,.5)">
+      <p class="mini"><b>Bloco reservado — sem dados no ar.</b> A medição de sentimento depende de uma camada de classificação por IA sobre manchetes e comentários públicos, ainda não implementada. Nenhum número ilustrativo é exibido aqui para não haver confusão com dado medido.</p>
+      <p class="mini" style="margin-top:8px">Próximo passo em avaliação: <b>sentimento de manchetes</b> — classificação do tom dos títulos já coletados (4.400+/semana) por veículo e território. Escopo mais modesto que o desenho original, porém real e auditável.</p>
     </div>
   </section>
 
   <footer>
-    RADAR GAZETA V2 · GERADO EM 16/07/2026 · DADOS REAIS: GOOGLE TRENDS VIA SUPERMETRICS (BR, 16/06–15/07)<br>
+    RADAR GAZETA V2 · ATUALIZADO EM 03/08/2026 · GOOGLE TRENDS VIA SUPERMETRICS (BR, 04/07–02/08)<br>
     NOTA METODOLÓGICA: interesse do Trends é relativo DENTRO de cada consulta — shares comparáveis dentro do território, não entre territórios. "Legalização das drogas" e "ideologia de gênero" retornaram volume insuficiente (&lt;1) — mantidos na taxonomia para vigília.
   </footer>
 </div>
 
 <script>
-const labels=["16/06","17/06","18/06","19/06","20/06","21/06","22/06","23/06","24/06","25/06","26/06","27/06","28/06","29/06","30/06","01/07","02/07","03/07","04/07","05/07","06/07","07/07","08/07","09/07","10/07","11/07","12/07","13/07","14/07","15/07"];
-const bolso=[57,81,60,55,50,45,31,39,41,97,52,47,49,42,39,48,54,61,40,41,43,33,39,36,39,46,44,47,54,56];
-const lula=[44,45,45,48,100,70,41,37,33,36,39,39,55,38,30,31,31,37,58,59,36,36,33,32,29,34,31,33,37,37];
-const stf=[20,21,20,19,9,10,15,16,14,15,17,10,9,11,15,14,14,11,6,5,13,13,13,13,11,6,5,13,13,13];
-const ele=[5,4,4,3,3,10,7,4,3,3,4,3,4,3,3,4,4,4,3,4,7,5,4,4,4,3,3,4,4,5];
+const labels=["04/07", "05/07", "06/07", "07/07", "08/07", "09/07", "10/07", "11/07", "12/07", "13/07", "14/07", "15/07", "16/07", "17/07", "18/07", "19/07", "20/07", "21/07", "22/07", "23/07", "24/07", "25/07", "26/07", "27/07", "28/07", "29/07", "30/07", "31/07", "01/08", "02/08"];
+const bolso=[45, 45, 46, 37, 44, 42, 44, 55, 54, 52, 59, 62, 70, 73, 55, 31, 96, 91, 73, 59, 66, 80, 73, 56, 52, 72, 59, 70, 83, 100];
+const lula=[68, 63, 41, 41, 38, 34, 33, 39, 36, 36, 48, 42, 46, 46, 47, 37, 38, 42, 44, 39, 41, 50, 50, 51, 59, 55, 57, 76, 76, 65];
+const stf=[8, 7, 16, 14, 16, 13, 13, 7, 6, 15, 17, 15, 15, 13, 8, 7, 16, 16, 14, 14, 13, 7, 7, 15, 15, 14, 15, 15, 8, 7];
+const ele=[4, 5, 8, 6, 6, 5, 5, 4, 4, 6, 6, 5, 6, 5, 4, 9, 9, 8, 7, 7, 6, 7, 7, 9, 8, 8, 7, 7, 7, 8];
 
 const POL="#3D5A80", ECO="#1E7F4F", VAL="#8A4A2F", GOLD="#C99B3F", MUT="#8A93A3", ALERT="#A63232", INK="#0F2237";
 const dOpts={maintainAspectRatio:false,cutout:"58%",plugins:{legend:{position:"right",labels:{boxWidth:10,font:{family:"Archivo",size:11}}}}};
 
 new Chart(document.getElementById("dPol"),{type:"doughnut",
-  data:{labels:["Bolsonaro 46%","Lula 42%","STF 12%","Eleições 26 · 4%","Congresso 1%"],
-  datasets:[{data:[46,42,12,4,1],backgroundColor:[INK,"#5A7CA6","#93A8C4",GOLD,"#D8D4CB"],borderWidth:2,borderColor:"#fff"}]},options:dOpts});
+  data:{labels:["bolsonaro 48%", "lula 37%", "stf 10%", "eleições 2026 5%", "tarifaço 1%"],
+  datasets:[{data:[47.6, 37.1, 9.5, 5.0, 0.8],backgroundColor:[INK,'#5A7CA6','#93A8C4',GOLD,'#D8D4CB'],borderWidth:2,borderColor:"#fff"}]},options:dOpts});
 
 new Chart(document.getElementById("dEco"),{type:"doughnut",
-  data:{labels:["Imp. de Renda 67%","Dólar 23%","Inflação 5%","Selic 4%","Tarifaço <1%"],
-  datasets:[{data:[67,23,5,4,1],backgroundColor:[ECO,"#5FA97C","#9CC7AB",GOLD,"#D8D4CB"],borderWidth:2,borderColor:"#fff"}]},options:dOpts});
+  data:{labels:["imposto de renda 59%", "dólar 28%", "inflação 6%", "taxa selic 5%", "tarifaço 2%"],
+  datasets:[{data:[59.4, 28.2, 6.0, 4.6, 1.9],backgroundColor:[ECO,'#5FA97C','#9CC7AB',GOLD,'#D8D4CB'],borderWidth:2,borderColor:"#fff"}]},options:dOpts});
 
 new Chart(document.getElementById("dVal"),{type:"doughnut",
-  data:{labels:["Aborto 89%","Homeschooling 6%","Lib. religiosa 3%","Ideol. gênero 1%","Legaliz. drogas <1%"],
-  datasets:[{data:[89,6,3,1,1],backgroundColor:[VAL,"#B0714F","#D0A489",GOLD,"#D8D4CB"],borderWidth:2,borderColor:"#fff"}]},options:dOpts});
+  data:{labels:["igreja católica 51%", "aborto 46%", "homeschooling 2%", "liberdade religiosa 0%", "família tradicional 0%"],
+  datasets:[{data:[51.1, 46.2, 1.8, 0.5, 0.4],backgroundColor:[VAL,'#B0714F','#D0A489',GOLD,'#D8D4CB'],borderWidth:2,borderColor:"#fff"}]},options:dOpts});
 
 new Chart(document.getElementById("corrida"),{type:"line",
   data:{labels,datasets:[
