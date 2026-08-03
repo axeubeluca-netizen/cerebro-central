@@ -262,6 +262,56 @@
     </div>
   </section>
 
+  <!-- BLOCO 10 · CAMADA CASA -->
+  <section class="bloco">
+    <div class="bhead"><span class="n">BLOCO 10</span><h2>Camada Casa — a audiência da Gazeta</h2><span class="uso">estreia: GA4 + Search Console conectados</span></div>
+    <div class="grid2">
+      <div class="panel">
+        <h3>De onde vem a audiência (sessões, últimos 30 dias)</h3>
+        <div class="src">GA4 · PROPRIEDADE GAZETA DO POVO · CANAIS PADRÃO</div>
+        <div class="chart"><canvas id="canais"></canvas></div>
+        <p class="mini" style="margin-top:10px"><b>O leitor que vem sozinho vale o dobro:</b> a sessão vinda de tráfego direto dura <b>227s</b> contra <b>109s</b> da busca orgânica. Social orgânico é o mais engajado de todos (365s), mas com volume pequeno.</p>
+      </div>
+      <div class="destaque">
+        <div class="l">Novo KPI oficial do Cérebro</div>
+        <div class="num">31%</div>
+        <p><b>Taxa de Audiência Própria</b> — a fatia que chega por canais que nenhuma plataforma pode desligar: direto (2,55M), push (84k) e e-mail (8,9k).</p>
+        <p>É a métrica que traduz a lição do the news para dentro de casa. <b>E-mail em 8,9 mil sessões</b> mostra o tamanho da oportunidade: a base própria ainda é o menor canal da casa.</p>
+        <p style="margin-top:8px">🤖 <b>Curiosidade que virou métrica:</b> o GA4 já registra <b>9.182 sessões vindas de "AI Assistant"</b> — o tráfego de IA existe, é medível, e agora conversa com nosso protocolo de citação.</p>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="panel">
+        <h3>Busca: marca × conteúdo (30 dias)</h3>
+        <div class="src">SEARCH CONSOLE · CLIQUES POR TIPO DE CONSULTA</div>
+        <table>
+          <thead><tr><th>Tipo</th><th class="num">Cliques</th><th class="num">CTR</th><th class="num">Posição média</th></tr></thead>
+          <tbody>
+            <tr><td><b>Non-branded</b> (conteúdo)</td><td class="num">3.105.633</td><td class="num">3,2%</td><td class="num">4,2</td></tr>
+            <tr><td><b>Branded</b> (marca)</td><td class="num">250.198</td><td class="num" style="color:var(--ok);font-weight:700">74,6%</td><td class="num">1,4</td></tr>
+            <tr><td>(não classificado pelo Google)</td><td class="num">1.077.104</td><td class="num">1,1%</td><td class="num">11,4</td></tr>
+          </tbody>
+        </table>
+        <p class="mini" style="margin-top:10px"><b>Leitura:</b> 92% dos cliques identificados vêm de <b>conteúdo, não da marca</b> — a Gazeta é encontrada pelo que publica. E quem procura a marca converte a <b>74,6%</b>: reconhecimento altíssimo entre quem já conhece.</p>
+      </div>
+      <div class="panel">
+        <h3>🗳 O achado da estreia: pesquisa eleitoral</h3>
+        <div class="src">SEARCH CONSOLE · AGRUPAMENTO DE CONSULTAS ELEITORAIS</div>
+        <table>
+          <thead><tr><th>Consulta</th><th class="num">Cliques</th><th class="num">CTR</th><th class="num">Pos.</th></tr></thead>
+          <tbody>
+            <tr><td>pesquisa para presidente 2026</td><td class="num">32.671</td><td class="num">15,1%</td><td class="num">2,9</td></tr>
+            <tr><td>pesquisa presidente 2026</td><td class="num">21.087</td><td class="num">17,9%</td><td class="num">2,5</td></tr>
+            <tr><td>pesquisa eleitoral 2026</td><td class="num">11.882</td><td class="num">17,4%</td><td class="num">2,1</td></tr>
+            <tr><td>pesquisa eleitoral</td><td class="num">9.349</td><td class="num">14,4%</td><td class="num">1,9</td></tr>
+            <tr><td>+ 8 variações no top-40</td><td class="num">~37.000</td><td class="num">13–27%</td><td class="num">1,9–3,3</td></tr>
+          </tbody>
+        </table>
+        <p class="mini" style="margin-top:10px"><b>Somadas, as consultas de pesquisa eleitoral passam de 100 mil cliques/mês</b> — com CTR altíssimo e posições de topo. A Gazeta já é referência nacional no tema. Cruze com o Trends ("eleições 2026" +38% na semana) e a conclusão é uma só: <b>o guia eleitoral canônico deixou de ser recomendação e virou obrigação</b>.</p>
+      </div>
+    </div>
+  </section>
+
   <footer>
     RADAR DE CONCORRÊNCIA V1 · EDIÇÃO SEMANAL Nº 2 · ATUALIZADA EM 28/07/2026 · COM O ANTAGONISTA (GOOGLE NEWS RSS) · FONTE: COLETOR PRÓPRIO (SITEMAPS-NEWS, 15 MIN) + ANÁLISE DE 3.992 TÍTULOS<br>
     PRÓXIMAS LIGAÇÕES: FB URLSHARES (TRAÇÃO) · GA4 (CALIBRAÇÃO) · ANTAGONISTA (RSS) · SENTIMENTO VIA CÓRTEX IA (ONDA 3)
@@ -319,6 +369,14 @@ new Chart(document.getElementById('temas'),{type:'bar',
   plugins:{legend:{position:'bottom',labels:{boxWidth:10,font:{family:'Archivo',size:11}}}},
   scales:{x:{stacked:true,max:100,grid:{color:'#F0EEE8'},ticks:{font:{family:'IBM Plex Mono',size:10},callback:v=>v+'%'}},
    y:{stacked:true,grid:{display:false},ticks:{font:{family:'Archivo',size:12.5}}}}}});
+
+new Chart(document.getElementById('canais'),{type:'bar',
+ data:{labels:['Busca orgânica','Direto','Não atribuído','Social pago','Social orgânico','Referral','Busca paga','Cross-network','Push mobile','E-mail'],
+  datasets:[{label:'Sessões (mil)',data:[4035,2554,404,325,288,195,175,155,84,9],
+   backgroundColor:['#3D5A80','#0F2237','#D8D4CB','#B0A99A','#1E7F4F','#93A8C4','#5A7CA6','#9CC7AB','#C99B3F','#C99B3F'],borderRadius:3}]},
+ options:{maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},
+  scales:{x:{grid:{color:'#F0EEE8'},ticks:{font:{family:'IBM Plex Mono',size:10},callback:v=>v+'k'}},
+   y:{grid:{display:false},ticks:{font:{family:'Archivo',size:11}}}}}});
 </script>
 </body>
 </html>
