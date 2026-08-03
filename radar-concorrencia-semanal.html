@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de Concorrência · V1 — Cérebro Gazeta</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root{--ink:#0F2237;--paper:#FBFAF8;--card:#FFF;--line:#E4E1DA;--muted:#66707D;--gold:#C99B3F;
+    --gz:#0F2237;--fo:#7A4E8C;--oe:#C99B3F;--es:#3D5A80;--alert:#A63232;--ok:#1E7F4F}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Archivo',sans-serif;font-size:15px;line-height:1.5}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px 64px}
+  header{padding:32px 0 18px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;border-bottom:2px solid var(--ink)}
+  h1{font-family:'Fraunces',serif;font-weight:700;font-size:36px;letter-spacing:-.5px}
+  h1 span{color:var(--gold)}
+  .sub{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:.08em}
+  .periodo{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);text-align:right}
+  .periodo b{color:var(--ink);display:block;font-size:14px}
+  .leg{display:flex;gap:18px;margin:14px 0 26px;font-size:12.5px;flex-wrap:wrap}
+  .leg span{display:flex;align-items:center;gap:6px}
+  .sw{width:11px;height:11px;border-radius:3px}
+  .bloco{margin-bottom:42px}
+  .bhead{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line);padding-bottom:9px;margin-bottom:16px}
+  .bhead .n{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.1em}
+  .bhead h2{font-family:'Fraunces',serif;font-weight:700;font-size:22px}
+  .bhead .uso{margin-left:auto;font-size:12px;color:var(--muted);font-style:italic}
+  .grid2{display:grid;grid-template-columns:1.5fr 1fr;gap:16px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+  @media(max-width:920px){.grid2,.grid3{grid-template-columns:1fr}}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px}
+  .panel h3{font-size:13.5px;font-weight:600;margin-bottom:2px}
+  .panel .src{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:12px}
+  .chart{position:relative;height:250px}
+  .mini{font-size:12.5px;color:var(--muted);line-height:1.55}
+  .mini b{color:var(--ink)}
+  .destaque{background:var(--ink);color:#F4F2ED;border-radius:10px;padding:18px}
+  .destaque .l{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+  .destaque .num{font-family:'Fraunces',serif;font-size:34px;font-weight:700}
+  .destaque p{font-size:13px;line-height:1.55;margin-top:6px;color:#C9CFD8}
+  .destaque p b{color:#fff}
+  /* heatmap */
+  .hm{display:grid;grid-template-columns:70px repeat(24,1fr);gap:2px;font-family:'IBM Plex Mono',monospace;font-size:9px}
+  .hm .lbl{font-size:10.5px;display:flex;align-items:center;color:var(--muted)}
+  .hm .c{aspect-ratio:1;border-radius:2px}
+  .hm .hh{text-align:center;color:var(--muted)}
+  /* termos */
+  .termos{display:flex;flex-wrap:wrap;gap:7px}
+  .tag{font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:4px 9px;border-radius:5px;border:1px solid var(--line)}
+  .t-prop{background:rgba(30,127,79,.08);border-color:rgba(30,127,79,.3);color:var(--ok)}
+  .t-comm{background:rgba(15,34,55,.05);color:var(--ink)}
+  .t-gap{background:rgba(166,50,50,.06);border-color:rgba(166,50,50,.25);color:var(--alert)}
+  /* matriz */
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+  td{padding:8px;border-bottom:1px solid #F0EEE8}
+  td.num{font-family:'IBM Plex Mono',monospace;text-align:right}
+  th.num{text-align:right}
+  .win{color:var(--ok);font-weight:700}
+  .lock{border:1px dashed #C9C4B8;border-radius:10px;padding:18px;background:rgba(255,255,255,.5)}
+  .lock h3{font-size:14px;margin-bottom:6px}
+  .lock p{font-size:12.5px;color:var(--muted)}
+  .pill{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em;padding:3px 7px;border-radius:4px;text-transform:uppercase;background:rgba(176,122,30,.12);color:#B07A1E;margin-bottom:8px}
+  /* heatmap v2 */
+  .hm2{display:grid;grid-template-columns:150px repeat(24,1fr) 74px;gap:3px;font-family:'IBM Plex Mono',monospace;margin-top:6px}
+  .hm2 .lbl{font-size:11px;display:flex;align-items:center;color:var(--ink);font-weight:600}
+  .hm2 .lbl small{color:var(--muted);font-weight:400;margin-left:5px}
+  .hm2 .c2{height:30px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:9.5px;color:#fff;cursor:default}
+  .hm2 .c2.pico{outline:2px solid var(--gold);outline-offset:-2px}
+  .hm2 .hh2{text-align:center;color:var(--muted);font-size:9.5px;align-self:end;padding-bottom:2px}
+  .hm2 .tot{font-size:10.5px;display:flex;align-items:center;justify-content:flex-end;color:var(--muted)}
+  .hm2 .tot b{color:var(--ink);margin-right:3px}
+  .hm2 .sep{grid-column:1/-1;height:8px}
+  .hm2-leg{display:flex;align-items:center;gap:10px;margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)}
+  .hm2-leg .grad{height:10px;width:160px;border-radius:5px;background:linear-gradient(90deg,rgba(15,34,55,.05),rgba(15,34,55,1))}
+  footer{border-top:1px solid var(--line);margin-top:16px;padding-top:14px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a href="index.html" style="display:inline-flex;align-items:center;gap:7px;margin:18px 0 -6px;padding:8px 14px;border:1.5px solid #0F2237;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;color:#0F2237;text-decoration:none;background:#fff">← Central do Cérebro</a>
+  <header>
+    <div>
+      <h1>Radar de <span>Concorrência</span></h1>
+      <div class="sub">Cérebro Gazeta · Turbina 2 · Gazeta × Folha × Oeste × Estadão</div>
+    </div>
+    <div class="periodo">edição semanal nº 2 · atualizada<b>22–28 jul 2026 · coleta própria · quinteto completo</b></div>
+  </header>
+  <div class="leg">
+    <span><span class="sw" style="background:var(--gz)"></span>Gazeta do Povo</span>
+    <span><span class="sw" style="background:var(--fo)"></span>Folha</span>
+    <span><span class="sw" style="background:var(--oe)"></span>Revista Oeste</span>
+    <span><span class="sw" style="background:var(--es)"></span>Estadão <em style="color:var(--muted)">(entrou 21/07)</em></span>
+  </div>
+
+  <!-- BLOCO 1 -->
+  <section class="bloco">
+    <div class="bhead"><span class="n">BLOCO 01</span><h2>Placar de Cadência</h2><span class="uso">abre a reunião de pauta de segunda</span></div>
+    <div class="grid2">
+      <div class="panel">
+        <h3>Artigos publicados por dia</h3>
+        <div class="src">SITEMAPS + GOOGLE NEWS RSS (ANTAGONISTA) · TER 28 PARCIAL · *ANTAGONISTA LIMITADO AO FEED</div>
+        <div class="chart"><canvas id="cadencia"></canvas></div>
+      </div>
+      <div class="destaque">
+        <div class="l">Os números da atualização</div>
+        <div class="num">41 vs 56</div>
+        <p><b>Primeiro teste do FDS: o plano não começou.</b> Sáb 44 + dom 38 = média 41/dia — abaixo até da linha de base (56). O gap segue aberto; medimos de novo no próximo fim de semana.</p>
+        <p><b>Fábrica da Oeste: 7º dia desligada</b> — previsão confirmada. <b>Estadão sustenta a liderança</b> nos úteis. E o <b>Antagonista estreou no quinteto</b> com pauta eleitoral quente (Nexus, Quaest).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCO 2 -->
+  <section class="bloco">
+    <div class="bhead"><span class="n">BLOCO 02</span><h2>Mapa de Calor Horário</h2><span class="uso">decide agendamento; mede a correção do gap noturno e do FDS</span></div>
+    <div class="panel">
+      <h3>Artigos por hora do dia — média por dia, dias úteis × fim de semana</h3>
+      <div class="src">ÚTEIS 17–23/07 (MÉDIA/DIA) · SÁB 18 + DOM 19 (FDS) · *ESTADÃO: 3 DIAS ÚTEIS · HORÁRIO DE BRASÍLIA · ESCALA DE COR ÚNICA — COMPARÁVEL ENTRE TODAS AS LINHAS</div>
+      <div class="hm2" id="heat2"></div>
+      <div class="hm2-leg" id="heat2leg"></div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="panel">
+        <h3>As quatro leituras do mapa</h3>
+        <div class="src">O QUE AS MANCHAS DIZEM</div>
+        <p class="mini" style="margin-bottom:9px"><b>1 · O apagão de FDS da Gazeta é visível a olho nu:</b> a linha sáb/dom fica quase branca — nenhuma hora passa de 6 artigos e a madrugada zera. É a imagem do "56 vs 182".</p>
+        <p class="mini" style="margin-bottom:9px"><b>2 · O estoque noturno da Folha:</b> o pico dela é às 23h — 31 artigos/dia agendados pra amanhecer indexados na busca. Técnica copiável amanhã, a custo zero.</p>
+        <p class="mini" style="margin-bottom:9px"><b>3 · A Oeste não tem pico — tem esteira:</b> 4 a 16 artigos em praticamente toda hora, útil ou FDS, madrugada incluída. Consistência industrial.</p>
+        <p class="mini"><b>4 · A janela 14h–17h é o prime time da Gazeta</b> (pico útil: 17,5 às 14h) — a pleno vapor, ela produz no ritmo dos grandes. O problema não é capacidade; é distribuição no tempo.</p>
+      </div>
+      <div class="destaque">
+        <div class="l">O plano de agendamento que o mapa pede</div>
+        <div class="num">3 janelas</div>
+        <p><b>22h–1h:</b> estoque noturno à la Folha — 8 a 10 matérias agendadas pra virada (evergreen + eleições + fé).</p>
+        <p><b>Sáb/dom 8h–20h:</b> grade mínima de 1 matéria a cada 40 min — tira o FDS de 56 e mira 120+.</p>
+        <p><b>5h–7h:</b> 3 a 4 pautas de utilidade pro leitor da manhã (IR, tarifaço, serviço) — demanda comprovada no Trends, campo vazio.</p>
+        <p style="margin-top:8px">Medição automática: este mesmo mapa, semana que vem, mostra se as manchas mudaram.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCO 3 -->
+  <section class="bloco">
+    <div class="bhead"><span class="n">BLOCO 03</span><h2>Batalha de Termos</h2><span class="uso">pauta diária + argumento de posicionamento</span></div>
+    <div class="grid3">
+      <div class="panel">
+        <h3 style="color:var(--ok)">🏰 Proprietários da Gazeta</h3>
+        <div class="src">ELA FALA · OS OUTROS QUASE NÃO (MENÇÕES 5D)</div>
+        <div class="termos">
+          <span class="tag t-prop">católicos ×23</span><span class="tag t-prop">bispos ×12</span>
+          <span class="tag t-prop">papa ×5</span><span class="tag t-prop">Deus ×5</span>
+          <span class="tag t-prop">reforma tributária</span>
+        </div>
+        <p class="mini" style="margin-top:10px">O território <b>Fé</b> é cobertura exclusiva da Gazeta no grupo — fosso editorial comprovado por dado. Frase pronta pro comercial. <em>(Excluído "falecimentos": produto local, fora do recorte nacional.)</em></p>
+      </div>
+      <div class="panel">
+        <h3>⚔️ Termos macro — o campo de jogo</h3>
+        <div class="src">TODOS DISPUTAM · VELOCIDADE E ÂNGULO DECIDEM</div>
+        <div class="termos">
+          <span class="tag t-comm">Lula</span><span class="tag t-comm">Bolsonaro</span>
+          <span class="tag t-comm">Trump</span><span class="tag t-comm">EUA</span>
+          <span class="tag t-comm">tarifaço</span><span class="tag t-comm">Moraes</span>
+        </div>
+        <p class="mini" style="margin-top:10px"><b>É aqui que o jogo nacional acontece.</b> Nos termos macro ninguém tem exclusividade — vence quem publica primeiro e com ângulo próprio. A Gazeta lidera os confrontos diretos (Bloco 4); a missão é sustentar a vantagem.</p>
+      </div>
+      <div class="panel">
+        <h3 style="color:var(--alert)">🕳 Gaps estruturais × evento</h3>
+        <div class="src">SEPARANDO O PERMANENTE DO PASSAGEIRO</div>
+        <div class="termos">
+          <span class="tag t-gap">"assista" ×38 (Oeste)</span><span class="tag t-gap">psicologia ×32</span>
+          <span class="tag t-comm" style="text-decoration:line-through;opacity:.55">copa ×178</span>
+          <span class="tag t-comm" style="text-decoration:line-through;opacity:.55">messi ×52</span>
+        </div>
+        <p class="mini" style="margin-top:10px">Copa/Messi = <b>evento encerrado</b> (final foi domingo 19) — explica o pico da Folha e sai do radar. O gap estrutural real é o formato <b>"assista"/vídeo</b> da Oeste: linguagem, não tema. <b>Previsão testável:</b> sem Copa, o volume da Folha deve cair forte esta semana — conferimos segunda.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCO 4 -->
+  <section class="bloco">
+    <div class="bhead"><span class="n">BLOCO 04</span><h2>Quem Pauta Quem</h2><span class="uso">prova de autoridade editorial · alerta de velocidade</span></div>
+    <div class="grid2">
+      <div class="panel">
+        <h3>Confrontos diretos — pautas compartilhadas (48h, 331 casos)</h3>
+        <div class="src">SIMILARIDADE DE TÍTULO ≥ 0.5 · QUEM PUBLICOU PRIMEIRO</div>
+        <table>
+          <thead><tr><th>Duelo</th><th class="num">Gazeta 1º</th><th class="num">Rival 1º</th><th class="num">Taxa Gazeta</th></tr></thead>
+          <tbody>
+            <tr><td>Gazeta × Revista Oeste</td><td class="num">42</td><td class="num">30</td><td class="num win">58%</td></tr>
+            <tr><td>Gazeta × Folha</td><td class="num">38</td><td class="num">32</td><td class="num win">54%</td></tr>
+            <tr><td>Gazeta × Estadão*</td><td class="num">13</td><td class="num">2</td><td class="num win">87%*</td></tr>
+          </tbody>
+        </table>
+        <p class="mini" style="margin-top:10px"><b>Janela nova (25–28, medição limpa, amostras pequenas):</b> Gazeta domina a Oeste (5 de 6, 83%). Contra Folha/Estadão a janela foi desfavorável (2/8 e 2/9) — pesou o FDS apagado. E o estreante Antagonista mostrou velocidade (5 de 8 contra a Gazeta): rival de agilidade a vigiar. Consolidação na Ed. 3.</p>
+<p class="mini" style="margin-top:10px">⚠ <b>Nota da semana:</b> desde 21/07 o sitemap da Gazeta degradou os títulos (v2.3 corrige); confrontos de 22–24 medidos por slug saíram artificialmente baixos. Tabela reflete a janela íntegra. *Estadão com 1 dia de coleta — número ilustrativo até fechar a semana. <b>A Gazeta é pautadora, não seguidora</b> — vence os dois rivais relevantes no corpo a corpo.</p>
+      </div>
+      <div class="destaque">
+        <div class="l">O dado institucional</div>
+        <div class="num">58%</div>
+        <p>Nos temas em que Gazeta e Oeste se encontram, <b>a Gazeta chega primeiro em 58% das vezes</b> — e a Oeste leva em média 6h pra seguir. Na prática, a Oeste usa a Gazeta como pauta e amplifica com volume.</p>
+        <p>Vigiar semanalmente: se essa taxa cair, é alerta de velocidade da redação.</p>
+      </div>
+    </div>
+    <div class="panel" style="margin-top:16px">
+      <h3>As provas — a matéria, os dois títulos, os horários</h3>
+      <div class="src">SELEÇÃO DOS CONFRONTOS MAIS CLAROS · LISTA COMPLETA (132 CASOS) NA PÁGINA "QUEM PAUTA QUEM — AS PROVAS"</div>
+      <table>
+        <thead><tr><th style="width:42%">Gazeta publicou</th><th style="width:12%">Quando</th><th style="width:34%">Seguidor</th><th class="num">Atraso</th></tr></thead>
+        <tbody>
+          <tr><td>Nunes Marques autoriza Buser a operar no Paraná</td><td class="num">seg 07h25</td><td><b style="color:var(--oe)">Oeste:</b> "…autoriza Buser a retomar operações no Paraná" (22h19)</td><td class="num" style="color:var(--alert)">+14,9h</td></tr>
+          <tr><td>Moraes arquiva investigação da "Abin paralela" contra Bolsonaro</td><td class="num">seg 17h28</td><td><b style="color:var(--oe)">Oeste:</b> "Moraes encerra investigação da 'Abin Paralela'…" (22h24)</td><td class="num" style="color:var(--alert)">+4,9h</td></tr>
+          <tr><td>TCU arquiva processos sobre gastos de Janja com viagens</td><td class="num">seg 21h53</td><td><b style="color:var(--oe)">Oeste:</b> "TCU arquiva processos contra Janja…" (22h41)</td><td class="num" style="color:var(--alert)">+48min</td></tr>
+          <tr><td>FGTS deve distribuir R$ 13,2 bi em lucros em agosto</td><td class="num">ter 09h07</td><td><b style="color:var(--es)">Estadão:</b> "FGTS deve distribuir R$ 13 bilhões…" (13h23)</td><td class="num" style="color:var(--alert)">+4,3h</td></tr>
+          <tr><td>Lula autoriza Forças Armadas na segurança das eleições de 2026</td><td class="num">ter 12h35</td><td><b style="color:var(--oe)">Oeste:</b> "Lula autoriza emprego das Forças Armadas…" (17h16)</td><td class="num" style="color:var(--alert)">+4,7h</td></tr>
+          <tr><td>Moraes nega pedido de Bolsonaro para receber visita de Milei</td><td class="num">sáb 09h34</td><td><b style="color:var(--oe)">Oeste:</b> "Alexandre de Moraes nega pedido…" (12h14)</td><td class="num" style="color:var(--alert)">+2,7h</td></tr>
+          <tr><td>BRB desiste de parceria para vender R$ 15 bi em ativos do Master</td><td class="num">seg 08h15</td><td><b style="color:var(--oe)">Oeste:</b> "BRB desiste de vender R$ 15 bilhões…" (13h57)</td><td class="num" style="color:var(--alert)">+5,7h</td></tr>
+          <tr><td>Mendonça é sorteado relator de queixa-crime de Caiado contra Boulos</td><td class="num">sex 08h16</td><td><b style="color:var(--oe)">Oeste:</b> "Mendonça vai ser o relator da ação…" (15h39)</td><td class="num" style="color:var(--alert)">+7,4h</td></tr>
+          <tr><td>Fachin reage a críticas dos EUA: STF não aceitará pressão externa</td><td class="num">qui 18h38</td><td><b style="color:var(--oe)">Oeste:</b> "STF reage aos EUA e diz que vai continuar…" (21h01)</td><td class="num" style="color:var(--alert)">+2,4h</td></tr>
+          <tr><td>PGR defende manter prisão domiciliar de Bolsonaro, com veto a visitas</td><td class="num">sex 19h41</td><td><b style="color:var(--fo)">Folha:</b> "PGR defende manter prisão domiciliar…" (20h02)</td><td class="num" style="color:var(--alert)">+21min</td></tr>
+        </tbody>
+      </table>
+      <p class="mini" style="margin-top:10px"><b>O padrão:</b> é no beat de Justiça/STF e poder — o coração editorial da Gazeta — que ela chega primeiro sistematicamente. Detalhe: dois desses furos aconteceram <b>no fim de semana</b>, mesmo com a redação publicando 3x menos. Lista completa e navegável: <a href="quem-pauta-quem-provas.html" style="color:var(--ink);font-weight:600">quem-pauta-quem-provas.html</a> (mantendo os dois arquivos na mesma pasta, o link abre direto).</p>
+    </div>
+  </section>
+
+  <!-- BLOCO 5 -->
+  <section class="bloco">
+    <div class="bhead"><span class="n">BLOCO 05</span><h2>Tração Estimada (audiência)</h2><span class="uso">a estimativa de audiência sem SimilarWeb</span></div>
+    <div class="grid2">
+      <div class="lock">
+        <span class="pill">liga com facebook urlshares · sem login</span>
+        <h3>ITE — Índice de Tração Editorial</h3>
+        <p>Shares no Facebook das top-20 matérias/dia de cada veículo → <b>shares por artigo × cadência = proxy de alcance social</b>. Rotina de consulta pronta pra ativar; nenhuma autenticação necessária.</p>
+      </div>
+      <div class="lock">
+        <span class="pill">calibra com ga4 · aguardando autorização</span>
+        <h3>A pedra de Roseta</h3>
+        <p>Audiência real da Gazeta (GA4) ÷ ITE da Gazeta = fator de conversão → aplicado ao ITE dos rivais, gera <b>audiência estimada por veículo com metodologia própria e auditável</b>. Candidato a pilar do IGA.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCO 6 -->
+  <section class="bloco">
+    <div class="bhead"><span class="n">BLOCO 06</span><h2>Share de Tema</h2><span class="uso">mapa de apostas editoriais de cada player</span></div>
+    <div class="grid2">
+      <div class="panel">
+        <h3>% da produção por território (títulos classificados, 17–20/07)</h3>
+        <div class="src">TAXONOMIA CÉREBRO V1 · "OUTROS" = LOCAL/SERVIÇO/VARIEDADES</div>
+        <div class="chart"><canvas id="temas"></canvas></div>
+      </div>
+      <div class="panel">
+        <h3>Leituras do mapa</h3>
+        <div class="src">17–20/07</div>
+        <p class="mini" style="margin-bottom:10px"><b>Gazeta segue a mais politizada — e ampliou:</b> 34% em Política+Justiça (vs 15% Folha, 18% Oeste, 15% Estadão).</p>
+        <p class="mini" style="margin-bottom:10px"><b>Fé/Costumes: 9% na Gazeta, 1–2% nos rivais.</b> O fosso segue exclusivo.</p>
+        <p class="mini" style="margin-bottom:10px"><b>Estadão entra com o DNA à vista:</b> Esportes + E-Investidor no topo — verticais de serviço puxam o novo líder de volume.</p>
+        <p class="mini"><b>Oeste pós-fábrica:</b> com o "oestegeral" desligado desde 22/07, a produção real caiu abaixo da Gazeta.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    RADAR DE CONCORRÊNCIA V1 · EDIÇÃO SEMANAL Nº 2 · ATUALIZADA EM 28/07/2026 · COM O ANTAGONISTA (GOOGLE NEWS RSS) · FONTE: COLETOR PRÓPRIO (SITEMAPS-NEWS, 15 MIN) + ANÁLISE DE 3.992 TÍTULOS<br>
+    PRÓXIMAS LIGAÇÕES: FB URLSHARES (TRAÇÃO) · GA4 (CALIBRAÇÃO) · ANTAGONISTA (RSS) · SENTIMENTO VIA CÓRTEX IA (ONDA 3)
+  </footer>
+</div>
+
+<script>
+const GZ='#0F2237', FO='#7A4E8C', OE='#C99B3F', ES='#3D5A80';
+new Chart(document.getElementById('cadencia'),{type:'bar',
+ data:{labels:['Qua 22','Qui 23','Sex 24','Sáb 25','Dom 26','Seg 27','Ter 28*'],datasets:[
+  {label:'Gazeta',data:[127, 156, 150, 44, 38, 126, 109],backgroundColor:GZ,borderRadius:3},
+  {label:'Folha',data:[209, 249, 215, 135, 116, 186, 157],backgroundColor:FO,borderRadius:3},
+  {label:'Oeste',data:[74, 100, 78, 40, 35, 71, 43],backgroundColor:OE,borderRadius:3},
+  {label:'Estadão',data:[291, 342, 292, 131, 132, 266, 178],backgroundColor:ES,borderRadius:3},
+  {label:'Antagonista',data:[null, 7, 24, 24, 26, 66, 55],backgroundColor:'#8A6FB0',borderRadius:3}]},
+ options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:11,font:{family:'Archivo',size:12}}}},
+  scales:{x:{grid:{display:false},ticks:{font:{family:'IBM Plex Mono',size:11}}},
+   y:{beginAtZero:true,grid:{color:'#F0EEE8'},ticks:{font:{family:'IBM Plex Mono',size:10}}}}}});
+
+const HEAT2={"gazeta": {"uteis": [1.5, 0.8, 1.0, 0.0, 0.5, 0.2, 0.8, 4.5, 8.5, 13.0, 8.0, 8.2, 7.0, 6.8, 8.5, 16.8, 12.2, 8.2, 7.0, 5.2, 5.5, 7.2, 3.8, 4.5], "fds": [1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 2.0, 4.0, 5.5, 2.0, 2.0, 5.0, 3.5, 1.0, 2.5, 1.5, 1.0, 3.0, 2.0, 3.5, 0.0]}, "folha": {"uteis": [0.5, 0.2, 1.8, 0.2, 9.2, 3.0, 6.2, 3.8, 10.2, 9.8, 13.0, 12.8, 15.8, 12.5, 11.0, 11.8, 13.5, 15.2, 14.0, 11.5, 8.0, 5.8, 7.5, 17.5], "fds": [1.0, 0.0, 0.0, 0.0, 7.0, 2.5, 4.0, 3.5, 2.5, 3.0, 8.0, 5.0, 7.5, 7.0, 4.0, 11.0, 10.0, 7.5, 8.0, 3.0, 4.0, 4.0, 5.5, 17.5]}, "oeste": {"uteis": [3.5, 4.5, 1.2, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 5.5, 3.2, 2.8, 4.2, 4.0, 5.8, 7.2, 4.5, 4.5, 6.2, 5.8, 6.0, 5.5, 4.2], "fds": [5.0, 3.0, 2.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 2.5, 1.5, 1.5, 1.0, 2.0, 2.0, 1.5, 1.0, 2.0, 2.0, 2.5, 1.5, 2.0, 2.0, 2.0]}, "estadao": {"uteis": [1.8, 1.8, 0.5, 8.5, 1.8, 10.0, 8.8, 3.2, 11.0, 21.5, 14.0, 17.8, 27.5, 14.0, 18.2, 18.8, 15.8, 22.5, 27.2, 16.2, 15.0, 11.2, 8.5, 2.2], "fds": [2.0, 0.5, 0.5, 8.5, 0.5, 11.5, 7.5, 6.0, 6.0, 5.5, 4.0, 5.5, 7.5, 4.5, 4.5, 10.5, 4.5, 13.0, 8.5, 4.0, 4.0, 3.5, 5.0, 4.0]}, "antagonista": {"uteis": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.8, 0.8, 1.0, 0.2, 1.5, 1.0, 1.5, 1.8, 1.8, 2.0, 4.0, 2.0, 2.0, 2.0, 1.5, 0.2, 0.2], "fds": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.5, 2.5, 2.0, 1.5, 1.5, 2.0, 1.5, 3.0, 0.5, 1.5, 2.0, 2.0, 1.5, 1.5, 0.5, 0.0, 0.0]}};
+const MAX2=33.5;
+const box2=document.getElementById('heat2');
+let html2='<div></div>'+Array.from({length:24},(_,h)=>`<div class="hh2">${h}</div>`).join('')+'<div class="hh2" style="text-align:right">total/dia</div>';
+const ORD=[['gazeta','Gazeta','úteis','uteis'],['gazeta','Gazeta','sáb/dom','fds'],
+ ['folha','Folha','úteis','uteis'],['folha','Folha','sáb/dom','fds'],
+ ['oeste','Oeste','úteis','uteis'],['oeste','Oeste','sáb/dom','fds'],
+ ['estadao','Estadão','úteis','uteis'],['estadao','Estadão','sáb/dom','fds'],
+ ['antagonista','Antagonista','úteis','uteis']];
+let prev='';
+for(const [v,nome,rot,key] of ORD){
+  if(prev && prev!==v) html2+='<div class="sep"></div>';
+  prev=v;
+  const arr=HEAT2[v][key];
+  const tot=arr.reduce((a,b)=>a+b,0);
+  const mx=Math.max(...arr);
+  html2+=`<div class="lbl">${nome}<small>${rot}</small></div>`+arr.map(x=>{
+    const a=Math.min(1,x/MAX2);
+    const escuro=a>0.45;
+    return `<div class="c2 ${x===mx&&x>0?'pico':''}" title="${nome} ${rot}: ${x} art./dia" style="background:rgba(15,34,55,${(0.05+a*0.95).toFixed(2)});color:${escuro?'#fff':'transparent'}">${x>=1?Math.round(x):''}</div>`;
+  }).join('')+`<div class="tot"><b>${Math.round(tot)}</b>/dia</div>`;
+}
+box2.innerHTML=html2;
+document.getElementById('heat2leg').innerHTML='<span>menos</span><div class="grad"></div><span>mais artigos/hora</span><span style="margin-left:14px">borda dourada = hora de pico da linha</span>';
+
+new Chart(document.getElementById('temas'),{type:'bar',
+ data:{labels:['Gazeta','Folha','Oeste','Estadão'],datasets:[
+  {label:'Política/Eleições',data:[28, 13, 14, 12],backgroundColor:GZ},
+  {label:'Justiça/STF',data:[6, 2, 4, 3],backgroundColor:'#5A7CA6'},
+  {label:'Fé/Costumes',data:[9, 2, 2, 1],backgroundColor:'#8A4A2F'},
+  {label:'Economia',data:[4, 4, 5, 7],backgroundColor:'#1E7F4F'},
+  {label:'Mundo',data:[8, 10, 6, 6],backgroundColor:'#93A8C4'},
+  {label:'Esporte',data:[1, 11, 3, 6],backgroundColor:FO},
+  {label:'Outros',data:[45, 58, 67, 66],backgroundColor:'#D8D4CB'}]},
+ options:{maintainAspectRatio:false,indexAxis:'y',
+  plugins:{legend:{position:'bottom',labels:{boxWidth:10,font:{family:'Archivo',size:11}}}},
+  scales:{x:{stacked:true,max:100,grid:{color:'#F0EEE8'},ticks:{font:{family:'IBM Plex Mono',size:10},callback:v=>v+'%'}},
+   y:{stacked:true,grid:{display:false},ticks:{font:{family:'Archivo',size:12.5}}}}}});
+</script>
+</body>
+</html>

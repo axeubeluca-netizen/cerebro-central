@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Territórios & Linguagem · Cérebro Gazeta</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wordcloud2.js/1.2.2/wordcloud2.min.js"></script>
+<style>
+:root{--ink:#0F2237;--paper:#FBFAF8;--card:#FFF;--line:#E4E1DA;--muted:#66707D;--gold:#C99B3F;
+ --gz:#0F2237;--fo:#7A4E8C;--oe:#C99B3F;--es:#3D5A80;--ok:#1E7F4F;--alert:#A63232}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:'Archivo',sans-serif;font-size:15px;line-height:1.5}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px 64px}
+header{padding:32px 0 16px;border-bottom:2px solid var(--ink)}
+h1{font-family:'Fraunces',serif;font-weight:700;font-size:34px;letter-spacing:-.5px}
+h1 span{color:var(--gold)}
+.sub{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:.08em}
+.bloco{margin:34px 0}
+.bhead{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line);padding-bottom:9px;margin-bottom:16px}
+.bhead .n{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.1em}
+.bhead h2{font-family:'Fraunces',serif;font-weight:700;font-size:22px}
+.bhead .uso{margin-left:auto;font-size:12px;color:var(--muted);font-style:italic}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tb{font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:7px 13px;border-radius:6px;border:1.5px solid var(--line);background:#fff;cursor:pointer}
+.tb.on{color:#fff}
+#cloud{width:100%;height:340px}
+.mini{font-size:12.5px;color:var(--muted);line-height:1.55;margin-top:10px}
+.mini b{color:var(--ink)}
+.arv{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:920px){.arv{grid-template-columns:repeat(2,1fr)}}
+.tree h3{font-size:13px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.dot{width:10px;height:10px;border-radius:3px}
+.tiles{display:flex;flex-wrap:wrap;gap:3px}
+.tile{border-radius:4px;color:#fff;padding:6px 7px;font-size:10.5px;line-height:1.25;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.tile b{font-size:11px}
+.tile .pc{font-family:'IBM Plex Mono',monospace;font-size:9px;opacity:.85}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+@media(max-width:920px){.grid3{grid-template-columns:1fr}}
+.card h3{font-size:13.5px;font-weight:600;margin-bottom:2px}
+.card .src{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:10px}
+.termos{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;border-radius:5px;border:1px solid var(--line);background:#FBFAF7}
+.alerta{background:var(--ink);color:#F4F2ED;border-radius:10px;padding:20px;margin-top:16px}
+.alerta .l{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.alerta p{font-size:13.5px;line-height:1.6;color:#C9CFD8}
+.alerta b{color:#fff}
+footer{border-top:1px solid var(--line);margin-top:24px;padding-top:14px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Territórios & <span>Linguagem</span></h1>
+  <div class="sub">Cérebro Gazeta · anexo do Radar de Concorrência · 17–23 jul 2026 · edição semanal nº 2 · 5.600+ títulos</div>
+</header>
+
+<section class="bloco">
+  <div class="bhead"><span class="n">BLOCO 07</span><h2>Nuvem de Termos por Veículo</h2><span class="uso">a linguagem de cada redação, lado a lado</span></div>
+  <div class="panel">
+    <div class="tabs" id="tabs"></div>
+    <canvas id="cloud"></canvas>
+    <p class="mini" id="cloudnote"></p>
+  </div>
+</section>
+
+<section class="bloco">
+  <div class="bhead"><span class="n">BLOCO 08</span><h2>Árvore de Editorias — a estrutura real de cada site</h2><span class="uso">extraída das URLs, não do menu institucional</span></div>
+  <div class="panel">
+    <div class="arv" id="arvores"></div>
+    <p class="mini"><b>Como ler:</b> o tamanho de cada bloco é proporcional ao volume publicado na semana. Nota: as URLs de redirecionamento da Folha foram reclassificadas retroativamente pela URL de destino (85% recuperadas; "geral*" = restante não identificado). A árvore dela agora reflete a semana completa.</p>
+  </div>
+</section>
+
+<section class="bloco">
+  <div class="bhead"><span class="n">BLOCO 09</span><h2>O Volume Fora da Política</h2><span class="uso">onde os rivais crescem sem disputar o território nobre</span></div>
+  <div class="grid3">
+    <div class="panel card">
+      <h3 style="color:var(--fo)">Folha — serviço + esporte + morte</h3>
+      <div class="src">MOTORES NÃO-POLÍTICOS DA SEMANA</div>
+      <div class="termos"><span class="tag">copa ×179</span><span class="tag">messi ×45</span><span class="tag">fifa ×24</span><span class="tag">cotidiano</span><span class="tag">mercado</span><span class="tag">"morre" ×20</span></div>
+      <p class="mini">A árvore real dela: <b>colunas 17% + esporte 16% + mercado 11% + cotidiano 8% + cultura 7%</b> — e "poder" (política) é só a 8ª editoria, com 6%. O volume da Folha é colunismo, serviço e cultura; política é a vitrine, não o motor.</p>
+    </div>
+    <div class="panel card">
+      <h3 style="color:var(--oe)">Oeste — a fábrica DESLIGOU esta semana</h3>
+      <div class="src">MUDANÇA ESTRUTURAL DETECTADA EM 22/07</div>
+      <div class="termos"><span class="tag" style="border-color:var(--alert);color:var(--alert)">oestegeral fora do sitemap</span><span class="tag">volume −50%</span><span class="tag">política agora no topo</span></div>
+      <p class="mini">Desde 22/07 a esteira viral (provérbios, psicologia, truques) sumiu do sitemap-news e o volume caiu pela metade. Hipóteses: recuo tático no Google News ou desligamento. <b>Janela aberta:</b> o espaço de comportamento/espiritualidade no Discover pode estar vagando — timing da Linha premium.</p>
+    </div>
+    <div class="panel card">
+      <h3 style="color:var(--es)">Estadão — verticais de nicho monetizáveis</h3>
+      <div class="src">1º DIA DE COLETA · JÁ VISÍVEL</div>
+      <div class="termos"><span class="tag">E-Investidor ×28</span><span class="tag">Paladar ×13</span><span class="tag">Jornal do Carro</span><span class="tag">"como assistir"</span><span class="tag">"horário"</span><span class="tag">"escalação"</span></div>
+      <p class="mini">Finanças pessoais, gastronomia, carro e <b>guias de serviço</b> ("horário", "escalação") — verticais desenhadas pra anunciante, não pra manchete.</p>
+    </div>
+  </div>
+  <div class="alerta">
+    <div class="l">A leitura estratégica do bloco</div>
+    <p><b>Os três rivais crescem volume com conteúdo que não disputa a política</b> — serviço/utilidade (Folha, Estadão), lifestyle viral (Oeste) e verticais de nicho (Estadão). A Gazeta quase não joga esse jogo no site principal: fora da política, seus termos fortes seguem sendo tarifaço, católicos e Paraná.</p>
+    <p style="margin-top:10px">E o alerta vermelho: <b>a Oeste está ocupando o território de comportamento e espiritualidade pop</b> ("provérbio" ×28, "psicologia" ×33) — a versão rasa do que a Sempre Família faz com profundidade. É audiência da comunidade da Gazeta sendo capturada por fórmula de clique. Decisão a tomar: trazer o comportamento cristão qualificado pro campo de batalha do volume, ou ceder o terreno.</p>
+  </div>
+</section>
+
+<footer>CÉREBRO GAZETA · TERRITÓRIOS & LINGUAGEM V1 · FONTE: COLETOR PRÓPRIO (SITEMAPS) · NUVENS EXCLUEM STOPWORDS · ESTADÃO COM 1 DIA DE SÉRIE</footer>
+</div>
+
+<script>
+const D={"clouds": {"gazeta": [["bolsonaro", 99], ["lula", 85], ["governo", 61], ["brasil", 53], ["trump", 49], ["flavio", 44], ["moraes", 30], ["curitiba", 27], ["eduardo", 23], ["flávio", 22], ["michelle", 22], ["copa", 21], ["mundo", 19], ["apoio", 19], ["argentina", 18], ["milei", 17], ["tarifaco", 16], ["igreja", 15], ["papa", 15], ["senado", 15], ["parana", 15], ["julho", 14], ["tarifaço", 14], ["brasileiros", 14], ["emendas", 14], ["espanha", 13], ["eleitoral", 13], ["pesquisa", 13], ["católicos", 13], ["eleicoes", 13], ["justica", 13], ["grande", 12], ["esquerda", 12], ["crise", 12], ["pessoas", 12], ["critica", 12], ["visita", 12], ["bispo", 12], ["jovens", 12], ["rede", 12], ["card", 12], ["green", 12], ["presidente", 11], ["empresas", 11], ["brasileiro", 11]], "folha": [["copa", 181], ["mundo", 113], ["flávio", 73], ["brasil", 72], ["trump", 70], ["governo", 65], ["bolsonaro", 62], ["lula", 59], ["espanha", 59], ["argentina", 56], ["final", 55], ["paulo", 53], ["messi", 47], ["morre", 29], ["futebol", 29], ["guerra", 26], ["campanha", 26], ["fifa", 25], ["tarcísio", 24], ["seleção", 24], ["volta", 24], ["mulheres", 24], ["brasileiro", 24], ["pede", 23], ["tarifaço", 23], ["polícia", 22], ["presidente", 21], ["morte", 21], ["yamal", 21], ["justiça", 21], ["estudo", 21], ["risco", 20], ["casa", 20], ["acordo", 19], ["mulher", 19], ["tarifas", 19], ["estados", 19], ["terá", 19], ["mortes", 19], ["mostra", 19], ["china", 18], ["maior", 18], ["espanhol", 18], ["flip", 18], ["show", 17]], "oeste": [["assista", 53], ["flávio", 51], ["lula", 41], ["programa", 39], ["metros", 38], ["pessoas", 37], ["quase", 35], ["psicologia", 32], ["bolsonaro", 32], ["brasil", 31], ["governo", 31], ["oeste", 30], ["casa", 30], ["provérbio", 27], ["vida", 27], ["revela", 26], ["você", 25], ["mundo", 25], ["quando", 24], ["simples", 24], ["maior", 22], ["master", 21], ["moraes", 20], ["cientistas", 20], ["está", 20], ["muito", 20], ["eleições", 19], ["água", 19], ["banco", 18], ["copa", 18], ["revelam", 18], ["justiça", 18], ["tarifaço", 17], ["trump", 17], ["brasileira", 17], ["mesmo", 17], ["jornal", 16], ["força", 16], ["pede", 16], ["significa", 16], ["critica", 16], ["brasileiro", 15], ["oceano", 15], ["cidade", 15], ["segundo", 15]], "estadao": [["brasil", 51], ["flávio", 39], ["bolsonaro", 35], ["copa", 35], ["paulo", 25], ["vivo", 25], ["governo", 24], ["assistir", 23], ["horário", 22], ["escalação", 22], ["alta", 21], ["mundo", 19], ["trump", 18], ["tarifaço", 16], ["está", 15], ["petróleo", 15], ["palmeiras", 14], ["anuncia", 14], ["lula", 14], ["ações", 13], ["presidente", 13], ["mercado", 13], ["horóscopo", 13], ["morre", 12], ["série", 12], ["brasileiro", 12], ["acordo", 12], ["feira", 12], ["resultado", 12], ["polícia", 11], ["desde", 11], ["brasileirão", 11], ["vale", 11], ["justiça", 11], ["dezenas", 11], ["receita", 11], ["seleção", 11], ["serve", 10], ["vídeo", 10], ["risco", 10], ["ação", 10], ["empresa", 10], ["maior", 10], ["tempo", 10], ["santos", 9]]}, "trees": {"gazeta": [["mundo", 201], ["eleicoes", 144], ["republica", 129], ["vozes", 104], ["opiniao", 57], ["economia", 47], ["brasil", 32], ["vida-e-cidadania", 29], ["gpbc", 29]], "folha": [["colunas", 316], ["esporte", 247], ["mercado", 237], ["geral*", 200], ["cotidiano", 175], ["mundo", 150], ["ilustrada", 140], ["poder", 114], ["geral", 104]], "oeste": [["oestegeral", 500], ["politica", 232], ["mundo", 133], ["brasil", 72], ["economia", 69], ["videos", 56], ["no-ponto", 24], ["agronegocio", 18], ["imprensa", 15]], "estadao": [["esportes", 122], ["einvestidor", 113], ["politica", 103], ["economia", 94], ["internacional", 64], ["cultura", 57], ["paladar", 57], ["brasil", 55], ["emais", 28]]}};
+const CORES={gazeta:'#0F2237',folha:'#7A4E8C',oeste:'#C99B3F',estadao:'#3D5A80'};
+const NOME={gazeta:'Gazeta do Povo',folha:'Folha',oeste:'Revista Oeste',estadao:'Estadão'};
+const NOTAS={
+ gazeta:'<b>Leitura:</b> política, justiça e fé dominam — católicos e bispos aparecem com peso que nenhum rival tem. Curitiba/Paraná seguem presentes como raiz, não como limite.',
+ folha:'<b>Leitura:</b> a nuvem é um estádio — copa, messi, espanha, final. Sem o evento, a linguagem real da Folha reaparece esta semana (previsão do Radar).',
+ oeste:'<b>Leitura:</b> "assista", "você", "simples", "provérbio" — vocabulário de fórmula viral, não de redação. A nuvem entrega o modelo de negócio.',
+ estadao:'<b>Leitura:</b> série ainda curta (1 dia), mas o DNA já aparece: investimento, serviço e esporte-guia. Fecha na próxima semana.'};
+let atual='gazeta';
+function tabs(){
+ document.getElementById('tabs').innerHTML=Object.keys(D.clouds).map(v=>
+  `<button class="tb ${v==atual?'on':''}" style="${v==atual?`background:${CORES[v]};border-color:${CORES[v]}`:''}" onclick="atual='${v}';render()">${NOME[v]}</button>`).join('');
+}
+function render(){
+ tabs();
+ const c=document.getElementById('cloud');
+ c.width=c.offsetWidth; c.height=340;
+ const lista=D.clouds[atual].map(([w,n])=>[w,n]);
+ const max=lista[0][1];
+ WordCloud(c,{list:lista,gridSize:10,weightFactor:n=>8+(n/max)*54,
+  fontFamily:'Archivo, sans-serif',color:()=>{
+   const base=CORES[atual];const tons=[base,'#66707D','#C99B3F'];return tons[Math.floor(Math.random()*3)];},
+  rotateRatio:0.12,backgroundColor:'transparent',drawOutOfBound:false,shrinkToFit:true});
+ document.getElementById('cloudnote').innerHTML=NOTAS[atual];
+}
+// árvores
+const arv=document.getElementById('arvores');
+arv.innerHTML=Object.entries(D.trees).map(([v,items])=>{
+ const tot=items.reduce((a,[,n])=>a+n,0);
+ return `<div class="tree"><h3><span class="dot" style="background:${CORES[v]}"></span>${NOME[v]}</h3>
+  <div class="tiles">`+items.map(([ed,n])=>{
+   const pc=n/tot*100;
+   const w=Math.max(18,Math.min(100,pc*1.9));
+   const h=Math.max(34,Math.sqrt(pc)*16);
+   return `<div class="tile" style="background:${CORES[v]};opacity:${(0.45+pc/100*0.55+0.12).toFixed(2)};flex:1 1 ${w}%;min-height:${h}px"><b>${ed}</b><span class="pc">${n} · ${pc.toFixed(0)}%</span></div>`;
+  }).join('')+`</div></div>`;
+}).join('');
+window.addEventListener('resize',render);
+render();
+</script>
+</body>
+</html>

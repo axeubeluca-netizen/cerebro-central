@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar Gazeta · V2 — Share de Intenção Nacional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root{
+    --ink:#0F2237; --paper:#FBFAF8; --card:#FFFFFF; --line:#E4E1DA; --muted:#66707D;
+    --gold:#C99B3F; --pol:#3D5A80; --eco:#1E7F4F; --val:#8A4A2F; --alert:#A63232; --rise:#1E7F4F;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Archivo',sans-serif;font-size:15px;line-height:1.5}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px 64px}
+  header{padding:36px 0 20px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  h1{font-family:'Fraunces',serif;font-weight:700;font-size:40px;letter-spacing:-0.5px}
+  h1 span{color:var(--gold)}
+  .sub{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:.08em}
+  .periodo{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);text-align:right}
+  .periodo b{color:var(--ink);display:block;font-size:14px}
+  .wire{border-top:2px solid var(--ink);border-bottom:1px solid var(--line);padding:10px 0;display:flex;gap:26px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:11.5px}
+  .fonte{display:flex;align-items:center;gap:7px}
+  .dot{width:8px;height:8px;border-radius:50%}
+  .d-live{background:#1E7F4F;box-shadow:0 0 0 3px rgba(30,127,79,.15)}
+  .d-wait{background:#A63232;box-shadow:0 0 0 3px rgba(166,50,50,.12)}
+  .d-soon{background:#B07A1E;box-shadow:0 0 0 3px rgba(176,122,30,.15)}
+  .st{color:var(--muted)}
+
+  .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:26px 0 40px}
+  @media(max-width:980px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 16px 14px}
+  .kpi .tag{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+  .kpi .val{font-family:'Fraunces',serif;font-weight:700;font-size:28px;margin:6px 0 2px}
+  .kpi .val.up{color:var(--rise)} .kpi .val.down{color:var(--alert)}
+  .kpi .ctx{font-size:12px;color:var(--muted)}
+
+  .camada{margin-bottom:44px}
+  .camada-head{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:18px}
+  .camada-head .n{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+  .camada-head h2{font-family:'Fraunces',serif;font-weight:700;font-size:24px}
+  .camada-head .q{margin-left:auto;font-size:13px;color:var(--muted);font-style:italic}
+
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+  .grid2{display:grid;grid-template-columns:1.55fr 1fr;gap:16px}
+  @media(max-width:900px){.grid3,.grid2{grid-template-columns:1fr}}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px}
+  .panel h3{font-size:14px;font-weight:600;margin-bottom:2px}
+  .panel h3 .terr{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;padding:2px 7px;border-radius:4px;margin-right:8px;color:#fff;vertical-align:middle}
+  .t-pol{background:var(--pol)} .t-eco{background:var(--eco)} .t-val{background:var(--val)}
+  .panel .src{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);margin-bottom:14px}
+  .donut-box{position:relative;height:190px;margin-bottom:10px}
+  .chart-box{position:relative;height:280px}
+  .mini{font-size:12.5px;color:var(--muted);line-height:1.55}
+  .mini b{color:var(--ink)}
+
+  .opps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media(max-width:980px){.opps{grid-template-columns:repeat(2,1fr)}}
+  .opp{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:16px}
+  .opp.hot{border-left-color:var(--rise)}
+  .opp.cool{border-left-color:var(--alert)}
+  .opp .k{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px}
+  .opp h3{font-family:'Fraunces',serif;font-size:18px;margin-bottom:6px}
+  .opp p{font-size:12.5px;color:var(--muted);line-height:1.5}
+
+  .senti{background:var(--ink);color:#F4F2ED;border-radius:10px;padding:22px}
+  .senti .lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+  .senti p{font-size:14px;line-height:1.6}
+  .senti b{color:#fff}
+  .senti .bars{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+  .senti .sb{flex:1;min-width:160px;background:rgba(255,255,255,.06);border-radius:8px;padding:12px}
+  .senti .sb .t{font-size:12px;color:#C9CFD8;margin-bottom:8px}
+  .senti .track{height:8px;border-radius:4px;background:rgba(255,255,255,.12);overflow:hidden;display:flex}
+  .senti .seg-p{background:#5FA97C}.senti .seg-n{background:#8A93A3}.senti .seg-neg{background:#C56B6B}
+  .senti .leg{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#9AA3AF;margin-top:6px}
+
+  footer{border-top:1px solid var(--line);margin-top:20px;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);line-height:1.8}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <h1>Radar <span>Gazeta</span> V2</h1>
+      <div class="sub">Território Nacional · Share de Intenção por Editoria · Economia — Política — Costumes &amp; Valores</div>
+    </div>
+    <div class="periodo">período<b>16 jun – 15 jul 2026 · Brasil</b></div>
+  </header>
+
+  <div class="wire">
+    <div class="fonte"><span class="dot d-live"></span>PULSO DE DEMANDA (TRENDS) <span class="st">· AO VIVO</span></div>
+    <div class="fonte"><span class="dot d-soon"></span>TAGS RELACIONADAS <span class="st">· ENDPOINT INSTÁVEL — FALLBACK: NEWS RSS (ONDA 2)</span></div>
+    <div class="fonte"><span class="dot d-soon"></span>SENTIMENTO <span class="st">· CÓRTEX IA — ONDA 3</span></div>
+    <div class="fonte"><span class="dot d-wait"></span>GA4 + GSC <span class="st">· AGUARDANDO AUTORIZAÇÃO</span></div>
+  </div>
+
+  <!-- KPIs reais -->
+  <div class="kpis">
+    <div class="kpi">
+      <div class="tag">Política · demanda por pessoas</div>
+      <div class="val">88%</div>
+      <div class="ctx">da intenção política é Bolsonaro (46%) + Lula (42%). Personalismo total.</div>
+    </div>
+    <div class="kpi">
+      <div class="tag">"Eleições 2026" na busca</div>
+      <div class="val">4%</div>
+      <div class="ctx">do território político. A onda ainda não subiu — janela de autoridade aberta.</div>
+    </div>
+    <div class="kpi">
+      <div class="tag">STF · últimos 30 dias</div>
+      <div class="val down">−35%</div>
+      <div class="ctx">interesse caiu de ~20 para ~13. Tema esfriando na busca.</div>
+    </div>
+    <div class="kpi">
+      <div class="tag">Economia · utilidade domina</div>
+      <div class="val">67%</div>
+      <div class="ctx">da intenção econômica é Imposto de Renda. Serviço &gt; macro.</div>
+    </div>
+    <div class="kpi">
+      <div class="tag">Termo nascendo</div>
+      <div class="val up">tarifaço</div>
+      <div class="ctx">apareceu na busca em 15/07 pela 1ª vez no período. Capturar agora.</div>
+    </div>
+  </div>
+
+  <!-- SHARE DE INTENCAO -->
+  <section class="camada">
+    <div class="camada-head">
+      <span class="n">Bloco 01</span>
+      <h2>Share de Intenção por Território</h2>
+      <span class="q">"Dentro de cada editoria, o que o Brasil realmente quer saber?"</span>
+    </div>
+    <div class="grid3">
+      <div class="panel">
+        <h3><span class="terr t-pol">POLÍTICA</span>5 termos monitorados</h3>
+        <div class="src">TRENDS · BR · 30 DIAS · SHARE MÉDIO DENTRO DO TERRITÓRIO</div>
+        <div class="donut-box"><canvas id="dPol"></canvas></div>
+        <p class="mini"><b>Leitura:</b> a busca política é sobre <b>pessoas, não instituições</b>. "Congresso nacional" é estatisticamente invisível (1%). Pauta institucional só ganha tráfego quando ancorada em personagem.</p>
+      </div>
+      <div class="panel">
+        <h3><span class="terr t-eco">ECONOMIA</span>5 termos monitorados</h3>
+        <div class="src">TRENDS · BR · 30 DIAS · SHARE MÉDIO DENTRO DO TERRITÓRIO</div>
+        <div class="donut-box"><canvas id="dEco"></canvas></div>
+        <p class="mini"><b>Leitura:</b> o leitor busca economia <b>quando mexe no bolso dele</b>: IR (picos de 84–100 nos lotes de restituição) esmaga inflação e Selic. Conteúdo de utilidade é a porta de entrada do território.</p>
+      </div>
+      <div class="panel">
+        <h3><span class="terr t-val">COSTUMES &amp; VALORES</span>5 termos monitorados</h3>
+        <div class="src">TRENDS · BR · 30 DIAS · SHARE MÉDIO DENTRO DO TERRITÓRIO</div>
+        <div class="donut-box"><canvas id="dVal"></canvas></div>
+        <p class="mini"><b>Leitura:</b> "aborto" tem demanda <b>alta e constante</b> (70–100 todos os dias) — estrutural, não eventual. Homeschooling é nicho fiel. É o território natural de autoridade da Gazeta.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CORRIDA POLITICA -->
+  <section class="camada">
+    <div class="camada-head">
+      <span class="n">Bloco 02</span>
+      <h2>A Corrida da Atenção — Política</h2>
+      <span class="q">"Quem puxa a busca, dia a dia?"</span>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <h3>Interesse diário — Bolsonaro × Lula × STF × Eleições 2026</h3>
+        <div class="src">TRENDS · BR · DIÁRIO · ESCALA RELATIVA (100 = PICO DO PERÍODO)</div>
+        <div class="chart-box"><canvas id="corrida"></canvas></div>
+      </div>
+      <div class="panel">
+        <h3>O que os picos revelam</h3>
+        <div class="src">ANOTAÇÕES DO PERÍODO</div>
+        <p class="mini" style="margin-bottom:12px"><b>20/06 — Lula a 100:</b> maior pico do mês, mais que o dobro da sua média (~40). Evento pontual dominou a atenção num sábado.</p>
+        <p class="mini" style="margin-bottom:12px"><b>25/06 — Bolsonaro a 97:</b> pico espelhado cinco dias depois. A atenção nacional oscila em gangorra entre os dois polos.</p>
+        <p class="mini" style="margin-bottom:12px"><b>STF em declínio suave:</b> de ~20 para ~13 no período. O noticiário jurídico esfria na busca — realocar esforço ou reancorar em personagens.</p>
+        <p class="mini"><b>"Eleições 2026" pulsa nos fins de semana</b> (10 em 21/06; 7 em 06/07): o interesse eleitoral existe, mas ainda é latente. Quem indexar o tema antes da onda captura a subida inteira.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPORTUNIDADES -->
+  <section class="camada">
+    <div class="camada-head">
+      <span class="n">Bloco 03</span>
+      <h2>Oportunidades Detectadas</h2>
+      <span class="q">"O Garimpeiro, versão manual — vira agente na Onda 3"</span>
+    </div>
+    <div class="opps">
+      <div class="opp hot">
+        <div class="k">Capturar agora · nascendo</div>
+        <h3>tarifaço</h3>
+        <p>Primeiro registro na busca em 15/07. Termo em gestação = SEO barato hoje, caro em duas semanas. Hub explicativo + acompanhamento diário.</p>
+      </div>
+      <div class="opp hot">
+        <div class="k">Construir antes da onda</div>
+        <h3>eleições 2026</h3>
+        <p>Só 4% do share político — vai multiplicar até outubro. Indexar agora: guias por estado, candidatos, calendário. Autoridade se planta na baixa.</p>
+      </div>
+      <div class="opp">
+        <div class="k">Evergreen · demanda estrutural</div>
+        <h3>aborto &amp; valores</h3>
+        <p>Demanda constante 70–100 há 30 dias. Merece hub permanente e atualizado — território de identidade editorial com procura contínua comprovada.</p>
+      </div>
+      <div class="opp cool">
+        <div class="k">Esfriar detectado · realocar</div>
+        <h3>stf</h3>
+        <p>−35% em 30 dias. Se o esforço editorial seguir alto aqui, está pagando prêmio por atenção em queda. Reancorar em personagens ou reduzir cadência.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SENTIMENTO -->
+  <section class="camada">
+    <div class="camada-head">
+      <span class="n">Bloco 04</span>
+      <h2>Share de Sentimento</h2>
+      <span class="q">"Como o Brasil se sente sobre cada território"</span>
+    </div>
+    <div class="senti">
+      <div class="lbl">Córtex IA · Liga na Onda 3 — prévia ilustrativa do formato</div>
+      <p>O sentimento nasce do cruzamento: <b>comentários públicos + manchetes + posts das listas monitoradas</b>, classificados diariamente pela camada de IA na taxonomia oficial. O formato abaixo é ilustrativo (valores simulados) — a régua fica pronta quando as Turbinas Editorial e Distribuição ligarem.</p>
+      <div class="bars">
+        <div class="sb"><div class="t">Política · exemplo</div><div class="track"><div class="seg-neg" style="width:52%"></div><div class="seg-n" style="width:30%"></div><div class="seg-p" style="width:18%"></div></div><div class="leg">NEG 52 · NEU 30 · POS 18 (simulado)</div></div>
+        <div class="sb"><div class="t">Economia · exemplo</div><div class="track"><div class="seg-neg" style="width:38%"></div><div class="seg-n" style="width:40%"></div><div class="seg-p" style="width:22%"></div></div><div class="leg">NEG 38 · NEU 40 · POS 22 (simulado)</div></div>
+        <div class="sb"><div class="t">Costumes · exemplo</div><div class="track"><div class="seg-neg" style="width:33%"></div><div class="seg-n" style="width:36%"></div><div class="seg-p" style="width:31%"></div></div><div class="leg">NEG 33 · NEU 36 · POS 31 (simulado)</div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    RADAR GAZETA V2 · GERADO EM 16/07/2026 · DADOS REAIS: GOOGLE TRENDS VIA SUPERMETRICS (BR, 16/06–15/07)<br>
+    NOTA METODOLÓGICA: interesse do Trends é relativo DENTRO de cada consulta — shares comparáveis dentro do território, não entre territórios. "Legalização das drogas" e "ideologia de gênero" retornaram volume insuficiente (&lt;1) — mantidos na taxonomia para vigília.
+  </footer>
+</div>
+
+<script>
+const labels=["16/06","17/06","18/06","19/06","20/06","21/06","22/06","23/06","24/06","25/06","26/06","27/06","28/06","29/06","30/06","01/07","02/07","03/07","04/07","05/07","06/07","07/07","08/07","09/07","10/07","11/07","12/07","13/07","14/07","15/07"];
+const bolso=[57,81,60,55,50,45,31,39,41,97,52,47,49,42,39,48,54,61,40,41,43,33,39,36,39,46,44,47,54,56];
+const lula=[44,45,45,48,100,70,41,37,33,36,39,39,55,38,30,31,31,37,58,59,36,36,33,32,29,34,31,33,37,37];
+const stf=[20,21,20,19,9,10,15,16,14,15,17,10,9,11,15,14,14,11,6,5,13,13,13,13,11,6,5,13,13,13];
+const ele=[5,4,4,3,3,10,7,4,3,3,4,3,4,3,3,4,4,4,3,4,7,5,4,4,4,3,3,4,4,5];
+
+const POL="#3D5A80", ECO="#1E7F4F", VAL="#8A4A2F", GOLD="#C99B3F", MUT="#8A93A3", ALERT="#A63232", INK="#0F2237";
+const dOpts={maintainAspectRatio:false,cutout:"58%",plugins:{legend:{position:"right",labels:{boxWidth:10,font:{family:"Archivo",size:11}}}}};
+
+new Chart(document.getElementById("dPol"),{type:"doughnut",
+  data:{labels:["Bolsonaro 46%","Lula 42%","STF 12%","Eleições 26 · 4%","Congresso 1%"],
+  datasets:[{data:[46,42,12,4,1],backgroundColor:[INK,"#5A7CA6","#93A8C4",GOLD,"#D8D4CB"],borderWidth:2,borderColor:"#fff"}]},options:dOpts});
+
+new Chart(document.getElementById("dEco"),{type:"doughnut",
+  data:{labels:["Imp. de Renda 67%","Dólar 23%","Inflação 5%","Selic 4%","Tarifaço <1%"],
+  datasets:[{data:[67,23,5,4,1],backgroundColor:[ECO,"#5FA97C","#9CC7AB",GOLD,"#D8D4CB"],borderWidth:2,borderColor:"#fff"}]},options:dOpts});
+
+new Chart(document.getElementById("dVal"),{type:"doughnut",
+  data:{labels:["Aborto 89%","Homeschooling 6%","Lib. religiosa 3%","Ideol. gênero 1%","Legaliz. drogas <1%"],
+  datasets:[{data:[89,6,3,1,1],backgroundColor:[VAL,"#B0714F","#D0A489",GOLD,"#D8D4CB"],borderWidth:2,borderColor:"#fff"}]},options:dOpts});
+
+new Chart(document.getElementById("corrida"),{type:"line",
+  data:{labels,datasets:[
+    {label:"Bolsonaro",data:bolso,borderColor:INK,borderWidth:2.5,pointRadius:0,tension:.3},
+    {label:"Lula",data:lula,borderColor:ALERT,borderWidth:2.5,pointRadius:0,tension:.3},
+    {label:"STF",data:stf,borderColor:MUT,borderWidth:2,pointRadius:0,tension:.3},
+    {label:"Eleições 2026",data:ele,borderColor:GOLD,borderWidth:2,pointRadius:0,tension:.3}
+  ]},
+  options:{maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+    plugins:{legend:{position:"bottom",labels:{usePointStyle:true,pointStyle:"line",font:{family:"Archivo",size:12}}}},
+    scales:{x:{ticks:{maxTicksLimit:10,font:{family:"IBM Plex Mono",size:10},color:"#66707D"},grid:{display:false}},
+      y:{beginAtZero:true,ticks:{font:{family:"IBM Plex Mono",size:10},color:"#66707D"},grid:{color:"#F0EEE8"}}}}});
+</script>
+</body>
+</html>
