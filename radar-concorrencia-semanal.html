@@ -216,34 +216,36 @@
     <div class="bhead"><span class="n">BLOCO 03</span><h2>Batalha de Termos</h2><span class="uso">pauta diária + argumento de posicionamento</span></div>
     <div class="grid3">
       <div class="panel">
-        <h3 style="color:var(--ok)">🏰 Proprietários da Gazeta</h3>
-        <div class="src">ELA FALA · OS OUTROS QUASE NÃO (MENÇÕES 5D)</div>
+        <h3 style="color:var(--ok)">🏰 Só a Gazeta fala</h3>
+        <div class="src">MENÇÕES NA SEMANA · RIVAIS PRATICAMENTE AUSENTES</div>
         <div class="termos">
-          <span class="tag t-prop">católicos ×23</span><span class="tag t-prop">bispos ×12</span>
-          <span class="tag t-prop">papa ×5</span><span class="tag t-prop">Deus ×5</span>
-          <span class="tag t-prop">reforma tributária</span>
+          <span class="tag t-prop">bispos ×10</span><span class="tag t-prop">católica ×7</span>
+          <span class="tag t-prop">católicos ×7</span><span class="tag t-prop">bispo ×7</span>
+          <span class="tag t-prop">igreja ×7</span><span class="tag t-prop">religiosa ×7</span>
+          <span class="tag t-prop">aposentados ×6</span>
         </div>
-        <p class="mini" style="margin-top:10px">O território <b>Fé</b> é cobertura exclusiva da Gazeta no grupo — fosso editorial comprovado por dado. Frase pronta pro comercial. <em>(Excluído "falecimentos": produto local, fora do recorte nacional.)</em></p>
+        <p class="mini" style="margin-top:10px">O território <b>Fé</b> segue exclusivo — nenhum dos cinco rivais o cobre com constância. Confirmado pela quinta semana seguida. E aparece um vizinho novo: <b>aposentados</b>, tema de bolso que ninguém do grupo disputa.</p>
       </div>
       <div class="panel">
         <h3>⚔️ Termos macro — o campo de jogo</h3>
-        <div class="src">TODOS DISPUTAM · VELOCIDADE E ÂNGULO DECIDEM</div>
+        <div class="src">4 OU MAIS VEÍCULOS DISPUTAM · VELOCIDADE E ÂNGULO DECIDEM</div>
         <div class="termos">
           <span class="tag t-comm">Lula</span><span class="tag t-comm">Bolsonaro</span>
-          <span class="tag t-comm">Trump</span><span class="tag t-comm">EUA</span>
-          <span class="tag t-comm">tarifaço</span><span class="tag t-comm">Moraes</span>
+          <span class="tag t-comm">Flávio</span><span class="tag t-comm">Trump</span>
+          <span class="tag t-comm">vice</span><span class="tag t-comm">crise</span>
+          <span class="tag t-comm">Moraes</span><span class="tag t-comm">2026</span>
         </div>
-        <p class="mini" style="margin-top:10px"><b>É aqui que o jogo nacional acontece.</b> Nos termos macro ninguém tem exclusividade — vence quem publica primeiro e com ângulo próprio. A Gazeta lidera os confrontos diretos (Bloco 4); a missão é sustentar a vantagem.</p>
+        <p class="mini" style="margin-top:10px"><b>É aqui que o jogo nacional acontece.</b> Nenhuma exclusividade possível — vence quem publica primeiro e com ângulo próprio. Nota da semana: <b>"vice"</b> e <b>"2026"</b> entram na lista, sinal de que a corrida eleitoral começou a dominar o noticiário do grupo.</p>
       </div>
       <div class="panel">
-        <h3 style="color:var(--alert)">🕳 Gaps estruturais × evento</h3>
-        <div class="src">SEPARANDO O PERMANENTE DO PASSAGEIRO</div>
+        <h3 style="color:var(--alert)">🕳 Onde os rivais estão e a Gazeta não</h3>
+        <div class="src">2+ VEÍCULOS PUBLICAM FORTE · GAZETA COM 3 MENÇÕES OU MENOS</div>
         <div class="termos">
-          <span class="tag t-gap">"assista" ×38 (Oeste)</span><span class="tag t-gap">psicologia ×32</span>
-          <span class="tag t-comm" style="text-decoration:line-through;opacity:.55">copa ×178</span>
-          <span class="tag t-comm" style="text-decoration:line-through;opacity:.55">messi ×52</span>
+          <span class="tag t-gap">greve ×51</span><span class="tag t-gap">lucro ×62</span>
+          <span class="tag t-gap">alta ×61</span><span class="tag t-gap">queda ×59</span>
+          <span class="tag t-gap">preso ×55</span><span class="tag t-gap">"São Paulo" ×107</span>
         </div>
-        <p class="mini" style="margin-top:10px">Copa/Messi = <b>evento encerrado</b> (final foi domingo 19) — explica o pico da Folha e sai do radar. O gap estrutural real é o formato <b>"assista"/vídeo</b> da Oeste: linguagem, não tema. <b>Previsão testável:</b> sem Copa, o volume da Folha deve cair forte esta semana — conferimos segunda.</p>
+        <p class="mini" style="margin-top:10px"><b>Dois tipos de ausência aqui.</b> "São Paulo" é geografia — decisão editorial legítima. Mas <b>lucro, alta, queda</b> (resultados de empresas e mercado) e <b>greve</b> são pautas de economia e cotidiano que os cinco rivais cobrem e a Gazeta quase não toca. Vale avaliar se é escolha ou lacuna.</p>
       </div>
     </div>
   </section>
@@ -353,7 +355,7 @@
 </div>
 
 <script>
-const GZ='#0F2237', FO='#7A4E8C', OE='#C99B3F', ES='#3D5A80';
+const GZ='#0F2237', FO='#7A4E8C', OE='#C99B3F', ES='#3D5A80', AN='#8A6FB0', OG='#1E7F4F';, FO='#7A4E8C', OE='#C99B3F', ES='#3D5A80';
 new Chart(document.getElementById('cadencia'),{type:'bar',
  data:{labels:["Qui 30", "Sex 31", "Sáb 1", "Dom 2", "Seg 3", "Ter 4", "Qua 5"],datasets:[
   {label:'Gazeta',data:[165, 141, 55, 39, 136, 133, 149],backgroundColor:GZ,borderRadius:3},
@@ -418,7 +420,7 @@ new Chart(document.getElementById('canais'),{type:'bar',
 
 new Chart(document.getElementById('resumo'),{type:'bar',
  data:{labels:['Estadão','O Globo','Folha','Gazeta','Oeste','Antagonista'],datasets:[
-  {label:'Dias úteis',data:[273,220,168,135,84,48],backgroundColor:INK,borderRadius:3},
+  {label:'Dias úteis',data:[273,220,168,135,84,48],backgroundColor:GZ,borderRadius:3},
   {label:'Sábado e domingo',data:[124,143,98,48,50,38],backgroundColor:'#C99B3F',borderRadius:3}]},
  options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:11,font:{family:'Archivo',size:12}}}},
   scales:{x:{grid:{display:false},ticks:{font:{family:'Archivo',size:12}}},
