@@ -85,7 +85,7 @@
       <h1>Radar de <span>Concorrência</span></h1>
       <div class="sub">Cérebro Gazeta · Turbina 2 · Gazeta × Folha × Oeste × Estadão</div>
     </div>
-    <div class="periodo">edição semanal nº 5<b>30 jul – 5 ago 2026 (rua) · 30 dias (casa) · com ajustes da direção de jornalismo</b></div>
+    <div class="periodo">edição semanal nº 6<b>4 – 10 ago 2026 · com O Globo, F5 e as fábricas de conteúdo</b></div>
   </header>
   <div class="leg">
     <span><span class="sw" style="background:var(--gz)"></span>Gazeta do Povo</span>
@@ -100,7 +100,7 @@
     <div class="grid2">
       <div class="panel">
         <h3>Dias úteis × fim de semana — produção editorial</h3>
-        <div class="src">MÉDIA DIÁRIA · 30/07–05/08 · EXCLUI CONTEÚDO COMERCIAL E PUBLIEDITORIAL</div>
+        <div class="src">MÉDIA DIÁRIA · 04–10/08 · SÓ CAMADA EDITORIAL · EXCLUI COLUNISMO E CONTEÚDO COMERCIAL</div>
         <div class="chart"><canvas id="resumo"></canvas></div>
       </div>
       <div class="panel">
@@ -109,14 +109,15 @@
         <table>
           <thead><tr><th>Veículo</th><th class="num">Útil</th><th class="num">FDS</th><th class="num">Queda</th></tr></thead>
           <tbody>
-            <tr><td>Estadão</td><td class="num">282</td><td class="num">120</td><td class="num">−56%</td></tr>
-            <tr><td>Folha</td><td class="num">153</td><td class="num">84</td><td class="num">−42%</td></tr>
-            <tr style="background:#F6F1E4"><td><b>Gazeta do Povo</b></td><td class="num"><b>106</b></td><td class="num"><b>42</b></td><td class="num" style="color:var(--alert)"><b>−68%</b></td></tr>
-            <tr><td>Revista Oeste</td><td class="num">82</td><td class="num">45</td><td class="num">−45%</td></tr>
-            <tr><td>O Antagonista</td><td class="num">48</td><td class="num">34</td><td class="num">−28%</td></tr>
-          </tbody>
+            <tr><td>Estadão</td><td class="num">273</td><td class="num">124</td><td class="num">−55%</td></tr>
+            <tr><td>O Globo</td><td class="num">220</td><td class="num">143</td><td class="num">−35%</td></tr>
+            <tr><td>Folha</td><td class="num">168</td><td class="num">98</td><td class="num">−42%</td></tr>
+            <tr style="background:#F6F1E4"><td><b>Gazeta do Povo</b></td><td class="num">135</td><td class="num">48</td><td class="num" style="color:var(--alert)">−64%</td></tr>
+            <tr><td>Revista Oeste</td><td class="num">84</td><td class="num">50</td><td class="num">−41%</td></tr>
+            <tr><td>O Antagonista</td><td class="num">48</td><td class="num">38</td><td class="num">−20%</td></tr>
+            </tbody>
         </table>
-        <p class="mini" style="margin-top:10px"><b>A Gazeta tem a maior queda de fim de semana do grupo.</b> Todos os concorrentes desaceleram menos — o Antagonista, o menor em volume, é o mais constante.</p>
+        <p class="mini" style="margin-top:10px"><b>A Gazeta segue com a maior queda de fim de semana do grupo (−64%).</b> O Globo, que estreia no monitoramento, é o mais constante entre os grandes (−35%) e já aparece como o 2º maior em volume.</p>
       </div>
     </div>
     <div class="panel" style="margin-top:16px">
@@ -132,6 +133,33 @@
         </tbody>
       </table>
       <p class="mini" style="margin-top:10px"><b>Por que isso importa:</b> conteúdo comercial e colunismo somavam <b>25% da contagem total</b> da Gazeta — o que explicava a diferença observada em relação às métricas internas. A partir desta edição, o placar principal usa apenas a camada editorial, e as três camadas ficam visíveis para conferência.</p>
+    </div>
+  </section>
+
+  <!-- BLOCO FÁBRICAS -->
+  <section class="bloco">
+    <div class="bhead"><span class="n">NOVO</span><h2>As fábricas de conteúdo</h2><span class="uso">produção que estava invisível no radar até agora</span></div>
+    <div class="grid2">
+      <div class="destaque">
+        <div class="l">Correção importante desta edição</div>
+        <div class="num">106/dia</div>
+        <p><b>A fábrica da Oeste nunca parou.</b> Nas edições 2 a 5 registramos que a esteira "oestegeral" havia sido desligada em 22/07. Estava errado: ela apenas <b>saiu do sitemap de notícias</b> e seguiu publicando — agora medida diretamente pelo feed da seção.</p>
+        <p>Com ela, a produção real da Oeste vai de 84 para <b>190 peças por dia</b> — e a esteira responde por <b>67% de tudo</b> que o veículo publica.</p>
+      </div>
+      <div class="panel">
+        <h3>Produção real dos rivais do campo — jornalismo × fábrica</h3>
+        <div class="src">COLETA VIA FEED DA PRÓPRIA SEÇÃO · MÉDIA DIÁRIA 08–10/08</div>
+        <table>
+          <thead><tr><th>Veículo</th><th class="num">Jornalismo</th><th class="num">Fábrica</th><th class="num">Total</th><th class="num">% fábrica</th></tr></thead>
+          <tbody>
+            <tr><td>Revista Oeste</td><td class="num">84</td><td class="num">106</td><td class="num"><b>190</b></td><td class="num" style="color:var(--alert)">56%</td></tr>
+            <tr><td>O Antagonista</td><td class="num">48</td><td class="num">102</td><td class="num"><b>150</b></td><td class="num" style="color:var(--alert)">68%</td></tr>
+            <tr style="background:#F6F1E4"><td><b>Gazeta do Povo</b></td><td class="num"><b>135</b></td><td class="num">—</td><td class="num"><b>135</b></td><td class="num">0%</td></tr>
+          </tbody>
+        </table>
+        <p class="mini" style="margin-top:10px"><b>O que são essas fábricas:</b> seções de conteúdo viral publicadas em alto volume, fora do canal de notícias — provérbios, psicologia pop, curiosidades, guias de utilidade. No Antagonista, os nomes dos arquivos de imagem revelam geração automatizada por IA. Elas não disputam pauta: disputam Google Discover e busca de cauda longa.</p>
+        <p class="mini" style="margin-top:9px"><b>A leitura estratégica:</b> os dois rivais do mesmo campo editorial já operam escala sintética há meses. A decisão sobre a linha premium de conteúdo — que está em documento desde julho — deixou de ser hipótese e virou resposta a um movimento em curso.</p>
+      </div>
     </div>
   </section>
 
@@ -319,7 +347,7 @@
   </section>
 
   <footer>
-    RADAR DE CONCORRÊNCIA V1 · EDIÇÃO SEMANAL Nº 5 · GERADA EM 07/08/2026 · QUINTETO COMPLETO + CAMADA CASA · 613 PARES ANALISADOS · FONTE: COLETOR PRÓPRIO (SITEMAPS-NEWS, 15 MIN) + ANÁLISE DE 3.992 TÍTULOS<br>
+    RADAR DE CONCORRÊNCIA V1 · EDIÇÃO SEMANAL Nº 6 · GERADA EM 11/08/2026 · QUINTETO COMPLETO + CAMADA CASA · 613 PARES ANALISADOS · FONTE: COLETOR PRÓPRIO (SITEMAPS-NEWS, 15 MIN) + ANÁLISE DE 3.992 TÍTULOS<br>
     PRÓXIMAS LIGAÇÕES: FB URLSHARES (TRAÇÃO) · GA4 (CALIBRAÇÃO) · ANTAGONISTA (RSS) · SENTIMENTO VIA CÓRTEX IA (ONDA 3)
   </footer>
 </div>
@@ -389,9 +417,9 @@ new Chart(document.getElementById('canais'),{type:'bar',
    y:{grid:{display:false},ticks:{font:{family:'Archivo',size:11}}}}}});
 
 new Chart(document.getElementById('resumo'),{type:'bar',
- data:{labels:['Estadão','Folha','Gazeta','Oeste','Antagonista'],datasets:[
-  {label:'Dias úteis',data:[282,153,106,82,48],backgroundColor:INK,borderRadius:3},
-  {label:'Sábado e domingo',data:[120,84,42,45,34],backgroundColor:'#C99B3F',borderRadius:3}]},
+ data:{labels:['Estadão','O Globo','Folha','Gazeta','Oeste','Antagonista'],datasets:[
+  {label:'Dias úteis',data:[273,220,168,135,84,48],backgroundColor:INK,borderRadius:3},
+  {label:'Sábado e domingo',data:[124,143,98,48,50,38],backgroundColor:'#C99B3F',borderRadius:3}]},
  options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:11,font:{family:'Archivo',size:12}}}},
   scales:{x:{grid:{display:false},ticks:{font:{family:'Archivo',size:12}}},
    y:{beginAtZero:true,grid:{color:'#F0EEE8'},ticks:{font:{family:'IBM Plex Mono',size:10}}}}}});
