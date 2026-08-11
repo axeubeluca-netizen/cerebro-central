@@ -99,25 +99,26 @@
     <div class="bhead"><span class="n">RESUMO</span><h2>Média de publicações por dia</h2><span class="uso">o retrato da semana em um gráfico</span></div>
     <div class="grid2">
       <div class="panel">
-        <h3>Dias úteis × fim de semana — produção editorial</h3>
-        <div class="src">MÉDIA DIÁRIA · 04–10/08 · SÓ CAMADA EDITORIAL · EXCLUI COLUNISMO E CONTEÚDO COMERCIAL</div>
+        <h3>Dias úteis × fim de semana — produção total publicada</h3>
+        <div class="src">PRODUÇÃO TOTAL PUBLICADA · MÉDIA DIÁRIA 04–10/08 · INCLUI SUBDOMÍNIOS E FÁBRICAS DE CONTEÚDO</div>
         <div class="chart"><canvas id="resumo"></canvas></div>
       </div>
       <div class="panel">
         <h3>Leitura rápida</h3>
         <div class="src">O QUE O GRÁFICO DIZ</div>
         <table>
-          <thead><tr><th>Veículo</th><th class="num">Útil</th><th class="num">FDS</th><th class="num">Queda</th></tr></thead>
+          <thead><tr><th>Veículo</th><th class="num">Útil</th><th class="num">Sáb/Dom</th><th class="num">Variação</th></tr></thead>
           <tbody>
-            <tr><td>Estadão</td><td class="num">273</td><td class="num">124</td><td class="num">−55%</td></tr>
-            <tr><td>O Globo</td><td class="num">220</td><td class="num">143</td><td class="num">−35%</td></tr>
-            <tr><td>Folha</td><td class="num">168</td><td class="num">98</td><td class="num">−42%</td></tr>
-            <tr style="background:#F6F1E4"><td><b>Gazeta do Povo</b></td><td class="num">135</td><td class="num">48</td><td class="num" style="color:var(--alert)">−64%</td></tr>
-            <tr><td>Revista Oeste</td><td class="num">84</td><td class="num">50</td><td class="num">−41%</td></tr>
-            <tr><td>O Antagonista</td><td class="num">48</td><td class="num">38</td><td class="num">−20%</td></tr>
-            </tbody>
+            <tr><td>O Globo<br><span style="font-size:11px;color:var(--muted)">inclui blogs</span></td><td class="num">299</td><td class="num">174</td><td class="num" style="">−42%</td></tr>
+            <tr><td>Estadão<br><span style="font-size:11px;color:var(--muted)"></span></td><td class="num">280</td><td class="num">130</td><td class="num" style="">−54%</td></tr>
+            <tr><td>Folha<br><span style="font-size:11px;color:var(--muted)">inclui F5 (17/dia)</span></td><td class="num">225</td><td class="num">142</td><td class="num" style="">−37%</td></tr>
+            <tr><td>Revista Oeste<br><span style="font-size:11px;color:var(--muted)">inclui a fábrica oestegeral</span></td><td class="num">163</td><td class="num">198</td><td class="num" style="color:var(--ok);font-weight:700">+21%</td></tr>
+            <tr style="background:#F6F1E4"><td><b>Gazeta do Povo</b><br><span style="font-size:11px;color:var(--muted)">sem fábrica de conteúdo</span></td><td class="num">165</td><td class="num">52</td><td class="num" style="color:var(--alert)">−68%</td></tr>
+            <tr><td>O Antagonista<br><span style="font-size:11px;color:var(--muted)">inclui a fábrica Lado oa!</span></td><td class="num">130</td><td class="num">161</td><td class="num" style="color:var(--ok);font-weight:700">+24%</td></tr>
+          </tbody>
         </table>
-        <p class="mini" style="margin-top:10px"><b>A Gazeta segue com a maior queda de fim de semana do grupo (−64%).</b> O Globo, que estreia no monitoramento, é o mais constante entre os grandes (−35%) e já aparece como o 2º maior em volume.</p>
+        <p class="mini" style="margin-top:10px">🚨 <b>Com tudo somado, o fim de semana inverte o jogo.</b> Oeste e Antagonista <b>publicam mais</b> no sábado e domingo (+21% e +24%) porque as esteiras automatizadas não param. A Gazeta cai 68% — e passa a ser o veículo que menos publica do grupo no fim de semana: 52 peças contra 198 da Oeste.</p>
+        <p class="mini" style="margin-top:9px"><b>Nota:</b> esta tabela mostra a produção total publicada, incluindo subdomínios (F5 na Folha) e fábricas de conteúdo. O placar de produção estritamente jornalística está no bloco seguinte.</p>
       </div>
     </div>
     <div class="panel" style="margin-top:16px">
@@ -201,10 +202,10 @@
       <div class="panel">
         <h3>As quatro leituras do mapa</h3>
         <div class="src">O QUE AS MANCHAS DIZEM</div>
-        <p class="mini" style="margin-bottom:9px"><b>1 · O apagão de FDS da Gazeta é visível a olho nu:</b> a linha sáb/dom fica quase branca — nenhuma hora passa de 6 artigos e a madrugada zera. É a imagem do "56 vs 182".</p>
-        <p class="mini" style="margin-bottom:9px"><b>2 · O estoque noturno da Folha:</b> o pico dela é às 23h — 31 artigos/dia agendados pra amanhecer indexados na busca. Técnica copiável amanhã, a custo zero.</p>
-        <p class="mini" style="margin-bottom:9px"><b>3 · A Oeste não tem pico — tem esteira:</b> 4 a 16 artigos em praticamente toda hora, útil ou FDS, madrugada incluída. Consistência industrial.</p>
-        <p class="mini"><b>4 · A janela 14h–17h é o prime time da Gazeta</b> (pico útil: 17,5 às 14h) — a pleno vapor, ela produz no ritmo dos grandes. O problema não é capacidade; é distribuição no tempo.</p>
+        <p class="mini" style="margin-bottom:9px"><b>1 · O apagão de fim de semana da Gazeta:</b> a linha sáb/dom fica quase branca — o pico dela é 7 artigos, à meia-noite. Nenhuma outra hora chega perto.</p>
+        <p class="mini" style="margin-bottom:9px"><b>2 · O Globo joga a madrugada:</b> o pico de fim de semana dele é às <b>4h da manhã</b> (26,5 artigos) — o maior valor de todo o mapa. É conteúdo agendado para amanhecer indexado, e explica a constância dele.</p>
+        <p class="mini" style="margin-bottom:9px"><b>3 · A Folha faz o mesmo às 23h</b> (19 artigos no fim de semana), e o Estadão às 5h (15). Os três grandes nacionais usam a virada do dia; a Gazeta, não.</p>
+        <p class="mini"><b>4 · O pico da Gazeta é às 9h</b> (17,8) — cedo e curto. Depois disso a produção se espalha, mas nunca volta ao patamar. Distribuir parte dessa carga para a noite e o fim de semana é a alavanca mais barata do painel.</p>
       </div>
       <div class="destaque">
         <div class="l">O plano de agendamento que o mapa pede</div>
@@ -374,14 +375,15 @@ new Chart(document.getElementById('cadencia'),{type:'bar',
   scales:{x:{grid:{display:false},ticks:{font:{family:'IBM Plex Mono',size:11}}},
    y:{beginAtZero:true,grid:{color:'#F0EEE8'},ticks:{font:{family:'IBM Plex Mono',size:10}}}}}});
 
-const HEAT2={"gazeta": {"uteis": [2.0, 2.2, 1.2, 0.2, 0.0, 0.0, 1.0, 3.6, 9.2, 6.4, 8.6, 11.6, 10.0, 7.8, 8.8, 15.0, 10.6, 9.8, 7.4, 4.6, 6.6, 8.4, 6.4, 3.4], "fds": [1.5, 0.5, 1.0, 0.0, 0.0, 0.0, 2.5, 0.0, 0.5, 2.5, 7.5, 3.0, 3.0, 3.0, 3.0, 4.0, 0.5, 2.5, 2.0, 2.5, 1.0, 3.5, 1.5, 1.5]}, "folha": {"uteis": [2.0, 0.4, 0.2, 0.2, 12.2, 2.6, 5.0, 6.2, 6.2, 6.8, 14.4, 10.0, 13.6, 9.6, 10.8, 11.6, 14.4, 18.2, 16.8, 10.8, 10.4, 4.4, 6.6, 15.2], "fds": [0.5, 1.5, 0.5, 0.5, 5.5, 2.5, 3.5, 2.0, 4.5, 2.5, 9.5, 6.0, 6.5, 6.5, 5.5, 6.5, 8.0, 6.5, 5.5, 5.0, 4.0, 3.0, 5.0, 21.0]}, "oeste": {"uteis": [3.0, 4.4, 1.2, 0.0, 0.2, 0.0, 0.0, 0.0, 0.0, 1.8, 5.4, 4.6, 4.2, 6.2, 5.2, 6.2, 4.4, 6.0, 3.4, 5.8, 5.8, 6.0, 4.4, 4.0], "fds": [3.0, 2.5, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.5, 3.5, 2.5, 0.5, 2.0, 3.5, 2.0, 1.0, 3.0, 1.5, 2.5, 3.0, 3.0, 5.5, 3.0]}, "estadao": {"uteis": [2.4, 0.6, 0.2, 8.4, 2.2, 7.6, 9.0, 5.8, 10.8, 14.4, 16.6, 19.0, 21.6, 14.2, 13.2, 17.6, 20.8, 20.8, 24.2, 17.4, 19.8, 11.0, 8.4, 3.2], "fds": [1.5, 1.5, 1.5, 7.0, 0.5, 10.0, 7.5, 4.5, 5.0, 6.0, 7.0, 5.0, 9.5, 5.5, 4.0, 8.0, 7.5, 11.0, 6.5, 3.0, 4.5, 3.5, 3.5, 3.5]}, "antagonista": {"uteis": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.4, 1.8, 2.6, 2.0, 3.0, 3.0, 2.0, 1.8, 3.2, 3.8, 5.2, 3.8, 4.6, 4.0, 3.6, 0.4, 0.6], "fds": [0.5, 1.0, 0.5, 0.0, 0.0, 0.0, 1.0, 2.0, 4.0, 1.0, 3.0, 1.5, 3.5, 0.5, 2.0, 3.5, 1.5, 1.0, 3.0, 2.5, 1.5, 0.5, 0.5, 0.0]}};
-const MAX2=33.5;
+const HEAT2={"gazeta": {"uteis": [4.0, 3.6, 1.8, 0.2, 0.0, 0.0, 0.8, 2.4, 5.8, 17.8, 6.6, 12.4, 8.6, 7.2, 10.2, 12.0, 15.2, 11.8, 9.4, 6.6, 8.4, 11.0, 6.0, 3.2], "fds": [7.0, 0.5, 2.5, 0.0, 0.0, 0.0, 0.5, 0.0, 1.0, 2.0, 2.0, 4.0, 2.5, 4.0, 1.5, 2.0, 1.5, 2.5, 3.5, 2.0, 4.5, 4.5, 2.5, 1.5]}, "folha": {"uteis": [1.6, 0.6, 0.2, 0.2, 11.0, 3.2, 7.4, 5.2, 6.4, 8.0, 15.6, 14.8, 13.4, 10.2, 10.6, 15.0, 12.2, 19.8, 17.4, 11.2, 9.8, 5.6, 10.0, 16.0], "fds": [0.0, 0.5, 0.0, 0.0, 7.5, 1.5, 3.5, 3.0, 6.5, 4.0, 9.0, 9.0, 8.5, 9.5, 6.0, 11.0, 7.0, 8.0, 7.0, 4.5, 5.5, 1.0, 10.5, 19.0]}, "estadao": {"uteis": [2.4, 1.2, 0.2, 8.4, 1.8, 9.8, 8.0, 5.0, 11.8, 15.2, 16.2, 20.6, 19.4, 13.2, 12.8, 13.6, 17.4, 13.0, 26.4, 20.2, 18.4, 12.4, 9.6, 3.0], "fds": [2.0, 1.0, 0.0, 7.5, 0.5, 15.0, 7.0, 5.0, 5.0, 4.0, 5.0, 7.5, 7.0, 3.5, 8.5, 6.0, 6.0, 11.5, 7.0, 3.0, 7.0, 3.0, 5.0, 3.5]}, "oglobo": {"uteis": [17.0, 3.0, 6.0, 18.5, 20.0, 8.2, 13.0, 11.5, 10.5, 16.5, 18.8, 17.8, 13.8, 12.2, 16.0, 20.8, 17.8, 15.5, 17.0, 9.2, 3.5, 6.2, 4.0, 2.2], "fds": [15.5, 3.0, 3.5, 18.0, 26.5, 8.5, 5.0, 9.0, 10.0, 8.5, 10.0, 8.5, 6.5, 4.5, 3.0, 7.5, 7.5, 5.0, 2.0, 2.0, 1.0, 4.0, 2.5, 2.5]}, "oeste": {"uteis": [2.8, 4.8, 1.6, 0.6, 0.0, 0.0, 0.0, 0.0, 0.2, 2.2, 5.2, 4.4, 5.0, 6.4, 5.6, 5.8, 5.0, 5.8, 3.4, 6.4, 6.0, 5.6, 4.8, 3.0], "fds": [3.0, 3.0, 1.5, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 4.0, 3.0, 3.5, 3.5, 1.5, 2.0, 3.0, 3.0, 2.0, 2.5, 2.0, 3.0, 4.5, 2.5, 1.0]}, "antagonista": {"uteis": [0.0, 0.0, 0.0, 0.0, 0.0, 0.2, 0.4, 1.6, 2.4, 1.8, 2.8, 2.2, 4.2, 2.4, 2.4, 4.2, 4.6, 2.4, 3.2, 4.0, 3.8, 4.0, 0.8, 0.2], "fds": [0.0, 0.5, 0.5, 0.0, 0.0, 0.0, 1.0, 2.0, 4.5, 3.0, 3.0, 1.5, 2.0, 2.0, 2.0, 2.0, 1.5, 2.5, 2.5, 3.5, 1.0, 1.0, 2.0, 0.0]}};
+const MAX2=26.5;
 const box2=document.getElementById('heat2');
 let html2='<div></div>'+Array.from({length:24},(_,h)=>`<div class="hh2">${h}</div>`).join('')+'<div class="hh2" style="text-align:right">total/dia</div>';
 const ORD=[['gazeta','Gazeta','úteis','uteis'],['gazeta','Gazeta','sáb/dom','fds'],
+ ['estadao','Estadão','úteis','uteis'],['estadao','Estadão','sáb/dom','fds'],
+ ['oglobo','O Globo','úteis','uteis'],['oglobo','O Globo','sáb/dom','fds'],
  ['folha','Folha','úteis','uteis'],['folha','Folha','sáb/dom','fds'],
  ['oeste','Oeste','úteis','uteis'],['oeste','Oeste','sáb/dom','fds'],
- ['estadao','Estadão','úteis','uteis'],['estadao','Estadão','sáb/dom','fds'],
  ['antagonista','Antagonista','úteis','uteis'],['antagonista','Antagonista','sáb/dom','fds']];
 let prev='';
 for(const [v,nome,rot,key] of ORD){
@@ -426,9 +428,9 @@ new Chart(document.getElementById('canais'),{type:'bar',
    y:{grid:{display:false},ticks:{font:{family:'Archivo',size:11}}}}}});
 
 new Chart(document.getElementById('resumo'),{type:'bar',
- data:{labels:['Estadão','O Globo','Folha','Gazeta','Oeste','Antagonista'],datasets:[
-  {label:'Dias úteis',data:[273,220,168,135,84,48],backgroundColor:GZ,borderRadius:3},
-  {label:'Sábado e domingo',data:[124,143,98,48,50,38],backgroundColor:'#C99B3F',borderRadius:3}]},
+ data:{labels:["O Globo", "Estadão", "Folha", "Oeste", "Gazeta", "Antagonista"],datasets:[
+  {label:'Dias úteis',data:[299, 280, 225, 163, 165, 130],backgroundColor:GZ,borderRadius:3},
+  {label:'Sábado e domingo',data:[174, 130, 142, 198, 52, 161],backgroundColor:'#C99B3F',borderRadius:3}]},
  options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:11,font:{family:'Archivo',size:12}}}},
   scales:{x:{grid:{display:false},ticks:{font:{family:'Archivo',size:12}}},
    y:{beginAtZero:true,grid:{color:'#F0EEE8'},ticks:{font:{family:'IBM Plex Mono',size:10}}}}}});
