@@ -169,7 +169,7 @@
     <div class="grid2">
       <div class="panel">
         <h3>Artigos publicados por dia</h3>
-        <div class="src">SITEMAPS + GOOGLE NEWS RSS (ANTAGONISTA) · SEMANA COMPLETA 30/07–05/08 · ANTAGONISTA LIMITADO AO FEED</div>
+        <div class="src">SITEMAPS + GOOGLE NEWS RSS · TODOS OS VEÍCULOS · 04–10/08 · SÓ PRODUÇÃO JORNALÍSTICA</div>
         <div class="chart"><canvas id="cadencia"></canvas></div>
       </div>
       <div class="destaque">
@@ -355,14 +355,15 @@
 </div>
 
 <script>
-const GZ='#0F2237', FO='#7A4E8C', OE='#C99B3F', ES='#3D5A80', AN='#8A6FB0', OG='#1E7F4F';, FO='#7A4E8C', OE='#C99B3F', ES='#3D5A80';
+const GZ='#0F2237', FO='#7A4E8C', OE='#C99B3F', ES='#3D5A80', AN='#8A6FB0', OG='#1E7F4F';
 new Chart(document.getElementById('cadencia'),{type:'bar',
- data:{labels:["Qui 30", "Sex 31", "Sáb 1", "Dom 2", "Seg 3", "Ter 4", "Qua 5"],datasets:[
-  {label:'Gazeta',data:[165, 141, 55, 39, 136, 133, 149],backgroundColor:GZ,borderRadius:3},
-  {label:'Folha',data:[226, 197, 129, 115, 176, 220, 224],backgroundColor:FO,borderRadius:3},
-  {label:'Oeste',data:[84, 84, 47, 43, 75, 82, 86],backgroundColor:OE,borderRadius:3},
-  {label:'Estadão',data:[299, 272, 105, 149, 249, 302, 324],backgroundColor:ES,borderRadius:3},
-  {label:'Antagonista',data:[59, 69, 39, 30, 27, 45, 39],backgroundColor:'#8A6FB0',borderRadius:3}]},
+ data:{labels:["Ter 4", "Qua 5", "Qui 6", "Sex 7", "Sáb 8", "Dom 9", "Seg 10"],datasets:[
+  {label:'Gazeta',data:[133, 168, 165, 175, 60, 44, 184],backgroundColor:GZ,borderRadius:3},
+  {label:'Folha',data:[220, 235, 248, 215, 153, 131, 209],backgroundColor:FO,borderRadius:3},
+  {label:'Estadão',data:[302, 324, 213, 285, 119, 142, 276],backgroundColor:ES,borderRadius:3},
+  {label:'O Globo',data:[0, 142, 377, 346, 176, 172, 331],backgroundColor:OG,borderRadius:3},
+  {label:'Oeste',data:[82, 86, 83, 87, 49, 50, 85],backgroundColor:OE,borderRadius:3},
+  {label:'Antagonista',data:[45, 42, 36, 52, 36, 40, 63],backgroundColor:AN,borderRadius:3}]},
  options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:11,font:{family:'Archivo',size:12}}}},
   scales:{x:{grid:{display:false},ticks:{font:{family:'IBM Plex Mono',size:11}}},
    y:{beginAtZero:true,grid:{color:'#F0EEE8'},ticks:{font:{family:'IBM Plex Mono',size:10}}}}}});
