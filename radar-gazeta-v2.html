@@ -1,335 +1,222 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Radar Gazeta · V2 — Share de Intenção Nacional</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de Demanda · Cérebro Gazeta</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-  :root{
-    --ink:#0F2237; --paper:#FBFAF8; --card:#FFFFFF; --line:#E4E1DA; --muted:#66707D;
-    --gold:#C99B3F; --pol:#3D5A80; --eco:#1E7F4F; --val:#8A4A2F; --alert:#A63232; --rise:#1E7F4F;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--paper);color:var(--ink);font-family:'Archivo',sans-serif;font-size:15px;line-height:1.5}
-  .wrap{max-width:1180px;margin:0 auto;padding:0 28px 64px}
-  header{padding:36px 0 20px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
-  h1{font-family:'Fraunces',serif;font-weight:700;font-size:40px;letter-spacing:-0.5px}
-  h1 span{color:var(--gold)}
-  .sub{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:.08em}
-  .periodo{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);text-align:right}
-  .periodo b{color:var(--ink);display:block;font-size:14px}
-  .wire{border-top:2px solid var(--ink);border-bottom:1px solid var(--line);padding:10px 0;display:flex;gap:26px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:11.5px}
-  .fonte{display:flex;align-items:center;gap:7px}
-  .dot{width:8px;height:8px;border-radius:50%}
-  .d-live{background:#1E7F4F;box-shadow:0 0 0 3px rgba(30,127,79,.15)}
-  .d-wait{background:#A63232;box-shadow:0 0 0 3px rgba(166,50,50,.12)}
-  .d-soon{background:#B07A1E;box-shadow:0 0 0 3px rgba(176,122,30,.15)}
-  .st{color:var(--muted)}
-
-  .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:26px 0 40px}
-  @media(max-width:980px){.kpis{grid-template-columns:repeat(2,1fr)}}
-  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 16px 14px}
-  .kpi .tag{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
-  .kpi .val{font-family:'Fraunces',serif;font-weight:700;font-size:28px;margin:6px 0 2px}
-  .kpi .val.up{color:var(--rise)} .kpi .val.down{color:var(--alert)}
-  .kpi .ctx{font-size:12px;color:var(--muted)}
-
-  .camada{margin-bottom:44px}
-  .camada-head{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:18px}
-  .camada-head .n{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
-  .camada-head h2{font-family:'Fraunces',serif;font-weight:700;font-size:24px}
-  .camada-head .q{margin-left:auto;font-size:13px;color:var(--muted);font-style:italic}
-
-  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
-  .grid2{display:grid;grid-template-columns:1.55fr 1fr;gap:16px}
-  @media(max-width:900px){.grid3,.grid2{grid-template-columns:1fr}}
-  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px}
-  .panel h3{font-size:14px;font-weight:600;margin-bottom:2px}
-  .panel h3 .terr{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;padding:2px 7px;border-radius:4px;margin-right:8px;color:#fff;vertical-align:middle}
-  .t-pol{background:var(--pol)} .t-eco{background:var(--eco)} .t-val{background:var(--val)}
-  .panel .src{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);margin-bottom:14px}
-  .donut-box{position:relative;height:190px;margin-bottom:10px}
-  .chart-box{position:relative;height:280px}
-  .mini{font-size:12.5px;color:var(--muted);line-height:1.55}
-  .mini b{color:var(--ink)}
-
-  .opps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-  @media(max-width:980px){.opps{grid-template-columns:repeat(2,1fr)}}
-  .opp{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:16px}
-  .opp.hot{border-left-color:var(--rise)}
-  .opp.cool{border-left-color:var(--alert)}
-  .opp .k{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px}
-  .opp h3{font-family:'Fraunces',serif;font-size:18px;margin-bottom:6px}
-  .opp p{font-size:12.5px;color:var(--muted);line-height:1.5}
-
-  .senti{background:var(--ink);color:#F4F2ED;border-radius:10px;padding:22px}
-  .senti .lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
-  .senti p{font-size:14px;line-height:1.6}
-  .senti b{color:#fff}
-  .senti .bars{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
-  .senti .sb{flex:1;min-width:160px;background:rgba(255,255,255,.06);border-radius:8px;padding:12px}
-  .senti .sb .t{font-size:12px;color:#C9CFD8;margin-bottom:8px}
-  .senti .track{height:8px;border-radius:4px;background:rgba(255,255,255,.12);overflow:hidden;display:flex}
-  .senti .seg-p{background:#5FA97C}.senti .seg-n{background:#8A93A3}.senti .seg-neg{background:#C56B6B}
-  .senti .leg{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#9AA3AF;margin-top:6px}
-
-  footer{border-top:1px solid var(--line);margin-top:20px;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);line-height:1.8}
+:root{--ink:#0F2237;--paper:#FBFAF8;--card:#FFF;--line:#E4E1DA;--muted:#66707D;--gold:#C99B3F;--ok:#1E7F4F;--alert:#A63232}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:'Archivo',sans-serif;font-size:15px;line-height:1.55}
+.wrap{max-width:1000px;margin:0 auto;padding:0 28px 64px}
+.voltar{display:inline-flex;align-items:center;gap:7px;margin:18px 0 0;padding:8px 14px;border:1.5px solid var(--ink);border-radius:8px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;color:var(--ink);text-decoration:none;background:#fff}
+header{padding:26px 0 18px;border-bottom:2px solid var(--ink)}
+h1{font-family:'Fraunces',serif;font-weight:700;font-size:36px;letter-spacing:-.5px}
+h1 span{color:var(--gold)}
+.linha{font-size:17px;color:var(--ink);margin-top:8px}
+.fonte{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:8px;text-transform:uppercase;letter-spacing:.06em}
+.comoler{background:#F5F3EE;border-radius:10px;padding:16px 18px;margin:22px 0 8px}
+.comoler b{display:block;margin-bottom:6px;font-size:13.5px}
+.comoler p{font-size:13.5px;color:#3A4553;margin-bottom:5px}
+.bloco{margin:38px 0}
+.pergunta{font-family:'Fraunces',serif;font-size:25px;font-weight:700;margin-bottom:4px}
+.numero{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.12em;text-transform:uppercase}
+.etiqueta{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.06em;padding:5px 12px;border-radius:20px;margin-bottom:10px}
+.et-brasil{background:#E8EEF5;color:#3D5A80}
+.et-gazeta{background:var(--ink);color:#fff}
+.et-acao{background:rgba(201,155,63,.18);color:#8A6614}
+.resposta{font-size:16.5px;background:rgba(201,155,63,.11);border-left:4px solid var(--gold);padding:12px 16px;border-radius:0 8px 8px 0;margin:12px 0 18px}
+.painel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px}
+.painel h3{font-size:14px;font-weight:600;margin-bottom:3px}
+.painel .sub{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);margin-bottom:14px}
+.chart{position:relative;height:230px}
+.chart.alto{height:300px}
+.nota{font-size:13.5px;color:#3A4553;margin-top:12px}
+.nota b{color:var(--ink)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:820px){.grid2{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;padding:8px;border-bottom:1.5px solid var(--line)}
+td{padding:9px 8px;border-bottom:1px solid #F0EEE8}
+td.num,th.num{text-align:right;font-family:'IBM Plex Mono',monospace}
+.sobe{color:var(--ok);font-weight:700}
+.desce{color:var(--alert);font-weight:700}
+.acao{background:var(--ink);color:#F4F2ED;border-radius:10px;padding:20px;margin-bottom:14px}
+.acao .tag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.acao h4{font-family:'Fraunces',serif;font-size:20px;margin-bottom:8px}
+.acao p{font-size:14px;color:#C9CFD8;line-height:1.6}
+.acao p b{color:#fff}
+footer{border-top:1px solid var(--line);margin-top:36px;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);line-height:1.8}
 </style>
 </head>
 <body>
 <div class="wrap">
+<a class="voltar" href="index.html">&larr; Central do Cérebro</a>
 
-<a href="index.html" style="display:inline-flex;align-items:center;gap:7px;margin:18px 0 -6px;padding:8px 14px;border:1.5px solid #0F2237;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;color:#0F2237;text-decoration:none;background:#fff">← Central do Cérebro</a>
-  <header>
-    <div>
-      <h1>Radar <span>Gazeta</span> V2</h1>
-      <div class="sub">Território Nacional · Share de Intenção por Editoria · Economia — Política — Costumes &amp; Valores</div>
-    </div>
-    <div class="periodo">período<b>4 jul – 2 ago 2026 · Brasil · 30 dias</b></div>
-  </header>
+<header>
+  <h1>Radar de <span>Demanda</span></h1>
+  <div class="linha">O que o Brasil procura no Google — e quanto disso chega na Gazeta.</div>
+  <div class="fonte">Search Console · Brasil · últimos 30 dias · atualizado em 24/08/2026</div>
+</header>
 
-  <div class="wire">
-    <div class="fonte"><span class="dot d-live"></span>PULSO DE DEMANDA (TRENDS) <span class="st">· AO VIVO</span></div>
-    <div class="fonte"><span class="dot d-soon"></span>TAGS RELACIONADAS <span class="st">· ENDPOINT INSTÁVEL — FALLBACK EM AVALIAÇÃO</span></div>
-    <div class="fonte"><span class="dot d-soon"></span>SENTIMENTO <span class="st">· EM CONSTRUÇÃO — SEM DADOS NO AR</span></div>
-    <div class="fonte"><span class="dot d-live"></span>GA4 + SEARCH CONSOLE <span class="st">· CONECTADOS EM 03/08 — CAMADA CASA NO RADAR DE CONCORRÊNCIA</span></div>
-  </div>
+<div class="comoler">
+  <b>Como ler este painel</b>
+  <p>🌎 <b>Partes 1 e 2 — o Brasil no Google.</b> O que as pessoas procuram no país inteiro. Nada disso é audiência da Gazeta ainda.</p>
+  <p>📰 <b>Parte 3 — a Gazeta.</b> Quantos desses cliques chegaram no nosso site.</p>
+  <p>✅ <b>Parte 4 — o que fazer.</b> Três decisões que saem da diferença entre as duas coisas.</p>
+</div>
 
-  <!-- KPIs reais -->
-  <div class="kpis">
-    <div class="kpi">
-      <div class="tag">Política · demanda por pessoas</div>
-      <div class="val">85%</div>
-      <div class="ctx">Bolsonaro (48%) + Lula (37%). Personalismo segue dominando o território.</div>
+<!-- 1 -->
+<section class="bloco">
+  <div class="numero">Parte 1 de 4</div>
+  <div class="etiqueta et-brasil">🌎 O BRASIL BUSCANDO NO GOOGLE</div>
+  <div class="pergunta">O que o Brasil está procurando?</div>
+  <div class="resposta">Dentro de cada assunto, a busca se concentra em <b>poucos nomes e poucos temas</b>. Em política, dois nomes valem 85% de tudo. Em economia, imposto de renda sozinho vale quase 60%.</div>
+  <div class="grid2">
+    <div class="painel">
+      <h3>Política</h3>
+      <div class="sub">DE CADA 100 BUSCAS SOBRE POLÍTICA, QUANTAS SÃO SOBRE CADA TEMA</div>
+      <div class="chart"><canvas id="c1"></canvas></div>
+      <p class="nota"><b>O que isso diz para a pauta:</b> notícia de política ancorada em <b>pessoa</b> encontra público. Matéria sobre instituição, sem personagem, não é procurada.</p>
     </div>
-    <div class="kpi">
-      <div class="tag">Bolsonaro · última semana</div>
-      <div class="val up">+62%</div>
-      <div class="ctx">de ~43 para ~70 de interesse médio; pico 100 em 02/08. Maior movimento do período.</div>
-    </div>
-    <div class="kpi">
-      <div class="tag">Igreja Católica</div>
-      <div class="val up">51%</div>
-      <div class="ctx">passou o aborto e lidera Costumes &amp; Valores — o território proprietário da Gazeta em alta.</div>
-    </div>
-    <div class="kpi">
-      <div class="tag">Economia · utilidade</div>
-      <div class="val">59%</div>
-      <div class="ctx">Imposto de Renda segue como porta de entrada (pico 100 em 15/07).</div>
-    </div>
-    <div class="kpi">
-      <div class="tag">Tarifaço · veredito</div>
-      <div class="val down">esfriou</div>
-      <div class="ctx">pico 13 em 16/07 e queda a ~0 desde 29/07. Onda curta — previsão da Ed. 1 encerrada.</div>
+    <div class="painel">
+      <h3>Economia</h3>
+      <div class="sub">DE CADA 100 BUSCAS SOBRE ECONOMIA</div>
+      <div class="chart"><canvas id="c2"></canvas></div>
+      <p class="nota"><b>O que isso diz para a pauta:</b> o leitor procura economia quando ela <b>mexe no bolso dele</b> — imposto, restituição, dólar. Selic e inflação, somadas, não chegam a 11%.</p>
     </div>
   </div>
+  <div class="painel" style="margin-top:16px">
+    <h3>Costumes, família e fé</h3>
+    <div class="sub">DE CADA 100 BUSCAS SOBRE ESSES TEMAS</div>
+    <div class="chart"><canvas id="c3"></canvas></div>
+    <p class="nota"><b>O que isso diz para a pauta:</b> "igreja católica" virou o assunto mais procurado desse grupo, com picos aos domingos. <b>É o tema em que a Gazeta não tem concorrente — e onde há mais gente procurando do que imaginávamos.</b></p>
+  </div>
+</section>
 
-  <!-- SHARE DE INTENCAO -->
-  <section class="camada">
-    <div class="camada-head">
-      <span class="n">Bloco 01</span>
-      <h2>Share de Intenção por Território</h2>
-      <span class="q">"Dentro de cada editoria, o que o Brasil realmente quer saber?"</span>
+<!-- 2 -->
+<section class="bloco">
+  <div class="numero">Parte 2 de 4</div>
+  <div class="etiqueta et-brasil">🌎 O BRASIL BUSCANDO NO GOOGLE</div>
+  <div class="pergunta">O que subiu e o que caiu nesta semana?</div>
+  <div class="resposta">A política <b>esquentou nos dois lados</b>: Bolsonaro subiu 62% e Lula 38% na última semana. E "eleições 2026" saiu da estagnação pela primeira vez desde junho.</div>
+  <div class="grid2">
+    <div class="painel">
+      <h3>Interesse dia a dia</h3>
+      <div class="sub">ESCALA DE 0 A 100 · 100 = O DIA DE MAIOR BUSCA DO PERÍODO</div>
+      <div class="chart alto"><canvas id="c4"></canvas></div>
     </div>
-    <div class="grid3">
-      <div class="panel">
-        <h3><span class="terr t-pol">POLÍTICA</span>5 termos monitorados</h3>
-        <div class="src">TRENDS · BR · 30 DIAS · SHARE MÉDIO DENTRO DO TERRITÓRIO</div>
-        <div class="donut-box"><canvas id="dPol"></canvas></div>
-        <p class="mini"><b>Leitura:</b> Bolsonaro voltou a dominar — <b>+62% na última semana</b>, com pico máximo em 02/08. O STF esfriou para 9,5% do território e "eleições 2026" começou a subir (+38%): a onda eleitoral está saindo da latência.</p>
-      </div>
-      <div class="panel">
-        <h3><span class="terr t-eco">ECONOMIA</span>5 termos monitorados</h3>
-        <div class="src">TRENDS · BR · 30 DIAS · SHARE MÉDIO DENTRO DO TERRITÓRIO</div>
-        <div class="donut-box"><canvas id="dEco"></canvas></div>
-        <p class="mini"><b>Leitura:</b> utilidade segue mandando: IR é 59% do território (pico 100 em 15/07). E o <b>tarifaço teve vida curta</b> — subiu a 13 em 16/07 e voltou a zero: evento, não tendência.</p>
-      </div>
-      <div class="panel">
-        <h3><span class="terr t-val">COSTUMES &amp; VALORES</span>5 termos monitorados</h3>
-        <div class="src">TRENDS · BR · 30 DIAS · SHARE MÉDIO DENTRO DO TERRITÓRIO</div>
-        <div class="donut-box"><canvas id="dVal"></canvas></div>
-        <p class="mini"><b>Leitura:</b> <b>"Igreja Católica" assumiu a liderança do território (51%)</b>, com picos de 100 em 26/07 e 98 em 02/08 — demanda alta, recorrente e dominical. É o fosso proprietário da Gazeta em plena alta.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CORRIDA POLITICA -->
-  <section class="camada">
-    <div class="camada-head">
-      <span class="n">Bloco 02</span>
-      <h2>A Corrida da Atenção — Política</h2>
-      <span class="q">"Quem puxa a busca, dia a dia?"</span>
-    </div>
-    <div class="grid2">
-      <div class="panel">
-        <h3>Interesse diário — Bolsonaro × Lula × STF × Eleições 2026</h3>
-        <div class="src">TRENDS · BR · DIÁRIO · ESCALA RELATIVA (100 = PICO DO PERÍODO)</div>
-        <div class="chart-box"><canvas id="corrida"></canvas></div>
-      </div>
-      <div class="panel">
-        <h3>O que os picos revelam</h3>
-        <div class="src">ANOTAÇÕES DO PERÍODO</div>
-        <p class="mini" style="margin-bottom:12px"><b>02/08 — Bolsonaro a 100:</b> pico máximo do período, fechando uma escalada de +62% em sete dias. A atenção nacional voltou a girar em torno dele.</p>
-        <p class="mini" style="margin-bottom:12px"><b>20–21/07 — Bolsonaro a 96 e 91:</b> primeiro salto do mês; desde então o patamar dele nunca mais voltou aos ~40 do início de julho.</p>
-        <p class="mini" style="margin-bottom:12px"><b>Lula também subiu (+38%)</b>, chegando a 76 em 31/07 e 01/08 — a gangorra segue, mas agora num patamar mais alto para os dois polos.</p>
-        <p class="mini"><b>"Eleições 2026" saiu da inércia:</b> +38% na semana, com 9 pontos recorrentes. Ainda é 5% do território — mas a curva mudou de direção. A janela de indexação está fechando.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- OPORTUNIDADES -->
-  <section class="camada">
-    <div class="camada-head">
-      <span class="n">Bloco 03</span>
-      <h2>Oportunidades Detectadas</h2>
-      <span class="q">"O Garimpeiro, versão manual — vira agente na Onda 3"</span>
-    </div>
-    <div class="opps">
-      <div class="opp hot">
-        <div class="k">Capturar agora · nascendo</div>
-        <h3>tarifaço</h3>
-        <p>Primeiro registro na busca em 15/07. Termo em gestação = SEO barato hoje, caro em duas semanas. Hub explicativo + acompanhamento diário.</p>
-      </div>
-      <div class="opp hot">
-        <div class="k">Construir antes da onda</div>
-        <h3>eleições 2026</h3>
-        <p>Só 4% do share político — vai multiplicar até outubro. Indexar agora: guias por estado, candidatos, calendário. Autoridade se planta na baixa.</p>
-      </div>
-      <div class="opp">
-        <div class="k">Evergreen · demanda estrutural</div>
-        <h3>aborto &amp; valores</h3>
-        <p>Demanda constante 70–100 há 30 dias. Merece hub permanente e atualizado — território de identidade editorial com procura contínua comprovada.</p>
-      </div>
-      <div class="opp cool">
-        <div class="k">Esfriar detectado · realocar</div>
-        <h3>stf</h3>
-        <p>−35% em 30 dias. Se o esforço editorial seguir alto aqui, está pagando prêmio por atenção em queda. Reancorar em personagens ou reduzir cadência.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- SENTIMENTO -->
-  <section class="camada">
-    <div class="camada-head">
-      <span class="n">Bloco 04</span>
-      <h2>Share de Sentimento</h2>
-      <span class="q">em construção</span>
-    </div>
-    <div class="panel" style="border-style:dashed;background:rgba(255,255,255,.5)">
-      <p class="mini"><b>Bloco reservado — sem dados no ar.</b> A medição de sentimento depende de uma camada de classificação por IA sobre manchetes e comentários públicos, ainda não implementada. Nenhum número ilustrativo é exibido aqui para não haver confusão com dado medido.</p>
-      <p class="mini" style="margin-top:8px">Próximo passo em avaliação: <b>sentimento de manchetes</b> — classificação do tom dos títulos já coletados (4.400+/semana) por veículo e território. Escopo mais modesto que o desenho original, porém real e auditável.</p>
-    </div>
-  </section>
-
-  <section class="camada">
-    <div class="camada-head">
-      <span class="n">Bloco 05</span>
-      <h2>Demanda × Captura</h2>
-      <span class="q">"o Brasil busca — e quanto disso chega na Gazeta?"</span>
-    </div>
-    <div class="grid2">
-      <div class="panel">
-        <h3>O cruzamento que só existe com a casa conectada</h3>
-        <div class="src">GOOGLE TRENDS (DEMANDA) × SEARCH CONSOLE (CAPTURA) · 30 DIAS</div>
-        <p class="mini" style="margin-bottom:10px"><b>Eleições/pesquisa:</b> demanda em alta (+38% na semana) e captura forte — as consultas de pesquisa eleitoral somam <b>+100 mil cliques/mês</b> com posições de topo (1,9–3,3). É o território onde a Gazeta já converte demanda em audiência.</p>
-        <p class="mini" style="margin-bottom:10px"><b>Personagens (Bolsonaro/Lula):</b> demanda altíssima, captura difusa — "lula" traz 10,8 mil cliques com CTR de 3,1% e posição 3,9; "bolsonaro" 5,8 mil a 3,3%. Território de commodity: muita impressão, pouco clique.</p>
-        <p class="mini"><b>Fé/Igreja:</b> demanda subiu e lidera Costumes (51%) — a captura correspondente ainda não aparece no top-40 de consultas. <b>Gap identificado:</b> a Gazeta produz o conteúdo (território proprietário) mas ainda não capitaliza a busca. Oportunidade direta de SEO evergreen.</p>
-      </div>
-      <div class="panel">
-        <h3>Próximo passo — Share de Demanda Capturada</h3>
-        <div class="src">INDICADOR EM CONSTRUÇÃO · PRIMEIRA VERSÃO NA ED. 3</div>
-        <p class="mini">Com GA4 e Search Console conectados, o Cérebro pode fechar a conta que estava aberta desde o blueprint: para cada um dos 40 termos da taxonomia, quanto da demanda nacional (Trends) vira clique na Gazeta (GSC).</p>
-        <p class="mini" style="margin-top:9px">O indicador vira: <b>termo → volume de busca → impressões da Gazeta → cliques → posição média</b>. Cada território ganha um placar de conversão, e as decisões de pauta passam a ter retorno estimável antes da publicação.</p>
-        <p class="mini" style="margin-top:9px">A <b>Camada Casa completa</b> (canais, audiência própria, tráfego de IA) está no Radar de Concorrência, Bloco 10.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="camada">
-    <div class="camada-head">
-      <span class="n">Bloco 06</span>
-      <h2>Share de Demanda Capturada — v1</h2>
-      <span class="q">"quanto de cada território a Gazeta converte em clique"</span>
-    </div>
-    <div class="panel">
-      <h3>Os 5 territórios da taxonomia × captura real na busca (30 dias)</h3>
-      <div class="src">SEARCH CONSOLE · 398 CONSULTAS DO TOP-400 CLASSIFICADAS NA TAXONOMIA V1 (PENDENTE VALIDAÇÃO)</div>
+    <div class="painel">
+      <h3>Variação da última semana</h3>
+      <div class="sub">COMPARADO COM A PRIMEIRA SEMANA DO PERÍODO</div>
       <table>
-        <thead><tr><th>Território</th><th class="num">Cliques</th><th class="num">Impressões</th><th class="num">CTR</th><th class="num">Posição</th><th class="num">Share dos cliques</th></tr></thead>
-        <tbody>
-          <tr style="background:#F6F1E4"><td><b>T1 · Política &amp; Eleições</b></td><td class="num">253.717</td><td class="num">3.140.720</td><td class="num">8,1%</td><td class="num">2,7</td><td class="num"><b>32,6%</b></td></tr>
-          <tr><td>Marca (branded)</td><td class="num">243.305</td><td class="num">318.145</td><td class="num" style="color:var(--ok);font-weight:700">76,5%</td><td class="num">1,1</td><td class="num">31,3%</td></tr>
-          <tr><td>Cauda longa / evergreen antigo</td><td class="num">187.959</td><td class="num">17.166.239</td><td class="num">1,1%</td><td class="num">3,3</td><td class="num">24,2%</td></tr>
-          <tr><td>T5 · Segurança, Educação &amp; Mundo</td><td class="num">63.380</td><td class="num">2.716.210</td><td class="num">2,3%</td><td class="num">4,3</td><td class="num">8,1%</td></tr>
-          <tr><td>T2 · Justiça &amp; Instituições</td><td class="num">21.960</td><td class="num">542.834</td><td class="num">4,1%</td><td class="num">2,7</td><td class="num">2,8%</td></tr>
-          <tr><td>T3 · Economia &amp; Bolso</td><td class="num">21.062</td><td class="num">761.108</td><td class="num">2,8%</td><td class="num">3,8</td><td class="num">2,7%</td></tr>
-          <tr style="background:#FBEFEF"><td><b>T4 · Costumes, Família &amp; Fé</b></td><td class="num">6.568</td><td class="num">200.855</td><td class="num">3,3%</td><td class="num">2,6</td><td class="num" style="color:var(--alert)"><b>0,8%</b></td></tr>
-        </tbody>
+        <thead><tr><th>Assunto</th><th class="num">Cliques no mês</th><th class="num">Quantos clicam ao ver*</th><th class="num">Posição no Google</th></tr></thead>
+      <tbody>
+        <tr style="background:#F6F1E4"><td><b>Política e eleições</b></td><td class="num">498.243</td><td class="num">7 em 100</td><td class="num">3,0</td></tr>
+        <tr><td>Quem buscou o nome "Gazeta"</td><td class="num">255.043</td><td class="num">77 em 100</td><td class="num">1,1</td></tr>
+        <tr><td>Matérias antigas ainda buscadas</td><td class="num">145.698</td><td class="num">6 em 100</td><td class="num">3,5</td></tr>
+        <tr><td>Mundo, segurança e educação</td><td class="num">62.076</td><td class="num">4 em 100</td><td class="num">3,7</td></tr>
+        <tr><td>Economia</td><td class="num">27.793</td><td class="num">2 em 100</td><td class="num">3,5</td></tr>
+        <tr><td>Justiça e STF</td><td class="num">23.189</td><td class="num">5 em 100</td><td class="num">2,6</td></tr>
+        <tr style="background:#EAF3EE"><td><b>Costumes, família e fé</b></td><td class="num"><b>21.195</b></td><td class="num">6 em 100</td><td class="num"><b>1,8</b></td></tr>
+      </tbody>
       </table>
-      <p class="mini" style="margin-top:12px">Base: as 400 consultas de maior volume do período, classificadas pela taxonomia v1. Exclui consultas anonimizadas pelo Google (~1,1M de cliques) e a linha sem termo identificado.</p>
+      <p class="nota"><b>Aviso útil:</b> nem todo assunto novo vira onda. O "tarifaço" apareceu forte em 16/07 e voltou a zero em duas semanas — foi evento, não tendência.</p>
     </div>
+  </div>
+</section>
 
-    <div class="grid2" style="margin-top:16px">
-      <div class="destaque">
-        <div class="l">O paradoxo do território proprietário</div>
-        <div class="num">0,8%</div>
-        <p><b>Fé/Costumes é onde a Gazeta não tem concorrente — e onde ela menos captura.</b> Só 6,5 mil cliques em 30 dias, contra 253 mil de Política.</p>
-        <p>O território que a IA cita (única generalista ao lado do Vatican News), que ninguém do grupo cobre (católicos ×23, bispos ×12) e cuja demanda lidera Costumes no Trends (51%) rende <b>menos de 1% dos cliques de busca</b>.</p>
-        <p style="margin-top:8px">A posição média é boa (2,6) e o CTR é razoável (3,3%): <b>não é problema de ranqueamento, é de volume de conteúdo indexado</b>. Faltam páginas, não autoridade.</p>
-      </div>
-      <div class="panel">
-        <h3>As três leituras do indicador</h3>
-        <div class="src">O QUE FAZER COM CADA FAIXA</div>
-        <p class="mini" style="margin-bottom:10px"><b>1 · Defender (T1 · Política &amp; Eleições):</b> 33% dos cliques, CTR de 8,1% e posição 2,7 — a Gazeta é referência nacional em pesquisa eleitoral. Consolidar num guia canônico antes que a onda suba de vez.</p>
-        <p class="mini" style="margin-bottom:10px"><b>2 · Otimizar (Cauda longa):</b> 17,1 milhões de impressões gerando só 1,1% de CTR. É o maior estoque de atenção desperdiçada do site — títulos e conteúdo evergreen antigo pedindo revisão.</p>
-        <p class="mini" style="margin-bottom:10px"><b>3 · Ocupar (T4 · Fé, T3 · Economia):</b> demanda existe, autoridade existe, conteúdo indexado não. É exatamente a lacuna que a Linha Discover premium foi desenhada para preencher.</p>
-        <p class="mini"><b>Nota:</b> a marca converte a 76,5% — reconhecimento altíssimo. Mas 92% dos cliques identificados vêm de conteúdo: <b>a Gazeta é encontrada pelo que publica, não pelo nome</b>.</p>
-      </div>
-    </div>
-  </section>
+<!-- 3 -->
+<section class="bloco">
+  <div class="numero">Parte 3 de 4</div>
+  <div class="etiqueta et-gazeta">📰 O QUE CHEGOU NA GAZETA</div>
+  <div class="pergunta">Quanto dessa procura chega até a Gazeta?</div>
+  <div class="resposta">A Gazeta recebe <b>1,03 milhão de cliques por mês</b> vindos da busca (entre as 300 buscas de maior volume). Quase <b>metade vem de política e eleições</b> — e o tema de fé, que era o menor de todos, <b>triplicou</b>.</div>
+  <div class="painel">
+    <h3>Cliques que chegaram da busca, por assunto</h3>
+    <div class="sub">SEARCH CONSOLE · ÚLTIMOS 30 DIAS · AS 400 BUSCAS DE MAIOR VOLUME</div>
+    <table>
+      <thead><tr><th>Assunto</th><th class="num">Cliques no mês</th><th class="num">Quantos clicam ao ver*</th><th class="num">Posição no Google</th></tr></thead>
+      <tbody>
+        <tr><td><b>Política e eleições</b></td><td class="num">253.717</td><td class="num">8 em 100</td><td class="num">2,7</td></tr>
+        <tr><td>Quem buscou o nome "Gazeta"</td><td class="num">243.305</td><td class="num">75 em 100</td><td class="num">1,1</td></tr>
+        <tr><td>Matérias antigas ainda buscadas</td><td class="num">187.959</td><td class="num">1 em 100</td><td class="num">3,3</td></tr>
+        <tr><td>Mundo, segurança e educação</td><td class="num">63.380</td><td class="num">2 em 100</td><td class="num">4,3</td></tr>
+        <tr><td>Justiça e STF</td><td class="num">21.960</td><td class="num">4 em 100</td><td class="num">2,7</td></tr>
+        <tr><td>Economia</td><td class="num">21.062</td><td class="num">3 em 100</td><td class="num">3,8</td></tr>
+        <tr style="background:#FBEFEF"><td><b>Costumes, família e fé</b></td><td class="num"><b>6.568</b></td><td class="num">3 em 100</td><td class="num">2,6</td></tr>
+      </tbody>
+    </table>
+    <p class="nota">*De cada 100 pessoas que veem a Gazeta no resultado da busca, quantas clicam.</p>
+    <p class="nota" style="margin-top:12px">🟢 <b>A virada da semana:</b> costumes e fé saíram de 6.568 para <b>21.195 cliques</b> — mais que o triplo — e agora é o assunto em que a Gazeta ocupa a <b>melhor posição no Google de todos (1,8)</b>. O que puxou: "ensino doméstico" sozinho traz 14.907 cliques com 40 de cada 100 pessoas clicando. A lacuna que apontamos em julho começou a ser preenchida.</p>
+    <p class="nota" style="margin-top:12px">🗳 <b>E a eleição virou quase metade da busca:</b> 133 consultas eleitorais somam <b>392 mil cliques por mês</b> — eram 100 mil em julho. Só "pesquisa para presidente 2026" traz 45.785.</p>
+  </div>
+</section>
 
-  <footer>
-    RADAR GAZETA V2 · ATUALIZADO EM 03/08/2026 · GA4 E SEARCH CONSOLE CONECTADOS · GOOGLE TRENDS VIA SUPERMETRICS (BR, 04/07–02/08)<br>
-    NOTA METODOLÓGICA: interesse do Trends é relativo DENTRO de cada consulta — shares comparáveis dentro do território, não entre territórios. "Legalização das drogas" e "ideologia de gênero" retornaram volume insuficiente (&lt;1) — mantidos na taxonomia para vigília.
-  </footer>
+<!-- 4 -->
+<section class="bloco">
+  <div class="numero">Parte 4 de 4</div>
+  <div class="etiqueta et-acao">✅ DECISÕES</div>
+  <div class="pergunta">O que fazer com isso?</div>
+  <div class="resposta">Três movimentos que saem diretamente dos números acima — nenhum deles exige produzir mais, apenas produzir <b>onde já há gente procurando</b>.</div>
+
+  <div class="acao">
+    <div class="tag">Ação 1 · urgente</div>
+    <h4>Uma página fixa sobre as pesquisas eleitorais</h4>
+    <p>As buscas eleitorais quase <b>quadruplicaram em um mês</b>: de 100 mil para <b>392 mil cliques</b>. A Gazeta aparece entre o 1º e o 3º resultado em quase todas — inclusive em consultas por estado, onde não tem operação local.</p>
+    <p style="margin-top:8px">Hoje isso está espalhado em dezenas de matérias que envelhecem em dois dias. Uma <b>página única, sempre atualizada no mesmo endereço</b>, concentra essa audiência e é o formato que as ferramentas de IA citam. A onda já chegou — cada semana sem a página é audiência que se perde.</p>
+  </div>
+  <div class="acao">
+    <div class="tag">Ação 2 · funcionou — manter</div>
+    <h4>Mais conteúdo de fé, família e vida prática</h4>
+    <p>Em julho este era o menor assunto da casa: 6.568 cliques, menos de 1% do total. <b>Agora são 21.195</b> — e com a melhor posição no Google de todos os assuntos (1,8).</p>
+    <p style="margin-top:8px">A prova de que o diagnóstico estava certo: <b>não faltava credibilidade, faltavam páginas</b>. "Ensino doméstico" sozinho responde por 14.907 cliques, com 40 de cada 100 pessoas clicando ao ver.</p>
+  </div>
+  <div class="acao">
+    <div class="tag">Ação 3 · dinheiro parado</div>
+    <h4>Revisar as matérias antigas que ainda aparecem na busca</h4>
+    <p>Conteúdo publicado há meses ou anos ainda aparece <b>17 milhões de vezes por mês</b> nos resultados do Google — mas só 1 em cada 100 pessoas clica. É o maior estoque de atenção desperdiçada do site.</p>
+    <p style="margin-top:8px">Atualizar título e conteúdo das que mais aparecem é trabalho de edição, não de reportagem — e o retorno é imediato.</p>
+  </div>
+</section>
+
+<footer>
+RADAR DE DEMANDA · CÉREBRO GAZETA · NÚCLEO DE AUDIÊNCIA &amp; MÉTRICAS · 07/08/2026<br>
+FONTES: GOOGLE TRENDS (INTERESSE DE BUSCA, BRASIL, 04/07–02/08) E GOOGLE SEARCH CONSOLE (CLIQUES E POSIÇÕES DA GAZETA, ÚLTIMOS 30 DIAS).<br>
+COMO LER OS PERCENTUAIS: O TRENDS MEDE PROPORÇÃO DENTRO DE CADA GRUPO DE TERMOS — OS NÚMEROS COMPARAM TEMAS ENTRE SI DENTRO DO MESMO ASSUNTO, NÃO ENTRE ASSUNTOS DIFERENTES.
+</footer>
 </div>
 
 <script>
-const labels=["04/07", "05/07", "06/07", "07/07", "08/07", "09/07", "10/07", "11/07", "12/07", "13/07", "14/07", "15/07", "16/07", "17/07", "18/07", "19/07", "20/07", "21/07", "22/07", "23/07", "24/07", "25/07", "26/07", "27/07", "28/07", "29/07", "30/07", "31/07", "01/08", "02/08"];
-const bolso=[45, 45, 46, 37, 44, 42, 44, 55, 54, 52, 59, 62, 70, 73, 55, 31, 96, 91, 73, 59, 66, 80, 73, 56, 52, 72, 59, 70, 83, 100];
-const lula=[68, 63, 41, 41, 38, 34, 33, 39, 36, 36, 48, 42, 46, 46, 47, 37, 38, 42, 44, 39, 41, 50, 50, 51, 59, 55, 57, 76, 76, 65];
-const stf=[8, 7, 16, 14, 16, 13, 13, 7, 6, 15, 17, 15, 15, 13, 8, 7, 16, 16, 14, 14, 13, 7, 7, 15, 15, 14, 15, 15, 8, 7];
-const ele=[4, 5, 8, 6, 6, 5, 5, 4, 4, 6, 6, 5, 6, 5, 4, 9, 9, 8, 7, 7, 6, 7, 7, 9, 8, 8, 7, 7, 7, 8];
+const INK='#0F2237', GOLD='#C99B3F', VERDE='#1E7F4F', MARROM='#8A4A2F', CINZA='#93A8C4', VERM='#A63232';
+const opcBarra = {maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},
+  tooltip:{callbacks:{label:c=>c.parsed.x+'% das buscas do assunto'}}},
+  scales:{x:{max:100,grid:{color:'#F0EEE8'},ticks:{font:{family:'IBM Plex Mono',size:10},callback:v=>v+'%'}},
+    y:{grid:{display:false},ticks:{font:{family:'Archivo',size:13}}}}};
 
-const POL="#3D5A80", ECO="#1E7F4F", VAL="#8A4A2F", GOLD="#C99B3F", MUT="#8A93A3", ALERT="#A63232", INK="#0F2237";
-const dOpts={maintainAspectRatio:false,cutout:"58%",plugins:{legend:{position:"right",labels:{boxWidth:10,font:{family:"Archivo",size:11}}}}};
+new Chart(document.getElementById('c1'),{type:'bar',
+ data:{labels:['Bolsonaro','Lula','STF','Eleições 2026','Tarifaço'],
+ datasets:[{data:[48,37,10,5,1],backgroundColor:[INK,'#5A7CA6','#93A8C4',GOLD,'#D8D4CB'],borderRadius:4}]},options:opcBarra});
 
-new Chart(document.getElementById("dPol"),{type:"doughnut",
-  data:{labels:["bolsonaro 48%", "lula 37%", "stf 10%", "eleições 2026 5%", "tarifaço 1%"],
-  datasets:[{data:[47.6, 37.1, 9.5, 5.0, 0.8],backgroundColor:[INK,'#5A7CA6','#93A8C4',GOLD,'#D8D4CB'],borderWidth:2,borderColor:"#fff"}]},options:dOpts});
+new Chart(document.getElementById('c2'),{type:'bar',
+ data:{labels:['Imposto de renda','Dólar','Inflação','Taxa Selic','Tarifaço'],
+ datasets:[{data:[59,28,6,5,2],backgroundColor:[VERDE,'#5FA97C','#9CC7AB',GOLD,'#D8D4CB'],borderRadius:4}]},options:opcBarra});
 
-new Chart(document.getElementById("dEco"),{type:"doughnut",
-  data:{labels:["imposto de renda 59%", "dólar 28%", "inflação 6%", "taxa selic 5%", "tarifaço 2%"],
-  datasets:[{data:[59.4, 28.2, 6.0, 4.6, 1.9],backgroundColor:[ECO,'#5FA97C','#9CC7AB',GOLD,'#D8D4CB'],borderWidth:2,borderColor:"#fff"}]},options:dOpts});
+new Chart(document.getElementById('c3'),{type:'bar',
+ data:{labels:['Igreja católica','Aborto','Homeschooling','Liberdade religiosa','Família tradicional'],
+ datasets:[{data:[51,46,2,1,1],backgroundColor:[MARROM,'#B0714F','#D0A489',GOLD,'#D8D4CB'],borderRadius:4}]},options:opcBarra});
 
-new Chart(document.getElementById("dVal"),{type:"doughnut",
-  data:{labels:["igreja católica 51%", "aborto 46%", "homeschooling 2%", "liberdade religiosa 0%", "família tradicional 0%"],
-  datasets:[{data:[51.1, 46.2, 1.8, 0.5, 0.4],backgroundColor:[VAL,'#B0714F','#D0A489',GOLD,'#D8D4CB'],borderWidth:2,borderColor:"#fff"}]},options:dOpts});
-
-new Chart(document.getElementById("corrida"),{type:"line",
-  data:{labels,datasets:[
-    {label:"Bolsonaro",data:bolso,borderColor:INK,borderWidth:2.5,pointRadius:0,tension:.3},
-    {label:"Lula",data:lula,borderColor:ALERT,borderWidth:2.5,pointRadius:0,tension:.3},
-    {label:"STF",data:stf,borderColor:MUT,borderWidth:2,pointRadius:0,tension:.3},
-    {label:"Eleições 2026",data:ele,borderColor:GOLD,borderWidth:2,pointRadius:0,tension:.3}
-  ]},
-  options:{maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
-    plugins:{legend:{position:"bottom",labels:{usePointStyle:true,pointStyle:"line",font:{family:"Archivo",size:12}}}},
-    scales:{x:{ticks:{maxTicksLimit:10,font:{family:"IBM Plex Mono",size:10},color:"#66707D"},grid:{display:false}},
-      y:{beginAtZero:true,ticks:{font:{family:"IBM Plex Mono",size:10},color:"#66707D"},grid:{color:"#F0EEE8"}}}}});
+new Chart(document.getElementById('c4'),{type:'line',
+ data:{labels:["04/07", "05/07", "06/07", "07/07", "08/07", "09/07", "10/07", "11/07", "12/07", "13/07", "14/07", "15/07", "16/07", "17/07", "18/07", "19/07", "20/07", "21/07", "22/07", "23/07", "24/07", "25/07", "26/07", "27/07", "28/07", "29/07", "30/07", "31/07", "01/08", "02/08"],datasets:[
+  {label:'Bolsonaro',data:[45, 45, 46, 37, 44, 42, 44, 55, 54, 52, 59, 62, 70, 73, 55, 31, 96, 91, 73, 59, 66, 80, 73, 56, 52, 72, 59, 70, 83, 100],borderColor:INK,borderWidth:2.5,pointRadius:0,tension:.3},
+  {label:'Lula',data:[68, 63, 41, 41, 38, 34, 33, 39, 36, 36, 48, 42, 46, 46, 47, 37, 38, 42, 44, 39, 41, 50, 50, 51, 59, 55, 57, 76, 76, 65],borderColor:VERM,borderWidth:2.5,pointRadius:0,tension:.3},
+  {label:'STF',data:[8, 7, 16, 14, 16, 13, 13, 7, 6, 15, 17, 15, 15, 13, 8, 7, 16, 16, 14, 14, 13, 7, 7, 15, 15, 14, 15, 15, 8, 7],borderColor:'#8A93A3',borderWidth:2,pointRadius:0,tension:.3},
+  {label:'Eleições 2026',data:[4, 5, 8, 6, 6, 5, 5, 4, 4, 6, 6, 5, 6, 5, 4, 9, 9, 8, 7, 7, 6, 7, 7, 9, 8, 8, 7, 7, 7, 8],borderColor:GOLD,borderWidth:2,pointRadius:0,tension:.3}]},
+ options:{maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+  plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'line',font:{family:'Archivo',size:12.5}}}},
+  scales:{x:{ticks:{maxTicksLimit:8,font:{family:'IBM Plex Mono',size:10},color:'#66707D'},grid:{display:false}},
+   y:{beginAtZero:true,max:100,grid:{color:'#F0EEE8'},ticks:{font:{family:'IBM Plex Mono',size:10},color:'#66707D'}}}}});
 </script>
 </body>
 </html>
