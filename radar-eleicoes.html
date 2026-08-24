@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar Eleições 2026 · Cérebro Gazeta</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--ink:#0F2237;--paper:#FBFAF8;--card:#FFF;--line:#E4E1DA;--muted:#66707D;--gold:#C99B3F;--ok:#1E7F4F;--alert:#A63232;
+--gz:#0F2237;--fo:#7A4E8C;--oe:#C99B3F;--es:#3D5A80;--og:#1E7F4F;--an:#8A6FB0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:'Archivo',sans-serif;font-size:15px;line-height:1.55}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px 64px}
+.voltar{display:inline-flex;align-items:center;gap:7px;margin:18px 0 0;padding:8px 14px;border:1.5px solid var(--ink);border-radius:8px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;color:var(--ink);text-decoration:none;background:#fff}
+header{padding:26px 0 18px;border-bottom:2px solid var(--ink)}
+h1{font-family:'Fraunces',serif;font-weight:700;font-size:36px;letter-spacing:-.5px}
+h1 span{color:var(--gold)}
+.linha{font-size:17px;margin-top:8px}
+.fonte{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:8px;text-transform:uppercase;letter-spacing:.06em}
+.bloco{margin:36px 0}
+.bhead{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line);padding-bottom:9px;margin-bottom:16px}
+.bhead .n{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.1em}
+.bhead h2{font-family:'Fraunces',serif;font-weight:700;font-size:23px}
+.bhead .uso{margin-left:auto;font-size:12px;color:var(--muted);font-style:italic}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px}
+.panel h3{font-size:14px;font-weight:600;margin-bottom:3px}
+.panel .src{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);margin-bottom:14px}
+.chart{position:relative;height:250px}
+.grid2{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+@media(max-width:860px){.grid2{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;padding:8px;border-bottom:1.5px solid var(--line)}
+td{padding:9px 8px;border-bottom:1px solid #F0EEE8}
+td.num,th.num{text-align:right;font-family:'IBM Plex Mono',monospace}
+.win{color:var(--ok);font-weight:700}
+.mini{font-size:13px;color:#3A4553;line-height:1.55}
+.mini b{color:var(--ink)}
+.destaque{background:var(--ink);color:#F4F2ED;border-radius:10px;padding:20px}
+.destaque .l{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.destaque .num{font-family:'Fraunces',serif;font-size:34px;font-weight:700}
+.destaque p{font-size:13.5px;line-height:1.6;color:#C9CFD8;margin-top:8px}
+.destaque p b{color:#fff}
+.acao{background:rgba(201,155,63,.1);border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:14px 18px;margin-top:12px}
+.acao b{color:var(--ink)}
+footer{border-top:1px solid var(--line);margin-top:36px;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);line-height:1.8}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="voltar" href="index.html">&larr; Central do Cérebro</a>
+
+<header>
+  <h1>Radar <span>Eleições 2026</span></h1>
+  <div class="linha">Quanto a Gazeta cobre, quem chega primeiro e o que a busca já está pedindo — no território que a casa escolheu como bandeira.</div>
+  <div class="fonte">Semana 17–23 ago 2026 · coleta própria + Search Console · edição nº 1</div>
+</header>
+
+<section class="bloco">
+  <div class="bhead"><span class="n">BLOCO 01</span><h2>Cadência eleitoral</h2><span class="uso">quanto cada veículo dedica à eleição</span></div>
+  <div class="grid2">
+    <div class="panel">
+      <h3>Matérias eleitorais por dia</h3>
+      <div class="src">FILTRO: URL /ELEICOES/ OU TERMOS INEQUIVOCAMENTE ELEITORAIS NO TÍTULO · 17–23/08</div>
+      <div class="chart"><canvas id="cad"></canvas></div>
+    </div>
+    <div class="destaque">
+      <div class="l">O dado que posiciona a casa</div>
+      <div class="num">20%</div>
+      <p><b>Um quinto de tudo que a Gazeta publica é eleição</b> — mais que o dobro da proporção de Folha, Estadão e O Globo (9% cada).</p>
+      <p>Em volume absoluto, O Globo publica mais (29.1/dia contra 25.6). Mas em <b>prioridade editorial</b>, a Gazeta lidera com folga o grupo inteiro.</p>
+      <p>É a tradução em dado da aposta declarada no especial "Por um Brasil decente, rico e seguro".</p>
+    </div>
+  </div>
+</section>
+
+<section class="bloco">
+  <div class="bhead"><span class="n">BLOCO 02</span><h2>Quem pauta a eleição</h2><span class="uso">o indicador mais estratégico do painel</span></div>
+  <div class="grid2">
+    <div class="panel">
+      <h3>Confrontos diretos em pautas eleitorais</h3>
+      <div class="src">116 PARES · SIMILARIDADE ≥ 0,55 · SÓ MATÉRIAS DE ELEIÇÃO</div>
+      <table>
+        <thead><tr><th>Duelo</th><th class="num">Gazeta 1ª</th><th class="num">Rival 1º</th><th class="num">Taxa</th></tr></thead>
+        <tbody>
+          <tr><td>Gazeta × Revista Oeste</td><td class="num">3</td><td class="num">1</td><td class="num win">75%</td></tr>
+          <tr><td>Gazeta × Estadão</td><td class="num">5</td><td class="num">5</td><td class="num win">50%</td></tr>
+          <tr><td>Gazeta × Folha</td><td class="num">3</td><td class="num">4</td><td class="num">43%</td></tr>
+          <tr><td>Gazeta × O Globo</td><td class="num">4</td><td class="num">6</td><td class="num">40%</td></tr>
+          <tr><td>Gazeta × O Antagonista</td><td class="num">1</td><td class="num">2</td><td class="num">33%</td></tr>
+        </tbody>
+      </table>
+      <p class="mini" style="margin-top:12px"><b>Leitura:</b> no território eleitoral a Gazeta empata com o Estadão (50%) e vence a Oeste (75%) — desempenho melhor do que na cobertura geral. Contra O Globo e Folha, a desvantagem persiste e tem a mesma causa de sempre: volume.</p>
+      <p class="mini" style="margin-top:9px"><b>Amostras pequenas:</b> de 3 a 10 confrontos por duelo. Estes números ganham confiabilidade com a série de algumas semanas — é a linha de base.</p>
+    </div>
+    <div class="panel">
+      <h3>Casos em que a Gazeta chegou primeiro</h3>
+      <div class="src">SELEÇÃO DA SEMANA · MATÉRIA, HORÁRIO E ATRASO DO SEGUIDOR</div>
+      <table>
+        <thead><tr><th>Gazeta publicou</th><th class="num">Quando</th><th>Seguidor</th><th class="num">Atraso</th></tr></thead>
+        <tbody>
+            <tr><td>real time big data governador senado pernambuco agosto 2026</td><td class="num">17/08 07:00</td><td>Oeste: 18/08 13:13</td><td class="num" style="color:var(--alert)">+30.2h</td></tr>
+            <tr><td>advogado de heleno desiste de concorrer a deputado federal apos medida proteti</td><td class="num">17/08 07:59</td><td>O Globo: 18/08 17:30</td><td class="num" style="color:var(--alert)">+33.5h</td></tr>
+            <tr><td>quem sao candidatos senador sao paulo 2026</td><td class="num">17/08 09:27</td><td>Folha: 18/08 12:30</td><td class="num" style="color:var(--alert)">+27.0h</td></tr>
+            <tr><td>real time big data senado parana agosto 2026</td><td class="num">18/08 07:38</td><td>Oeste: 18/08 12:03</td><td class="num" style="color:var(--alert)">+4.4h</td></tr>
+            <tr><td>renan santos defende fim da justica do trabalho e da clt propostas nao estao n</td><td class="num">18/08 15:30</td><td>Estadão: 18/08 15:52</td><td class="num" style="color:var(--alert)">+0.4h</td></tr>
+            <tr><td>Ex-ministro da Defesa da Ucrânia pede eleições e amplia pressão sobre Zelensky</td><td class="num">19/08 07:32</td><td>O Globo: 19/08 08:10</td><td class="num" style="color:var(--alert)">+0.6h</td></tr>
+            
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="bloco">
+  <div class="bhead"><span class="n">BLOCO 03</span><h2>Cobertura por eixo da tese</h2><span class="uso">"Brasil rico, decente e seguro" — o que a produção entrega</span></div>
+  <div class="grid2">
+    <div class="panel">
+      <h3>Como a cobertura eleitoral se distribui entre os três eixos</h3>
+      <div class="src">179 MATÉRIAS ELEITORAIS DA GAZETA NA SEMANA · CLASSIFICAÇÃO POR TERMOS DO TÍTULO</div>
+      <div class="chart"><canvas id="eixos"></canvas></div>
+    </div>
+    <div class="panel">
+      <h3>O que o gráfico revela</h3>
+      <div class="src">LEITURA</div>
+      <p class="mini" style="margin-bottom:10px"><b>68% da cobertura eleitoral não se encaixa em nenhum dos três eixos.</b> É o noticiário corrente da corrida — declarações, pesquisas, agenda de candidatos, bastidores. Natural e necessário, mas não é a tese.</p>
+      <p class="mini" style="margin-bottom:10px"><b>Entre as que se encaixam, "Brasil decente" domina (18%)</b> — STF, corrupção, instituições. É o eixo mais forte da casa e o que mais rende pauta primeira.</p>
+      <p class="mini" style="margin-bottom:10px"><b>"Brasil rico" (8%) e "Brasil seguro" (6%) ficam para trás.</b> Se a tese tem três pernas e a cobertura entrega uma delas com o dobro do peso das outras duas somadas, isso é uma decisão a tomar — não um acaso.</p>
+      <div class="acao"><b>Sugestão de acompanhamento:</b> este gráfico, semana a semana, mostra se a cobertura está honrando a tese que o especial anunciou. É o único indicador do Cérebro que mede coerência entre discurso editorial e produção.</div>
+    </div>
+  </div>
+</section>
+
+<section class="bloco">
+  <div class="bhead"><span class="n">BLOCO 04</span><h2>O que a busca está pedindo</h2><span class="uso">a demanda que já chega — e a que escapa</span></div>
+  <div class="grid2">
+    <div class="panel">
+      <h3>Consultas eleitorais que trazem mais cliques</h3>
+      <div class="src">SEARCH CONSOLE · ÚLTIMOS 30 DIAS · 133 TERMOS ELEITORAIS SOMAM 392 MIL CLIQUES</div>
+      <table>
+        <thead><tr><th>Consulta</th><th class="num">Cliques</th><th class="num">CTR</th><th class="num">Posição</th></tr></thead>
+        <tbody>
+          <tr><td>pesquisa para presidente 2026</td><td class="num">45.785</td><td class="num">14,9%</td><td class="num">2,8</td></tr>
+          <tr><td>pesquisa presidente 2026</td><td class="num">42.766</td><td class="num">15,4%</td><td class="num">2,8</td></tr>
+          <tr><td>pesquisa eleitoral</td><td class="num">24.187</td><td class="num">16,6%</td><td class="num">1,8</td></tr>
+          <tr><td>pesquisa eleitoral 2026</td><td class="num">15.324</td><td class="num">18,4%</td><td class="num">1,9</td></tr>
+          <tr><td>até que idade é obrigatório votar</td><td class="num">6.549</td><td class="num">12,9%</td><td class="num">2,4</td></tr>
+          <tr style="background:#EAF3EE"><td>pesquisa senado SC 2026</td><td class="num">1.310</td><td class="num win">41,7%</td><td class="num win">1,6</td></tr>
+          <tr style="background:#EAF3EE"><td>pesquisa para senador do PR 2026</td><td class="num">1.163</td><td class="num win">45,3%</td><td class="num win">1,2</td></tr>
+        </tbody>
+      </table>
+      <p class="mini" style="margin-top:12px"><b>O padrão que salta:</b> nas consultas estaduais a Gazeta tem <b>CTR de 40 a 46% e posição 1,2</b> — domínio quase absoluto, inclusive em estados sem operação local. Nas nacionais, o volume é maior mas a posição é 2,8.</p>
+    </div>
+    <div class="destaque">
+      <div class="l">A oportunidade medida</div>
+      <div class="num">+175%</div>
+      <p>É quanto o interesse por "eleições 2026" cresceu no Google em quatro semanas. E as consultas eleitorais que chegam à Gazeta quase <b>quadruplicaram</b>: de 100 mil para 392 mil cliques/mês.</p>
+      <p><b>A estrutura já existe</b> — /eleicoes/2026/, a subseção de pesquisas, os hubs de SP e PR. Falta a camada canônica: uma página fixa que responda "quem são os candidatos e como estão nas pesquisas", atualizada no mesmo endereço.</p>
+      <p>É o formato que o Google premia e que as ferramentas de IA citam. Hoje, quem responde essa pergunta são páginas de terceiros.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+RADAR ELEIÇÕES 2026 · CÉREBRO GAZETA · NÚCLEO DE AUDIÊNCIA &amp; MÉTRICAS · EDIÇÃO Nº 1 · 24/08/2026<br>
+FONTES: COLETA PRÓPRIA DE SITEMAPS (6 VEÍCULOS, 17–23/08) E GOOGLE SEARCH CONSOLE (ÚLTIMOS 30 DIAS).<br>
+CRITÉRIO ELEITORAL: MATÉRIA COM URL EM /ELEICOES/ OU COM TERMOS INEQUIVOCAMENTE ELEITORAIS NO TÍTULO (CANDIDATO, PESQUISA ELEITORAL, DEBATE PRESIDENCIAL, INTENÇÃO DE VOTO, INSTITUTOS DE PESQUISA, TSE/TRE). CLASSIFICAÇÃO POR EIXO É EXPERIMENTAL E BASEADA EM PALAVRAS DO TÍTULO.
+</footer>
+</div>
+
+<script>
+const GZ='#0F2237', FO='#7A4E8C', OE='#C99B3F', ES='#3D5A80', OG='#1E7F4F', AN='#8A6FB0', GOLD='#C99B3F';
+new Chart(document.getElementById('cad'),{type:'bar',
+ data:{labels:['O Globo','Gazeta','Estadão','Folha','Oeste','Antagonista'],datasets:[
+  {label:'Matérias eleitorais por dia',data:[29.1,25.6,23.4,19.7,10.6,7.9],
+   backgroundColor:[OG,GZ,ES,FO,OE,AN],borderRadius:4}]},
+ options:{maintainAspectRatio:false,plugins:{legend:{display:false},
+  tooltip:{callbacks:{afterLabel:c=>['9% do total','20% do total','9% do total','9% do total','14% do total','16% do total'][c.dataIndex]}}},
+  scales:{x:{grid:{display:false},ticks:{font:{family:'Archivo',size:12}}},
+   y:{beginAtZero:true,grid:{color:'#F0EEE8'},ticks:{font:{family:'IBM Plex Mono',size:10}}}}}});
+
+new Chart(document.getElementById('eixos'),{type:'doughnut',
+ data:{labels:['Sem eixo definido — noticiário corrente (122)','Brasil decente (33)','Brasil rico (14)','Brasil seguro (10)'],
+ datasets:[{data:[122,33,14,10],
+  backgroundColor:['#D8D4CB','#0F2237','#1E7F4F','#A63232'],borderWidth:2,borderColor:'#fff'}]},
+ options:{maintainAspectRatio:false,cutout:'55%',plugins:{legend:{position:'bottom',labels:{boxWidth:10,font:{family:'Archivo',size:11},padding:8}}}}});
+</script>
+</body>
+</html>
