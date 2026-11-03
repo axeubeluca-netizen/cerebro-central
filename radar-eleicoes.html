@@ -25,7 +25,8 @@ h1 span{color:var(--gold)}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px}
 .panel h3{font-size:14px;font-weight:600;margin-bottom:3px}
 .panel .src{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);margin-bottom:14px}
-.chart{position:relative;height:250px}
+.chart{position:relative;height:250px;flex:1 1 250px;min-height:250px;max-height:420px}
+  .grid2>.panel:has(.chart),.grid3>.panel:has(.chart){display:flex;flex-direction:column}
 .grid2{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
 @media(max-width:860px){.grid2{grid-template-columns:1fr}}
 table{width:100%;border-collapse:collapse;font-size:13.5px}
@@ -52,7 +53,7 @@ footer{border-top:1px solid var(--line);margin-top:36px;padding-top:16px;font-fa
 <header>
   <h1>Radar <span>Eleições 2026</span></h1>
   <div class="linha">Quanto a Gazeta cobre, quem chega primeiro e o que a busca já está pedindo — no território que a casa escolheu como bandeira.</div>
-  <div class="fonte">Semana 19 a 25 out 2026 · a semana do segundo turno · coleta própria · edição nº 9</div>
+  <div class="fonte">Semana 26 out a 1º nov 2026 · primeira semana após o ciclo · coleta própria · edição nº 10</div>
 </header>
 
 <section class="bloco">
@@ -60,15 +61,16 @@ footer{border-top:1px solid var(--line);margin-top:36px;padding-top:16px;font-fa
   <div class="grid2">
     <div class="panel">
       <h3>Matérias eleitorais por dia</h3>
-      <div class="src">FILTRO: URL /ELEICOES/ OU TERMOS INEQUIVOCAMENTE ELEITORAIS NO TÍTULO · 19–25/10</div>
+      <div class="src">FILTRO: URL /ELEICOES/ OU TERMOS INEQUIVOCAMENTE ELEITORAIS NO TÍTULO · 26/10–01/11</div>
       <div class="chart"><canvas id="cad"></canvas></div>
     </div>
     <div class="destaque">
-      <div class="l">A semana do segundo turno</div>
-        <div class="num">38%</div>
-        <p><b>A cobertura eleitoral saltou de 24% para 38%</b> (44.6 matérias/dia, contra 21,9 na semana anterior). É o segundo maior patamar da série, atrás apenas da semana do primeiro turno (55%).</p>
-        <p><b>Série:</b> 20% → 24% → 17% → 18% → 25% → 55% → 36% → 24% → <b>38%</b>.</p>
-        <p>🟢 <b>A Gazeta retomou a liderança de proporção</b> entre os seis: 38% contra 29% do Antagonista e 20% do O Globo. Em volume absoluto segue atrás — O Globo fez 70.4 matérias eleitorais por dia contra 44.6 da Gazeta.</p>
+      <div class="l">Fechamento do ciclo</div>
+        <div class="num">20%</div>
+        <p><b>A cobertura eleitoral caiu de 38% para 20%</b> (20,0 matérias/dia). É o menor patamar da série, empatado com a Edição nº 1.</p>
+        <p><b>Série completa:</b> 20% → 24% → 17% → 18% → 25% → 55% → 36% → 24% → 38% → <b>20%</b>.</p>
+        <p>A Revista Oeste passou a ser a mais eleitoral do grupo em proporção (24%), seguida pelo Antagonista (14%). Em volume absoluto, O Globo lidera com 30,0 matérias por dia.</p>
+        <p style="margin-top:8px">A pauta migrou de eleição para transição de governo — o que aparece no Radar de Concorrência como a ascensão da editoria República.</p>
       </div>
     </div>
   </section>
@@ -78,33 +80,33 @@ footer{border-top:1px solid var(--line);margin-top:36px;padding-top:16px;font-fa
   <div class="grid2">
     <div class="panel">
       <h3>Confrontos diretos em pautas eleitorais</h3>
-      <div class="src">307 PARES · SIMILARIDADE ≥ 0,55 · SÓ MATÉRIAS DE ELEIÇÃO · 19–25/10</div>
+      <div class="src">139 PARES · SIMILARIDADE ≥ 0,55 · SÓ MATÉRIAS DE ELEIÇÃO · 26/10–01/11</div>
       <table>
         <thead><tr><th>Duelo</th><th class="num">Gazeta 1ª</th><th class="num">Rival 1º</th><th class="num">Taxa</th></tr></thead>
         <tbody>
-          <tr><td>Gazeta × Revista Oeste</td><td class="num">7</td><td class="num">2</td><td class="num win">78%</td></tr>
-          <tr><td>Gazeta × O Globo</td><td class="num">15</td><td class="num">17</td><td class="num ">47%</td></tr>
-          <tr><td>Gazeta × Estadão</td><td class="num">10</td><td class="num">10</td><td class="num win">50%</td></tr>
-          <tr><td>Gazeta × Folha</td><td class="num">6</td><td class="num">7</td><td class="num ">46%</td></tr>
-          <tr><td>Gazeta × O Antagonista</td><td class="num">4</td><td class="num">10</td><td class="num ">29%</td></tr>
+          <tr><td>Gazeta × Revista Oeste</td><td class="num">9</td><td class="num">6</td><td class="num win">60%</td></tr>
+          <tr><td>Gazeta × Estadão</td><td class="num">5</td><td class="num">6</td><td class="num ">45%</td></tr>
+          <tr><td>Gazeta × O Antagonista</td><td class="num">5</td><td class="num">5</td><td class="num win">50%</td></tr>
+          <tr><td>Gazeta × Folha</td><td class="num">4</td><td class="num">5</td><td class="num ">44%</td></tr>
+          <tr><td>Gazeta × O Globo</td><td class="num">1</td><td class="num">7</td><td class="num ">12%</td></tr>
           </tbody>
       </table>
-      <p class="mini" style="margin-top:12px">🟢 <b>A base triplicou e ficou utilizável.</b> São 307 pares eleitorais nesta edição, contra 157 na anterior — a maior amostra desde a semana do primeiro turno. Os duelos com O Globo (32 confrontos) e Estadão (20) já têm densidade para leitura; Oeste (9) ainda não.</p>
-      <p class="mini" style="margin-top:9px"><b>Contra O Globo, 15 de 32.</b> É quase meio a meio com o veículo que publicou 70.4 matérias eleitorais por dia — três vezes e meia o ritmo da Gazeta. Chegar primeiro em metade das pautas compartilhadas, produzindo um terço do volume, é o melhor indicador de eficiência editorial do painel.</p>
-      <p class="mini" style="margin-top:9px"><b>Casos verificáveis:</b> a Gazeta chegou primeiro em 42 pautas eleitorais na semana. Os seis maiores atrasos do seguidor estão ao lado, um a um.</p>
+      <p class="mini" style="margin-top:12px">🚨 <b>A base encolheu para 139 pares</b>, contra 307 na edição anterior. Com o ciclo encerrado, há menos coincidência de pauta eleitoral a medir. Os duelos com 8 a 15 confrontos não são conclusivos — leia como indício.</p>
+      <p class="mini" style="margin-top:9px">O desempenho eleitoral caiu junto com o volume. Contra O Globo foram 1 de 8; contra a Oeste, 9 de 15. Com amostras desse tamanho, a leitura útil está nos casos individuais, não nas taxas.</p>
+      <p class="mini" style="margin-top:9px"><b>Casos verificáveis:</b> a Gazeta chegou primeiro em 24 pautas eleitorais na semana. Os seis maiores atrasos do seguidor estão ao lado, um a um.</p>
     </div>
     <div class="panel">
       <h3>Casos em que a Gazeta chegou primeiro</h3>
-      <div class="src">42 CASOS NA SEMANA · OS 6 MAIORES ATRASOS DO SEGUIDOR</div>
+      <div class="src">24 CASOS NA SEMANA · OS 6 MAIORES ATRASOS DO SEGUIDOR</div>
       <table>
         <thead><tr><th>Gazeta publicou</th><th class="num">Quando</th><th>Seguidor</th><th class="num">Atraso</th></tr></thead>
         <tbody>
-            <tr><td>como sera debate tv globo entre lula e flavio segundo turno</td><td class="num">22/10 09:22</td><td>Estadão: 23/10 15:00</td><td class="num" style="color:var(--alert)">+29.6h</td></tr>
-            <tr><td>parana pesquisas governador tocantins outubro 2026 vespera segundo turno</td><td class="num">24/10 16:27</td><td>Estadão: 25/10 20:03</td><td class="num" style="color:var(--alert)">+27.6h</td></tr>
-            <tr><td>atlasintel governador rio grande do norte outubro 2026 vespera segundo turno</td><td class="num">24/10 17:52</td><td>O Globo: 25/10 21:21</td><td class="num" style="color:var(--alert)">+27.5h</td></tr>
-            <tr><td>atlasintel governador espirito santo outubro 2026 vespera segundo turno</td><td class="num">24/10 17:46</td><td>O Globo: 25/10 20:56</td><td class="num" style="color:var(--alert)">+27.2h</td></tr>
-            <tr><td>atlasintel governador amazonas outubro 2026 vespera segundo turno</td><td class="num">24/10 17:45</td><td>O Globo: 25/10 20:32</td><td class="num" style="color:var(--alert)">+26.8h</td></tr>
-            <tr><td>voto do eleitor sera decisivo para vencer a crise institucional brasileira</td><td class="num">23/10 16:20</td><td>Oeste: 24/10 19:00</td><td class="num" style="color:var(--alert)">+26.7h</td></tr>
+            <tr><td>consultor internacional frances defende investigacao das eleicoes brasileiras descon</td><td class="num">29/10 14:28</td><td>Antagonista: 30/10 20:19</td><td class="num" style="color:var(--alert)">+29.8h</td></tr>
+            <tr><td>perseguido e exilado a rota de flavio bolsonaro apos eleicao</td><td class="num">27/10 18:56</td><td>Antagonista: 28/10 19:04</td><td class="num" style="color:var(--alert)">+24.1h</td></tr>
+            <tr><td>ewtn anuncia cobertura especial das eleicoes de meio de mandato nos eua</td><td class="num">30/10 18:07</td><td>Estadão: 31/10 17:31</td><td class="num" style="color:var(--alert)">+23.4h</td></tr>
+            <tr><td>amorim diz que trump esta mal informado sobre eleicoes brasileiras</td><td class="num">26/10 20:31</td><td>Folha: 27/10 18:39</td><td class="num" style="color:var(--alert)">+22.1h</td></tr>
+            <tr><td>mapa voto sao paulo lula segundo turno</td><td class="num">26/10 21:41</td><td>Folha: 27/10 18:26</td><td class="num" style="color:var(--alert)">+20.7h</td></tr>
+            <tr><td>a vitoria de vespera de flavio e a dolorida derrota para lula nas urnas</td><td class="num">26/10 15:17</td><td>O Globo: 27/10 11:56</td><td class="num" style="color:var(--alert)">+20.6h</td></tr>
             </tbody>
       </table>
     </div>
@@ -116,23 +118,23 @@ footer{border-top:1px solid var(--line);margin-top:36px;padding-top:16px;font-fa
   <div class="grid2">
     <div class="panel">
       <h3>Como a cobertura eleitoral se distribui entre os três eixos</h3>
-      <div class="src">312 MATÉRIAS ELEITORAIS DA GAZETA NA SEMANA · CLASSIFICAÇÃO POR TERMOS DO TÍTULO</div>
+      <div class="src">140 MATÉRIAS ELEITORAIS DA GAZETA NA SEMANA · CLASSIFICAÇÃO POR TERMOS DO TÍTULO</div>
       <div class="chart"><canvas id="eixos"></canvas></div>
     </div>
     <div class="panel">
       <h3>O que o gráfico revela</h3>
       <div class="src">LEITURA</div>
-      <p class="mini" style="margin-bottom:10px"><b>"Brasil decente" em 18%</b> — segue o eixo mais presente, puxado por STF, TSE e instituições.</p>
-      🚨 <p class="mini" style="margin-bottom:10px"><b>"Brasil rico" caiu para 3%</b> (8 matérias em 312) e "Brasil seguro" para 2% (5). Na semana de maior cobertura eleitoral do ciclo, os dois eixos econômico e de segurança praticamente sumiram da pauta — o sinal de duas semanas atrás não resistiu ao volume.</p>
+      <p class="mini" style="margin-bottom:10px"><b>"Brasil decente" em 16%</b> — segue o eixo mais presente, puxado por STF, PF e instituições.</p>
+      <p class="mini" style="margin-bottom:10px">🟢 <b>"Brasil rico" subiu para 6% e "Brasil seguro" para 4%</b> — o melhor resultado dos dois desde a edição nº 1, que segue sendo o teto da série (8% e 6%). O volume absoluto permanece baixo (9 e 5 matérias) e parte da melhora vem da queda do denominador, mas é o primeiro movimento consistente na direção da tese.</p>
       <table style="margin:8px 0 12px">
-        <thead><tr><th>Eixo</th><th class="num">Ed.1</th><th class="num">Ed.5</th><th class="num">Ed.6</th><th class="num">Ed.7</th><th class="num">Ed.8</th><th class="num">Ed.9</th></tr></thead>
+        <thead><tr><th>Eixo</th><th class="num">Ed.1</th><th class="num">Ed.5</th><th class="num">Ed.7</th><th class="num">Ed.8</th><th class="num">Ed.9</th><th class="num">Ed.10</th></tr></thead>
         <tbody>
-          <tr><td>Brasil decente</td><td class="num">18%</td><td class="num">18%</td><td class="num">13%</td><td class="num">20%</td><td class="num">20%</td><td class="num"><b>18%</b></td></tr>
-          <tr><td>Brasil rico</td><td class="num">8%</td><td class="num">1%</td><td class="num">0,4%</td><td class="num">5%</td><td class="num">5%</td><td class="num" style="color:var(--alert)"><b>3%</b></td></tr>
-          <tr><td>Brasil seguro</td><td class="num">6%</td><td class="num">2%</td><td class="num">1%</td><td class="num">2%</td><td class="num">2%</td><td class="num" style="color:var(--alert)"><b>2%</b></td></tr>
+          <tr><td>Brasil decente</td><td class="num">18%</td><td class="num">18%</td><td class="num">20%</td><td class="num">20%</td><td class="num">18%</td><td class="num"><b>16%</b></td></tr>
+          <tr><td>Brasil rico</td><td class="num">8%</td><td class="num">1%</td><td class="num">5%</td><td class="num">5%</td><td class="num">3%</td><td class="num" style="color:var(--ok)"><b>6%</b></td></tr>
+          <tr><td>Brasil seguro</td><td class="num">6%</td><td class="num">2%</td><td class="num">2%</td><td class="num">2%</td><td class="num">2%</td><td class="num" style="color:var(--ok)"><b>4%</b></td></tr>
         </tbody>
       </table>
-      <div class="acao"><b>O ciclo eleitoral terminou sem a tese aparecer na cobertura.</b> Em nove medições, "Brasil rico" nunca passou de 8% e fechou em 3%; "Brasil seguro" nunca passou de 6% e fechou em 2%. 78% das 312 matérias eleitorais da semana são noticiário corrente sem eixo identificável. <b>A tese dos três eixos não se materializou na produção durante a eleição</b> — a questão agora é se ela orienta a cobertura do novo governo, que começa a ser pautada esta semana.</div>
+      <div class="acao"><b>O ciclo terminou; a tese começa a aparecer agora.</b> Em dez medições durante a campanha, "Brasil rico" e "Brasil seguro" nunca passaram de 8% e 6%. Na primeira semana sem eleição, marcam 6% e 4% — ainda baixo em volume, mas em alta nos dois. 74% das 140 matérias seguem sem eixo identificável. <b>A questão para as próximas semanas é se a tese orienta a cobertura do novo governo</b>, que é onde a pauta econômica e de segurança naturalmente volta.</div>
     </div>
   </div>
 </section>
@@ -169,8 +171,8 @@ footer{border-top:1px solid var(--line);margin-top:36px;padding-top:16px;font-fa
 </section>
 
 <footer>
-RADAR ELEIÇÕES 2026 · CÉREBRO GAZETA · NÚCLEO DE AUDIÊNCIA &amp; MÉTRICAS · EDIÇÃO Nº 9 · 26/10/2026<br>
-FONTES: COLETA PRÓPRIA DE SITEMAPS (6 VEÍCULOS, 19–25/10) E MARFEEL. OS DADOS DE SEARCH CONSOLE SÃO HISTÓRICOS, DE 24/08/2026 — A FONTE SEGUE BLOQUEADA POR LICENÇA NO SUPERMETRICS.<br>
+RADAR ELEIÇÕES 2026 · CÉREBRO GAZETA · NÚCLEO DE AUDIÊNCIA &amp; MÉTRICAS · EDIÇÃO Nº 10 · 02/11/2026<br>
+FONTES: COLETA PRÓPRIA DE SITEMAPS (6 VEÍCULOS, 26/10 A 01/11) E MARFEEL. OS DADOS DE SEARCH CONSOLE SÃO HISTÓRICOS, DE 24/08/2026 — A FONTE SEGUE BLOQUEADA POR LICENÇA NO SUPERMETRICS.<br>
 CRITÉRIO ELEITORAL: MATÉRIA COM URL EM /ELEICOES/ OU COM TERMOS INEQUIVOCAMENTE ELEITORAIS NO TÍTULO (CANDIDATO, PESQUISA ELEITORAL, DEBATE PRESIDENCIAL, INTENÇÃO DE VOTO, INSTITUTOS DE PESQUISA, TSE/TRE). CLASSIFICAÇÃO POR EIXO É EXPERIMENTAL E BASEADA EM PALAVRAS DO TÍTULO.
 </footer>
 </div>
@@ -179,16 +181,16 @@ CRITÉRIO ELEITORAL: MATÉRIA COM URL EM /ELEICOES/ OU COM TERMOS INEQUIVOCAMENT
 const GZ='#0F2237', FO='#7A4E8C', OE='#C99B3F', ES='#3D5A80', OG='#1E7F4F', AN='#8A6FB0', GOLD='#C99B3F';
 new Chart(document.getElementById('cad'),{type:'bar',
  data:{labels:["O Globo", "Estadão", "Folha", "Gazeta", "Antagonista", "Oeste"],datasets:[
-  {label:'Matérias eleitorais por dia',data:[70.4, 48.0, 44.1, 44.6, 14.9, 17.1],
+  {label:'Matérias eleitorais por dia',data:[30.0, 27.3, 22.4, 20.0, 5.9, 12.1],
    backgroundColor:[OG,ES,FO,GZ,AN,OE],borderRadius:4}]},
  options:{maintainAspectRatio:false,plugins:{legend:{display:false},
-  tooltip:{callbacks:{afterLabel:c=>["20% do total", "19% do total", "19% do total", "38% do total", "29% do total", "20% do total"][c.dataIndex]}}},
+  tooltip:{callbacks:{afterLabel:c=>["9% do total", "12% do total", "11% do total", "20% do total", "14% do total", "24% do total"][c.dataIndex]}}},
   scales:{x:{grid:{display:false},ticks:{font:{family:'Archivo',size:12}}},
    y:{beginAtZero:true,grid:{color:'#F0EEE8'},ticks:{font:{family:'IBM Plex Mono',size:10}}}}}});
 
 new Chart(document.getElementById('eixos'),{type:'doughnut',
- data:{labels:['Sem eixo definido — noticiário corrente (243)','Brasil decente (56)','Brasil rico (8)','Brasil seguro (5)'],
- datasets:[{data:[112, 30, 8, 3],
+ data:{labels:['Sem eixo definido — noticiário corrente (103)','Brasil decente (23)','Brasil rico (9)','Brasil seguro (5)'],
+ datasets:[{data:[103, 23, 9, 5],
   backgroundColor:['#D8D4CB','#0F2237','#1E7F4F','#A63232'],borderWidth:2,borderColor:'#fff'}]},
  options:{maintainAspectRatio:false,cutout:'55%',plugins:{legend:{position:'bottom',labels:{boxWidth:10,font:{family:'Archivo',size:11},padding:8}}}}});
 </script>
