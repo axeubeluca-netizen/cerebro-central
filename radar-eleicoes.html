@@ -1,198 +1,263 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Radar Eleições 2026 · Cérebro Gazeta</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de Eleições · Ed. 18 — Cérebro Gazeta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-:root{--ink:#0F2237;--paper:#FBFAF8;--card:#FFF;--line:#E4E1DA;--muted:#66707D;--gold:#C99B3F;--ok:#1E7F4F;--alert:#A63232;
---gz:#0F2237;--fo:#7A4E8C;--oe:#C99B3F;--es:#3D5A80;--og:#1E7F4F;--an:#8A6FB0}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--paper);color:var(--ink);font-family:'Archivo',sans-serif;font-size:15px;line-height:1.55}
-.wrap{max-width:1080px;margin:0 auto;padding:0 28px 64px}
-.voltar{display:inline-flex;align-items:center;gap:7px;margin:18px 0 0;padding:8px 14px;border:1.5px solid var(--ink);border-radius:8px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;color:var(--ink);text-decoration:none;background:#fff}
-header{padding:26px 0 18px;border-bottom:2px solid var(--ink)}
-h1{font-family:'Fraunces',serif;font-weight:700;font-size:36px;letter-spacing:-.5px}
-h1 span{color:var(--gold)}
-.linha{font-size:17px;margin-top:8px}
-.fonte{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:8px;text-transform:uppercase;letter-spacing:.06em}
-.bloco{margin:36px 0}
-.bhead{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line);padding-bottom:9px;margin-bottom:16px}
-.bhead .n{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.1em}
-.bhead h2{font-family:'Fraunces',serif;font-weight:700;font-size:23px}
-.bhead .uso{margin-left:auto;font-size:12px;color:var(--muted);font-style:italic}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px}
-.panel h3{font-size:14px;font-weight:600;margin-bottom:3px}
-.panel .src{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);margin-bottom:14px}
-.chart{position:relative;height:250px;flex:1 1 250px;min-height:250px;max-height:420px}
-  .grid2>.panel:has(.chart),.grid3>.panel:has(.chart){display:flex;flex-direction:column}
-.grid2{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
-@media(max-width:860px){.grid2{grid-template-columns:1fr}}
-table{width:100%;border-collapse:collapse;font-size:13.5px}
-th{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;padding:8px;border-bottom:1.5px solid var(--line)}
-td{padding:9px 8px;border-bottom:1px solid #F0EEE8}
-td.num,th.num{text-align:right;font-family:'IBM Plex Mono',monospace}
-.win{color:var(--ok);font-weight:700}
-.mini{font-size:13px;color:#3A4553;line-height:1.55}
-.mini b{color:var(--ink)}
-.destaque{background:var(--ink);color:#F4F2ED;border-radius:10px;padding:20px}
-.destaque .l{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
-.destaque .num{font-family:'Fraunces',serif;font-size:34px;font-weight:700}
-.destaque p{font-size:13.5px;line-height:1.6;color:#C9CFD8;margin-top:8px}
-.destaque p b{color:#fff}
-.acao{background:rgba(201,155,63,.1);border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:14px 18px;margin-top:12px}
-.acao b{color:var(--ink)}
-footer{border-top:1px solid var(--line);margin-top:36px;padding-top:16px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);line-height:1.8}
+  :root{--ink:#0F2237;--paper:#FBFAF8;--card:#FFF;--line:#E4E1DA;--muted:#66707D;--gold:#C99B3F;
+    --gz:#0F2237;--fo:#7A4E8C;--oe:#C99B3F;--es:#3D5A80;--an:#8A6FB0;--og:#1E7F4F;
+    --pol:#3D5A80;--eco:#1E7F4F;--val:#8A4A2F;--alert:#A63232;--ok:#1E7F4F;--rise:#1E7F4F}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Archivo',sans-serif;font-size:15px;line-height:1.5}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px 64px}
+  .back{display:inline-flex;align-items:center;gap:7px;margin:18px 0 -6px;padding:8px 14px;border:1.5px solid var(--ink);border-radius:8px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;color:var(--ink);text-decoration:none;background:#fff}
+  header{padding:32px 0 18px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;border-bottom:2px solid var(--ink)}
+  h1{font-family:'Fraunces',serif;font-weight:700;font-size:36px;letter-spacing:-.5px}
+  h1 span{color:var(--gold)}
+  .sub{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:.08em}
+  .periodo{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);text-align:right}
+  .periodo b{color:var(--ink);display:block;font-size:14px}
+  .recon{background:rgba(176,122,30,.1);border:1px solid rgba(176,122,30,.35);border-radius:8px;padding:11px 14px;margin:16px 0 0;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8A5E14;line-height:1.6}
+  .recon b{color:#6B4910}
+  .leg{display:flex;gap:16px;margin:14px 0 26px;font-size:12.5px;flex-wrap:wrap}
+  .leg span{display:flex;align-items:center;gap:6px}
+  .sw{width:11px;height:11px;border-radius:3px}
+  .bloco{margin-bottom:42px}
+  .bhead{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line);padding-bottom:9px;margin-bottom:16px;flex-wrap:wrap}
+  .bhead .n{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.1em}
+  .bhead h2{font-family:'Fraunces',serif;font-weight:700;font-size:22px}
+  .bhead .uso{margin-left:auto;font-size:12px;color:var(--muted);font-style:italic}
+  .grid2{display:grid;grid-template-columns:1.5fr 1fr;gap:16px}
+  .grid2e{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+  @media(max-width:920px){.grid2,.grid2e,.grid3{grid-template-columns:1fr}}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px}
+  .panel h3{font-size:13.5px;font-weight:600;margin-bottom:2px}
+  .panel .src{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:12px;line-height:1.5}
+  .chart{position:relative;height:260px}
+  .chart.tall{height:330px}
+  .chart.sm{height:200px}
+  .mini{font-size:12.5px;color:var(--muted);line-height:1.55}
+  .mini b{color:var(--ink)}
+  .destaque{background:var(--ink);color:#F4F2ED;border-radius:10px;padding:18px}
+  .destaque .l{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+  .destaque .num{font-family:'Fraunces',serif;font-size:34px;font-weight:700}
+  .destaque p{font-size:13px;line-height:1.55;margin-top:6px;color:#C9CFD8}
+  .destaque p b{color:#fff}
+  .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:22px 0 36px}
+  @media(max-width:980px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 16px 14px}
+  .kpi .tag{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+  .kpi .val{font-family:'Fraunces',serif;font-weight:700;font-size:26px;margin:6px 0 2px}
+  .kpi .val.up{color:var(--rise)} .kpi .val.down{color:var(--alert)}
+  .kpi .ctx{font-size:12px;color:var(--muted)}
+  .hm2{display:grid;grid-template-columns:168px repeat(24,1fr) 76px;gap:3px;font-family:'IBM Plex Mono',monospace;margin-top:6px}
+  .hm2 .lbl{font-size:11px;display:flex;align-items:center;color:var(--ink);font-weight:600}
+  .hm2 .lbl small{color:var(--muted);font-weight:400;margin-left:5px}
+  .hm2 .c2{height:28px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:9.5px;color:#fff;cursor:default}
+  .hm2 .c2.pico{outline:2px solid var(--gold);outline-offset:-2px}
+  .hm2 .hh2{text-align:center;color:var(--muted);font-size:9.5px;align-self:end;padding-bottom:2px}
+  .hm2 .tot{font-size:10.5px;display:flex;align-items:center;justify-content:flex-end;color:var(--muted)}
+  .hm2 .tot b{color:var(--ink);margin-right:3px}
+  .hm2 .sep{grid-column:1/-1;height:8px}
+  .hm2-leg{display:flex;align-items:center;gap:10px;margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);flex-wrap:wrap}
+  .hm2-leg .grad{height:10px;width:160px;border-radius:5px;background:linear-gradient(90deg,rgba(15,34,55,.05),rgba(15,34,55,1))}
+  .termos{display:flex;flex-wrap:wrap;gap:7px}
+  .tag{font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:4px 9px;border-radius:5px;border:1px solid var(--line)}
+  .t-prop{background:rgba(30,127,79,.08);border-color:rgba(30,127,79,.3);color:var(--ok)}
+  .t-comm{background:rgba(15,34,55,.05);color:var(--ink)}
+  .t-gap{background:rgba(166,50,50,.06);border-color:rgba(166,50,50,.25);color:var(--alert)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:bottom}
+  td{padding:8px;border-bottom:1px solid #F0EEE8;vertical-align:top}
+  td.num,th.num{text-align:right}
+  td.num{font-family:'IBM Plex Mono',monospace}
+  .win{color:var(--ok);font-weight:700}
+  .lose{color:var(--alert);font-weight:700}
+  .warn{border:1px solid rgba(166,50,50,.3);background:rgba(166,50,50,.04);border-radius:10px;padding:18px;margin-bottom:16px}
+  .warn h3{font-size:13.5px;font-weight:600;margin-bottom:6px;color:var(--alert)}
+  .warn p{font-size:12.5px;color:var(--muted);line-height:1.6}
+  .warn p b{color:var(--ink)}
+  .pill{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em;padding:3px 7px;border-radius:4px;text-transform:uppercase;background:rgba(176,122,30,.12);color:#B07A1E;margin-bottom:8px}
+  .pill.bad{background:rgba(166,50,50,.1);color:var(--alert)}
+  .pill.good{background:rgba(30,127,79,.1);color:var(--ok)}
+  .navcards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:40px}
+  @media(max-width:820px){.navcards{grid-template-columns:1fr}}
+  .nc{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:20px;text-decoration:none;color:var(--ink);display:block;transition:border-color .15s}
+  .nc:hover{border-left-color:var(--ink)}
+  .nc .k{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px}
+  .nc h3{font-family:'Fraunces',serif;font-size:20px;margin-bottom:7px}
+  .nc p{font-size:12.5px;color:var(--muted);line-height:1.55}
+  .cloud{display:flex;flex-wrap:wrap;gap:6px;align-items:baseline}
+  .cloud span{font-family:'IBM Plex Mono',monospace;color:var(--ink);line-height:1.3}
+  footer{border-top:1px solid var(--line);margin-top:16px;padding-top:14px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);line-height:1.8}
 </style>
 </head>
 <body>
 <div class="wrap">
-<a class="voltar" href="index.html">&larr; Central do Cérebro</a>
-
-<header>
-  <h1>Radar <span>Eleições 2026</span></h1>
-  <div class="linha">Quanto a Gazeta cobre, quem chega primeiro e o que a busca já está pedindo — no território que a casa escolheu como bandeira.</div>
-  <div class="fonte">Semana 26 out a 1º nov 2026 · primeira semana após o ciclo · coleta própria · edição nº 10</div>
-</header>
-
-<section class="bloco">
-  <div class="bhead"><span class="n">BLOCO 01</span><h2>Cadência eleitoral</h2><span class="uso">quanto cada veículo dedica à eleição</span></div>
-  <div class="grid2">
-    <div class="panel">
-      <h3>Matérias eleitorais por dia</h3>
-      <div class="src">FILTRO: URL /ELEICOES/ OU TERMOS INEQUIVOCAMENTE ELEITORAIS NO TÍTULO · 26/10–01/11</div>
-      <div class="chart"><canvas id="cad"></canvas></div>
+<a href="index.html" class="back">← Central do Cérebro</a>
+  <header>
+    <div>
+      <h1>Radar de <span>Eleições</span></h1>
+      <div class="sub">Cérebro Gazeta · Ed. 18 · Cadência eleitoral das seis linhas jornalísticas</div>
     </div>
-    <div class="destaque">
-      <div class="l">Fechamento do ciclo</div>
-        <div class="num">20%</div>
-        <p><b>A cobertura eleitoral caiu de 38% para 20%</b> (20,0 matérias/dia). É o menor patamar da série, empatado com a Edição nº 1.</p>
-        <p><b>Série completa:</b> 20% → 24% → 17% → 18% → 25% → 55% → 36% → 24% → 38% → <b>20%</b>.</p>
-        <p>A Revista Oeste passou a ser a mais eleitoral do grupo em proporção (24%), seguida pelo Antagonista (14%). Em volume absoluto, O Globo lidera com 30,0 matérias por dia.</p>
-        <p style="margin-top:8px">A pauta migrou de eleição para transição de governo — o que aparece no Radar de Concorrência como a ascensão da editoria República.</p>
+    <div class="periodo">janela de análise<b>02–08 nov 2026 · semana fechada</b>
+      <span style="display:block;margin-top:4px">primeira semana cheia pós-eleição</span></div>
+  </header>
+  <div class="recon" style="background:rgba(166,50,50,.07);border-color:rgba(166,50,50,.35);color:#7A2222">
+    <b>RETIFICAÇÃO — ED. 18.</b> O indicador de cadência da Revista Oeste foi corrigido nesta edição e a correção <b>vale para toda a série desde a Ed. 2</b>. Até aqui, o conteúdo de fábrica da Oeste (<code>/oestegeral/</code>) era contado como jornalismo em algumas janelas, o que inflava a cadência dela e distorcia o número de abertura do Cérebro. A classificação passa a ser feita por padrão de URL, não pelo rótulo da linha de coleta. <b>O índice de fim de semana Gazeta × Oeste nunca foi de 3x ou 4x: foi de ~1,0x em 17 das 17 edições apuradas.</b> O bloco 01 traz a série retificada.
+  </div>
+  <div class="recon">
+    <b>RECONSTRUÇÃO ESTRUTURAL.</b> Painel reconstruído sobre a linguagem de design aprovada (Radar de Concorrência V1 e Radar Gazeta V2), porque os arquivos da Ed. 17 não estavam disponíveis. Dados da janela 02–08/11/2026, apurados do zero. Nenhum percentual herdado de edição anterior.
+  </div>
+
+  <div class="recon" style="background:rgba(61,90,128,.08);border-color:rgba(61,90,128,.3);color:#2D4460">
+    <b>LEIA ESTE PAINEL COM O CICLO NA CABEÇA.</b> Esta é a primeira janela cheia depois do encerramento do calendário eleitoral de 2026. A queda de cobertura aparece em <b>todos os seis veículos</b>, e é maior onde o pico foi maior. O indicador útil aqui não é a variação — é <b>qual patamar cada redação sustenta quando o tema esfria</b>.
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="tag">Peças eleitorais · Gazeta</div><div class="val">71</div><div class="ctx">contra 129 na Ed. 17, em 656 peças totais.</div></div>
+    <div class="kpi"><div class="tag">Share eleitoral · Gazeta</div><div class="val down">10,82%</div><div class="ctx">era 18,45% na Ed. 17. Queda de 7,63 pontos.</div></div>
+    <div class="kpi"><div class="tag">Posição no grupo</div><div class="val up">1º</div><div class="ctx">maior share eleitoral das seis linhas, à frente do Antagonista (8,80%).</div></div>
+    <div class="kpi"><div class="tag">Peças eleitorais · todas as linhas</div><div class="val">421</div><div class="ctx">soma das seis linhas jornalísticas, já sem o conteúdo de fábrica.</div></div>
+    <div class="kpi"><div class="tag">O ponto frágil</div><div class="val down">0</div><div class="ctx">peças eleitorais da Gazeta no sábado 07/11, num dia em que o mercado publicou 23.</div></div>
+  </div>
+
+  <section class="bloco">
+    <div class="bhead"><span class="n">BLOCO 01</span><h2>Share eleitoral por veículo</h2><span class="uso">quem sustenta o tema quando ele esfria</span></div>
+    <div class="grid2">
+      <div class="panel">
+        <h3>% da produção dedicada a eleições — Ed. 17 × Ed. 18</h3>
+        <div class="src">CLASSIFICAÇÃO POR TERMO NO TÍTULO (eleição, candidato, campanha, urna, TSE, eleitoral, eleitor, chapa, coligação, pré-candidato, propaganda eleitoral) OU EDITORIA "eleicoes"</div>
+        <div class="chart tall"><canvas id="cShare"></canvas></div>
+      </div>
+      <div class="panel">
+        <h3>A tabela que fecha com o gráfico</h3>
+        <div class="src">PERCENTUAL SOBRE O TOTAL DE PEÇAS DE CADA VEÍCULO NA RESPECTIVA JANELA</div>
+        <table>
+          <thead><tr><th>Veículo</th><th class="num">Ed. 18</th><th class="num">% 18</th><th class="num">Ed. 17</th><th class="num">% 17</th><th class="num">Δ pontos</th></tr></thead>
+          <tbody>
+            <tr style="background:#F6F1E4"><td><b style="color:var(--gz)">Gazeta</b></td><td class="num">71</td><td class="num"><b>10,82%</b></td><td class="num">129</td><td class="num">18,45%</td><td class="num lose">-7,63</td></tr>
+            <tr><td><b style="color:var(--oe)">Oeste</b></td><td class="num">23</td><td class="num"><b>8,98%</b></td><td class="num">79</td><td class="num">22,51%</td><td class="num lose">-13,53</td></tr>
+            <tr><td><b style="color:var(--an)">Antagonista</b></td><td class="num">30</td><td class="num"><b>8,77%</b></td><td class="num">37</td><td class="num">12,37%</td><td class="num lose">-3,60</td></tr>
+            <tr><td><b style="color:var(--fo)">Folha</b></td><td class="num">96</td><td class="num"><b>7,16%</b></td><td class="num">139</td><td class="num">9,44%</td><td class="num lose">-2,28</td></tr>
+            <tr><td><b style="color:var(--og)">O Globo</b></td><td class="num">126</td><td class="num"><b>6,20%</b></td><td class="num">308</td><td class="num">12,90%</td><td class="num lose">-6,70</td></tr>
+            <tr><td><b style="color:var(--es)">Estadão</b></td><td class="num">75</td><td class="num"><b>5,10%</b></td><td class="num">146</td><td class="num">8,97%</td><td class="num lose">-3,87</td></tr>
+          </tbody>
+        </table>
+        <p class="mini" style="margin-top:11px"><b>A queda é universal.</b> O OGlobo perdeu 6,70 pontos e a Oeste 13,53 — os dois que mais haviam subido. A Gazeta perdeu 7,63 pontos, <b>mas chegou ao fim da semana no patamar mais alto do grupo</b>: 10,82% contra 8,98% da Oeste e 8,77% do Antagonista.</p>
+        <p class="mini" style="margin-top:9px"><b>O que isso quer dizer em pauta:</b> quando o tema deixa de ser obrigatório, a Gazeta é a única que mantém mais de uma peça em cada dez no território. É exatamente o comportamento que a tese prevê. <b>Nota de retificação:</b> o share da Oeste subiu de 2,61% para 8,98% nesta edição porque o conteúdo de fábrica saiu do denominador — a Oeste é mais eleitoral do que o painel anterior mostrava, não menos.</p>
       </div>
     </div>
   </section>
 
-<section class="bloco">
-  <div class="bhead"><span class="n">BLOCO 02</span><h2>Quem pauta a eleição</h2><span class="uso">o indicador mais estratégico do painel</span></div>
-  <div class="grid2">
-    <div class="panel">
-      <h3>Confrontos diretos em pautas eleitorais</h3>
-      <div class="src">139 PARES · SIMILARIDADE ≥ 0,55 · SÓ MATÉRIAS DE ELEIÇÃO · 26/10–01/11</div>
-      <table>
-        <thead><tr><th>Duelo</th><th class="num">Gazeta 1ª</th><th class="num">Rival 1º</th><th class="num">Taxa</th></tr></thead>
-        <tbody>
-          <tr><td>Gazeta × Revista Oeste</td><td class="num">9</td><td class="num">6</td><td class="num win">60%</td></tr>
-          <tr><td>Gazeta × Estadão</td><td class="num">5</td><td class="num">6</td><td class="num ">45%</td></tr>
-          <tr><td>Gazeta × O Antagonista</td><td class="num">5</td><td class="num">5</td><td class="num win">50%</td></tr>
-          <tr><td>Gazeta × Folha</td><td class="num">4</td><td class="num">5</td><td class="num ">44%</td></tr>
-          <tr><td>Gazeta × O Globo</td><td class="num">1</td><td class="num">7</td><td class="num ">12%</td></tr>
-          </tbody>
-      </table>
-      <p class="mini" style="margin-top:12px">🚨 <b>A base encolheu para 139 pares</b>, contra 307 na edição anterior. Com o ciclo encerrado, há menos coincidência de pauta eleitoral a medir. Os duelos com 8 a 15 confrontos não são conclusivos — leia como indício.</p>
-      <p class="mini" style="margin-top:9px">O desempenho eleitoral caiu junto com o volume. Contra O Globo foram 1 de 8; contra a Oeste, 9 de 15. Com amostras desse tamanho, a leitura útil está nos casos individuais, não nas taxas.</p>
-      <p class="mini" style="margin-top:9px"><b>Casos verificáveis:</b> a Gazeta chegou primeiro em 24 pautas eleitorais na semana. Os seis maiores atrasos do seguidor estão ao lado, um a um.</p>
+  <section class="bloco">
+    <div class="bhead"><span class="n">BLOCO 02</span><h2>A curva do decaimento</h2><span class="uso">dia a dia, Gazeta contra o mercado</span></div>
+    <div class="grid2">
+      <div class="panel">
+        <h3>Peças eleitorais por dia — Gazeta × soma das seis linhas</h3>
+        <div class="src">HORA EFETIVA, FUSO DE BRASÍLIA · 02/11 É FERIADO (FINADOS) · EIXOS SEPARADOS: A GAZETA À ESQUERDA, O MERCADO À DIREITA</div>
+        <div class="chart tall"><canvas id="cSerie"></canvas></div>
+      </div>
+      <div class="destaque">
+        <div class="l">o ponto frágil da semana</div>
+        <div class="num">Sábado, zero</div>
+        <p>No sábado 07/11 a Gazeta publicou <b>nenhuma peça eleitoral</b>, num dia em que o conjunto do mercado publicou 23. No domingo foram 5 contra 34.</p>
+        <p>É o apagão de fim de semana aparecendo dentro do território mais valioso da tese. A Gazeta lidera o share da semana e abre mão dele justamente nos dois dias em que o leitor tem mais tempo de tela.</p>
+        <p style="margin-top:8px"><b>O pico foi na terça 03/11</b>, com 19 peças — o dia das midterms americanas, que puxaram a cobertura internacional e empurraram o mercado a 102 peças eleitorais.</p>
+      </div>
     </div>
-    <div class="panel">
-      <h3>Casos em que a Gazeta chegou primeiro</h3>
-      <div class="src">24 CASOS NA SEMANA · OS 6 MAIORES ATRASOS DO SEGUIDOR</div>
-      <table>
-        <thead><tr><th>Gazeta publicou</th><th class="num">Quando</th><th>Seguidor</th><th class="num">Atraso</th></tr></thead>
-        <tbody>
-            <tr><td>consultor internacional frances defende investigacao das eleicoes brasileiras descon</td><td class="num">29/10 14:28</td><td>Antagonista: 30/10 20:19</td><td class="num" style="color:var(--alert)">+29.8h</td></tr>
-            <tr><td>perseguido e exilado a rota de flavio bolsonaro apos eleicao</td><td class="num">27/10 18:56</td><td>Antagonista: 28/10 19:04</td><td class="num" style="color:var(--alert)">+24.1h</td></tr>
-            <tr><td>ewtn anuncia cobertura especial das eleicoes de meio de mandato nos eua</td><td class="num">30/10 18:07</td><td>Estadão: 31/10 17:31</td><td class="num" style="color:var(--alert)">+23.4h</td></tr>
-            <tr><td>amorim diz que trump esta mal informado sobre eleicoes brasileiras</td><td class="num">26/10 20:31</td><td>Folha: 27/10 18:39</td><td class="num" style="color:var(--alert)">+22.1h</td></tr>
-            <tr><td>mapa voto sao paulo lula segundo turno</td><td class="num">26/10 21:41</td><td>Folha: 27/10 18:26</td><td class="num" style="color:var(--alert)">+20.7h</td></tr>
-            <tr><td>a vitoria de vespera de flavio e a dolorida derrota para lula nas urnas</td><td class="num">26/10 15:17</td><td>O Globo: 27/10 11:56</td><td class="num" style="color:var(--alert)">+20.6h</td></tr>
-            </tbody>
-      </table>
-    </div>
-  </div>
-</section>
+  </section>
 
-<section class="bloco">
-  <div class="bhead"><span class="n">BLOCO 03</span><h2>Cobertura por eixo da tese</h2><span class="uso">"Brasil rico, decente e seguro" — o que a produção entrega</span></div>
-  <div class="grid2">
-    <div class="panel">
-      <h3>Como a cobertura eleitoral se distribui entre os três eixos</h3>
-      <div class="src">140 MATÉRIAS ELEITORAIS DA GAZETA NA SEMANA · CLASSIFICAÇÃO POR TERMOS DO TÍTULO</div>
-      <div class="chart"><canvas id="eixos"></canvas></div>
+  <section class="bloco">
+    <div class="bhead"><span class="n">BLOCO 03</span><h2>O que pautou a semana</h2><span class="uso">os três eventos que organizaram a cobertura</span></div>
+    <div class="grid3">
+      <div class="panel">
+        <h3>1 · As midterms americanas</h3>
+        <div class="src">TERÇA 03/11 · PICO DA SÉRIE</div>
+        <p class="mini" style="margin-bottom:9px">O termo <b>"midterms" aparece 18 vezes nos títulos da Gazeta</b> contra 20 nos cinco rivais somados — índice de 8,5x. Foi o eixo internacional que organizou a semana.</p>
+        <p class="mini">Peças com tração medida: "Republicanos perdem controle da Câmara e do Senado dos EUA" (10.671 PV), "Eleições nos EUA: republicanos se aproximam de democratas" (14.347 PV), "Por que Donald Trump não pode concorrer à reeleição em 2028" (10.687 PV). O ângulo explicativo funcionou.</p>
+      </div>
+      <div class="panel">
+        <h3>2 · A disputa pelo Senado</h3>
+        <div class="src">ALCOLUMBRE × ROGÉRIO MARINHO</div>
+        <p class="mini" style="margin-bottom:9px"><b>"alcolumbre" ×20 na Gazeta contra 47 nos rivais</b> — índice de 4,0x. É pauta pós-eleitoral de rearranjo de poder, e a Gazeta ocupou o território com volume e com editorial.</p>
+        <p class="mini">Três editoriais da janela trataram do tema, somando 28.588 PV: "A reeleição de Alcolumbre já está sendo tramada" (16.250), "Reeleição de Alcolumbre no Senado é desastre" (4.588) e a cobertura de "Direita quer expor votos para vencer Alcolumbre" (9.203 em republica). Território de opinião com retorno medido.</p>
+      </div>
+      <div class="panel">
+        <h3>3 · A crise do Paraguai</h3>
+        <div class="src">IMPEACHMENT E PRISÃO DE SANTIAGO PEÑA</div>
+        <p class="mini" style="margin-bottom:9px"><b>"paraguai" ×26 na Gazeta contra 108 nos rivais</b> — índice de 2,3x. Não é território proprietário, mas foi onde a Gazeta ganhou velocidade: <b>chegou primeiro contra o Antagonista com 1,2h de vantagem</b> no impeachment, e contra a Folha na transferência de Peña para unidade militar.</p>
+        <p class="mini">Não é pauta eleitoral brasileira, mas entra no radar porque dominou o eixo internacional ao lado das midterms e porque puxou peças de economia — "Como a crise bancária afeta os investimentos dos brasileiros no Paraguai" (7.347 PV).</p>
+      </div>
     </div>
-    <div class="panel">
-      <h3>O que o gráfico revela</h3>
-      <div class="src">LEITURA</div>
-      <p class="mini" style="margin-bottom:10px"><b>"Brasil decente" em 16%</b> — segue o eixo mais presente, puxado por STF, PF e instituições.</p>
-      <p class="mini" style="margin-bottom:10px">🟢 <b>"Brasil rico" subiu para 6% e "Brasil seguro" para 4%</b> — o melhor resultado dos dois desde a edição nº 1, que segue sendo o teto da série (8% e 6%). O volume absoluto permanece baixo (9 e 5 matérias) e parte da melhora vem da queda do denominador, mas é o primeiro movimento consistente na direção da tese.</p>
-      <table style="margin:8px 0 12px">
-        <thead><tr><th>Eixo</th><th class="num">Ed.1</th><th class="num">Ed.5</th><th class="num">Ed.7</th><th class="num">Ed.8</th><th class="num">Ed.9</th><th class="num">Ed.10</th></tr></thead>
-        <tbody>
-          <tr><td>Brasil decente</td><td class="num">18%</td><td class="num">18%</td><td class="num">20%</td><td class="num">20%</td><td class="num">18%</td><td class="num"><b>16%</b></td></tr>
-          <tr><td>Brasil rico</td><td class="num">8%</td><td class="num">1%</td><td class="num">5%</td><td class="num">5%</td><td class="num">3%</td><td class="num" style="color:var(--ok)"><b>6%</b></td></tr>
-          <tr><td>Brasil seguro</td><td class="num">6%</td><td class="num">2%</td><td class="num">2%</td><td class="num">2%</td><td class="num">2%</td><td class="num" style="color:var(--ok)"><b>4%</b></td></tr>
-        </tbody>
-      </table>
-      <div class="acao"><b>O ciclo terminou; a tese começa a aparecer agora.</b> Em dez medições durante a campanha, "Brasil rico" e "Brasil seguro" nunca passaram de 8% e 6%. Na primeira semana sem eleição, marcam 6% e 4% — ainda baixo em volume, mas em alta nos dois. 74% das 140 matérias seguem sem eixo identificável. <b>A questão para as próximas semanas é se a tese orienta a cobertura do novo governo</b>, que é onde a pauta econômica e de segurança naturalmente volta.</div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<section class="bloco">
-  <div class="bhead"><span class="n">BLOCO 04</span><h2>O que a busca está pedindo</h2><span class="uso">a demanda que já chega — e a que escapa</span></div>
-  <div class="grid2">
-    <div class="panel">
-      <h3>Consultas eleitorais que trazem mais cliques</h3>
-      <div class="src">⚠️ HISTÓRICO DE 24/08/2026 · 133 TERMOS ELEITORAIS SOMAVAM 392 MIL CLIQUES · FONTE BLOQUEADA DESDE 31/08</div>
-      <table>
-        <thead><tr><th>Consulta</th><th class="num">Cliques</th><th class="num">CTR</th><th class="num">Posição</th></tr></thead>
-        <tbody>
-          <tr><td>pesquisa para presidente 2026</td><td class="num">45.785</td><td class="num">14,9%</td><td class="num">2,8</td></tr>
-          <tr><td>pesquisa presidente 2026</td><td class="num">42.766</td><td class="num">15,4%</td><td class="num">2,8</td></tr>
-          <tr><td>pesquisa eleitoral</td><td class="num">24.187</td><td class="num">16,6%</td><td class="num">1,8</td></tr>
-          <tr><td>pesquisa eleitoral 2026</td><td class="num">15.324</td><td class="num">18,4%</td><td class="num">1,9</td></tr>
-          <tr><td>até que idade é obrigatório votar</td><td class="num">6.549</td><td class="num">12,9%</td><td class="num">2,4</td></tr>
-          <tr style="background:#EAF3EE"><td>pesquisa senado SC 2026</td><td class="num">1.310</td><td class="num win">41,7%</td><td class="num win">1,6</td></tr>
-          <tr style="background:#EAF3EE"><td>pesquisa para senador do PR 2026</td><td class="num">1.163</td><td class="num win">45,3%</td><td class="num win">1,2</td></tr>
-        </tbody>
-      </table>
-      <p class="mini" style="margin-top:12px"><b>O padrão que salta:</b> nas consultas estaduais a Gazeta tinha <b>CTR de 40 a 46% e posição 1,2</b> — domínio quase absoluto, inclusive em estados sem operação local. Nas nacionais, volume maior e posição 2,8.</p><p class="mini" style="margin-top:9px">⚠️ <b>Estes números são de 24 de agosto</b> e atravessaram o primeiro turno sem atualização. A medição do primeiro turno pela Marfeel confirmou a tese por outro caminho: as 57 páginas de lista de eleitos fizeram <b>8,57 milhões de page views</b>, com 91% vindos de fora do Paraná.</p>
+  <section class="bloco">
+    <div class="bhead"><span class="n">BLOCO 04</span><h2>O que vigiar na Ed. 19</h2><span class="uso">09–15/11 · com Proclamação da República no domingo</span></div>
+    <div class="grid2e">
+      <div class="panel">
+        <h3>Três perguntas que a próxima janela responde</h3>
+        <div class="src">COM PREVISÃO TESTÁVEL, PARA CONFERIR NA SEGUNDA</div>
+        <p class="mini" style="margin-bottom:10px"><b>1 · O patamar de 10,82% se sustenta ou continua caindo?</b> Previsão: estabiliza entre 8% e 11%. A pauta de rearranjo (Senado, reforma do STF, 2027) é eleitoral por natureza e não depende de calendário. Se cair abaixo de 7%, a Gazeta perdeu o território junto com o ciclo.</p>
+        <p class="mini" style="margin-bottom:10px"><b>2 · O zero de sábado se repete?</b> É o teste mais simples e mais revelador deste painel. Uma única peça eleitoral agendada para o fim de semana já muda o resultado.</p>
+        <p class="mini"><b>3 · A agenda de 2027 assume o lugar?</b> Os termos "2027" e "reeleição" já apareceram entre os macro da janela. Se a cobertura migrar de "eleição que passou" para "mandato que começa", o indicador precisa de uma segunda linha na Ed. 20.</p>
+      </div>
+      <div class="panel">
+        <h3>Nota sobre a base da Ed. 19</h3>
+        <div class="src">PLANEJAMENTO DE JANELA</div>
+        <p class="mini" style="margin-bottom:10px">A janela 09–15/11 tem <b>5 dias úteis e 2 de fim de semana</b>, sem feriado no meio: 15/11, Proclamação da República, cai no domingo e não reduz a base de dias úteis.</p>
+        <p class="mini" style="margin-bottom:10px">Efeito esperado: o fim de semana de 14–15/11 terá comportamento atípico, com o domingo funcionando como véspera de feriado prolongado para parte do país. <b>A comparação de fim de semana entre Ed. 18 e Ed. 19 vai pedir ressalva.</b></p>
+        <p class="mini"><b>Sinalizado com antecedência</b> para que a leitura da próxima edição já saia com a advertência pronta, em vez de ser corrigida depois.</p>
+      </div>
     </div>
-    <div class="destaque">
-      <div class="l">A oportunidade, agora medida em audiência própria</div>
-      <div class="num">8,57 M</div>
-      <p><b>Page views das 57 páginas de lista de eleitos no primeiro turno</b> — 56% de todo o tráfego do site em 04 e 05/10, segundo a Marfeel. Média de 150 mil page views por página.</p>
-      <p>O lote saiu entre 20h12 e 21h28 do domingo da eleição. <b>91% do volume veio de estados fora do Paraná.</b> A casa executou o formato de consulta e ganhou a busca nacional.</p>
-      <p><b>O segundo turno é em 25/10 — daqui a seis dias.</b> A recomendação é atualizar as 57 páginas no mesmo endereço, em vez de criar novas: elas já têm autoridade acumulada e voltam a ranquear mais rápido.</p>
-      <p>A camada canônica permanente — uma página fixa que responda "quem são os candidatos e como estão nas pesquisas" — segue sendo a recomendação nº 1 do painel, pela oitava edição.</p>
-    </div>
-  </div>
-</section>
-
-<footer>
-RADAR ELEIÇÕES 2026 · CÉREBRO GAZETA · NÚCLEO DE AUDIÊNCIA &amp; MÉTRICAS · EDIÇÃO Nº 10 · 02/11/2026<br>
-FONTES: COLETA PRÓPRIA DE SITEMAPS (6 VEÍCULOS, 26/10 A 01/11) E MARFEEL. OS DADOS DE SEARCH CONSOLE SÃO HISTÓRICOS, DE 24/08/2026 — A FONTE SEGUE BLOQUEADA POR LICENÇA NO SUPERMETRICS.<br>
-CRITÉRIO ELEITORAL: MATÉRIA COM URL EM /ELEICOES/ OU COM TERMOS INEQUIVOCAMENTE ELEITORAIS NO TÍTULO (CANDIDATO, PESQUISA ELEITORAL, DEBATE PRESIDENCIAL, INTENÇÃO DE VOTO, INSTITUTOS DE PESQUISA, TSE/TRE). CLASSIFICAÇÃO POR EIXO É EXPERIMENTAL E BASEADA EM PALAVRAS DO TÍTULO.
-</footer>
+  </section>
+  <footer>
+    CÉREBRO GAZETA · ED. 18 · JANELA 02–08/11/2026 · GERADO EM 09/11/2026 · BASE: 4 DIAS ÚTEIS + 1 FERIADO (02/11, FINADOS) + 2 DE FIM DE SEMANA<br>
+    FONTES: COLETOR PRÓPRIO <b>cerebro-gazeta</b> (SITEMAPS + RSS) · 131.695 LINHAS, 130.244 APÓS DEDUPLICAÇÃO · MARFEEL VIA KINGMETRICS, CONTA 3731<br>
+    LIMITAÇÕES DECLARADAS: O ANTAGONISTA VIA GOOGLE NEWS RSS (VOLUME PARCIAL, NÃO COMPARÁVEL) · COLETA DE JORNALISMO DA REVISTA OESTE COM 3 DIAS ZERADOS NA JANELA (02, 05 E 06/11) — LINHA NÃO APURÁVEL PARA CADÊNCIA · REVISTA OESTE DECLARA HORÁRIO DE PUBLICAÇÃO ADIANTADO — CRITÉRIO V3 EM VIGOR (A QUEDA APARENTE DO INDICADOR É ARTEFATO DE COMPOSIÇÃO, NÃO CORREÇÃO DA FONTE) · <b>98,3% DOS TÍTULOS DA GAZETA VÊM DO SLUG DA URL, NÃO DA MANCHETE, DESDE 27/07 — SÓ A GAZETA É AFETADA</b> · SEARCH CONSOLE, TRENDS E GA4 BLOQUEADOS NO SUPERMETRICS DESDE 31/08 POR MUDANÇA DE PLANO NA LICENÇA 1810658 — DADO DE BUSCA É HISTÓRICO DE 24/08<br>
+    CLASSIFICAÇÃO DE FÁBRICA POR PADRÃO DE URL (<code>/oestegeral/</code> E <code>/ladooa/</code>), NÃO PELO RÓTULO DA LINHA DE COLETA — REGRA NOVA NESTA EDIÇÃO, APLICADA RETROATIVAMENTE A TODA A SÉRIE<br>NENHUM PERCENTUAL FOI HERDADO DE EDIÇÃO ANTERIOR — TODOS RECALCULADOS DO DADO BRUTO.
+  </footer>
 </div>
-
 <script>
-const GZ='#0F2237', FO='#7A4E8C', OE='#C99B3F', ES='#3D5A80', OG='#1E7F4F', AN='#8A6FB0', GOLD='#C99B3F';
-new Chart(document.getElementById('cad'),{type:'bar',
- data:{labels:["O Globo", "Estadão", "Folha", "Gazeta", "Antagonista", "Oeste"],datasets:[
-  {label:'Matérias eleitorais por dia',data:[30.0, 27.3, 22.4, 20.0, 5.9, 12.1],
-   backgroundColor:[OG,ES,FO,GZ,AN,OE],borderRadius:4}]},
- options:{maintainAspectRatio:false,plugins:{legend:{display:false},
-  tooltip:{callbacks:{afterLabel:c=>["9% do total", "12% do total", "11% do total", "20% do total", "14% do total", "24% do total"][c.dataIndex]}}},
-  scales:{x:{grid:{display:false},ticks:{font:{family:'Archivo',size:12}}},
-   y:{beginAtZero:true,grid:{color:'#F0EEE8'},ticks:{font:{family:'IBM Plex Mono',size:10}}}}}});
+const D={"dias": ["02/11", "03/11", "04/11", "05/11", "06/11", "07/11", "08/11"], "rotulos": ["Seg 02*", "Ter 03", "Qua 04", "Qui 05", "Sex 06", "Sáb 07", "Dom 08"], "cad": {"gazeta": [50, 131, 136, 117, 128, 47, 47], "folha": [150, 220, 258, 238, 209, 126, 139], "estadao": [149, 249, 239, 248, 257, 150, 179], "oglobo": [185, 355, 376, 388, 341, 186, 202], "oeste": [0, 73, 89, 0, 0, 47, 47], "antagonista": [41, 63, 59, 55, 49, 39, 36], "oeste_fabrica": [74, 105, 96, 77, 99, 168, 151], "antagonista_fabrica": [30, 57, 55, 56, 59, 75, 75]}, "cadtot": {"gazeta": 656, "folha": 1340, "estadao": 1471, "oglobo": 2033, "oeste": 256, "antagonista": 342, "oeste_fabrica": 770, "antagonista_fabrica": 407}, "cad17": {"gazeta": 699, "folha": 1473, "estadao": 1628, "oglobo": 2387, "oeste": 351, "antagonista": 299, "oeste_fabrica": 778, "antagonista_fabrica": 450}, "uteis_dia": {"gazeta": 128, "folha": 231, "estadao": 248, "oglobo": 365, "oeste": 40, "antagonista": 56, "oeste_fabrica": 94, "antagonista_fabrica": 57}, "fds_dia": {"gazeta": 47, "folha": 132, "estadao": 164, "oglobo": 194, "oeste": 47, "antagonista": 38, "oeste_fabrica": 160, "antagonista_fabrica": 75}, "fer": {"gazeta": 50, "folha": 150, "estadao": 149, "oglobo": 185, "oeste": 0, "antagonista": 41, "oeste_fabrica": 74, "antagonista_fabrica": 30}, "heat": {"gazeta": {"uteis": [1.2, 2.5, 1.5, 0.2, 0.0, 0.0, 1.2, 3.5, 5.8, 6.8, 8.2, 7.0, 9.5, 8.2, 7.5, 12.8, 8.8, 11.2, 6.8, 6.5, 4.2, 9.2, 2.2, 3.0], "fds": [5.0, 0.5, 1.0, 0.0, 0.5, 0.5, 0.5, 0.0, 0.0, 1.0, 5.5, 3.5, 0.0, 2.0, 5.5, 3.5, 1.5, 1.0, 2.5, 2.5, 2.5, 3.5, 3.0, 1.5]}, "folha": {"uteis": [3.2, 0.8, 0.5, 0.2, 12.8, 3.5, 6.8, 4.5, 10.2, 9.8, 13.2, 12.2, 17.0, 14.8, 9.8, 11.8, 11.2, 20.2, 17.2, 12.0, 8.2, 6.5, 9.2, 15.5], "fds": [0.5, 0.5, 0.5, 0.0, 8.5, 2.5, 2.5, 2.5, 5.5, 3.5, 7.0, 5.0, 9.0, 8.5, 7.5, 9.0, 6.0, 10.0, 7.5, 5.5, 7.0, 3.0, 6.5, 14.5]}, "estadao": {"uteis": [1.8, 1.5, 0.5, 8.5, 2.0, 6.8, 3.2, 0.0, 0.0, 7.0, 17.8, 20.0, 29.2, 12.5, 0.0, 2.8, 18.8, 22.8, 29.8, 19.8, 16.2, 15.0, 9.5, 3.0], "fds": [1.0, 0.5, 1.5, 7.5, 1.5, 9.0, 8.0, 7.5, 7.5, 6.5, 10.0, 9.5, 10.5, 5.5, 6.0, 10.0, 13.0, 14.0, 13.5, 6.5, 5.0, 4.5, 6.0, 0.0]}, "oglobo": {"uteis": [24.8, 5.0, 8.0, 29.8, 31.0, 11.5, 12.2, 16.8, 19.0, 21.2, 24.0, 15.5, 18.0, 14.5, 19.0, 17.8, 18.5, 20.5, 13.2, 8.8, 7.0, 4.0, 3.0, 2.0], "fds": [14.5, 5.5, 4.0, 25.5, 29.0, 7.5, 11.5, 7.5, 8.5, 10.5, 6.0, 10.0, 3.0, 8.5, 5.5, 8.5, 4.0, 8.0, 2.5, 6.0, 5.5, 1.0, 0.0, 1.5]}, "oeste": {"uteis": [1.0, 0.8, 0.8, 0.0, 0.2, 0.0, 0.0, 0.0, 0.0, 0.5, 2.0, 1.8, 2.2, 2.5, 2.2, 2.5, 2.8, 2.5, 3.0, 2.8, 3.8, 2.5, 6.5, 0.2], "fds": [1.0, 0.5, 1.5, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.5, 2.5, 3.0, 2.5, 4.5, 2.5, 3.5, 1.5, 2.0, 2.0, 3.0, 8.0, 3.0, 1.5, 1.0]}, "antagonista": {"uteis": [0.2, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 3.2, 2.5, 2.8, 3.8, 5.2, 2.0, 4.0, 2.8, 4.5, 5.0, 3.2, 2.8, 4.5, 4.8, 2.5, 0.8, 0.0], "fds": [0.0, 0.0, 0.5, 0.5, 0.0, 0.0, 1.5, 4.0, 2.5, 3.5, 3.0, 3.0, 3.5, 1.5, 2.5, 2.5, 1.0, 2.0, 3.0, 1.5, 1.0, 0.0, 0.5, 0.0]}, "oeste_fabrica": {"uteis": [2.8, 2.0, 2.5, 2.2, 2.8, 2.5, 6.8, 5.0, 4.5, 3.0, 3.5, 4.0, 4.0, 4.0, 4.5, 4.8, 4.8, 5.8, 4.0, 4.0, 3.5, 4.2, 5.0, 4.2], "fds": [6.0, 4.0, 3.5, 5.0, 5.5, 5.5, 9.0, 9.5, 8.0, 6.0, 7.0, 6.0, 6.5, 7.5, 8.0, 7.5, 8.5, 8.5, 6.5, 8.0, 6.0, 6.0, 6.5, 5.0]}, "antagonista_fabrica": {"uteis": [0.0, 0.5, 1.8, 4.8, 4.5, 1.0, 1.2, 0.0, 0.0, 0.0, 0.0, 2.0, 8.5, 4.5, 0.0, 0.0, 0.0, 7.5, 7.0, 1.0, 3.2, 4.2, 4.5, 0.5], "fds": [0.0, 0.0, 2.0, 7.0, 5.0, 1.0, 0.0, 0.0, 0.0, 1.5, 7.0, 5.0, 1.5, 0.0, 5.5, 6.5, 3.5, 4.0, 4.5, 4.5, 5.0, 5.0, 4.5, 2.0]}}, "share": {"gazeta": {"T1": 24.2, "T2": 21.6, "T3": 10.7, "T4": 12.5, "T5": 13.0, "Outros": 18.0}, "folha": {"T1": 17.7, "T2": 8.8, "T3": 12.6, "T4": 3.7, "T5": 17.3, "Outros": 39.9}, "estadao": {"T1": 12.1, "T2": 8.4, "T3": 22.8, "T4": 3.4, "T5": 10.1, "Outros": 43.2}, "oglobo": {"T1": 13.1, "T2": 11.1, "T3": 12.5, "T4": 3.0, "T5": 18.8, "Outros": 41.5}, "oeste": {"T1": 24.2, "T2": 17.6, "T3": 12.9, "T4": 2.3, "T5": 21.5, "Outros": 21.5}, "antagonista": {"T1": 28.1, "T2": 25.1, "T3": 7.3, "T4": 1.8, "T5": 11.4, "Outros": 26.3}, "oeste_fabrica": {"T1": 0.9, "T2": 7.1, "T3": 10.0, "T4": 4.8, "T5": 7.5, "Outros": 69.6}, "antagonista_fabrica": {"T1": 2.2, "T2": 7.4, "T3": 14.5, "T4": 3.2, "T5": 5.2, "Outros": 67.6}}, "share_n": {"gazeta": 656, "folha": 1340, "estadao": 1471, "oglobo": 2033, "oeste": 256, "antagonista": 342, "oeste_fabrica": 770, "antagonista_fabrica": 407}, "eixos": {"gazeta": {"Justica & Instituicoes": {"pct": 21.6}, "Fe & Costumes": {"pct": 12.3}, "Economia & Bolso": {"pct": 17.7}, "Poder & Eleicoes": {"pct": 29.9}, "Seguranca & Mundo": {"pct": 22.9}}, "folha": {"Justica & Instituicoes": {"pct": 8.8}, "Fe & Costumes": {"pct": 4.2}, "Economia & Bolso": {"pct": 14.2}, "Poder & Eleicoes": {"pct": 22.2}, "Seguranca & Mundo": {"pct": 24.0}}, "estadao": {"Justica & Instituicoes": {"pct": 8.4}, "Fe & Costumes": {"pct": 3.6}, "Economia & Bolso": {"pct": 17.7}, "Poder & Eleicoes": {"pct": 14.8}, "Seguranca & Mundo": {"pct": 15.6}}, "oglobo": {"Justica & Instituicoes": {"pct": 11.1}, "Fe & Costumes": {"pct": 3.3}, "Economia & Bolso": {"pct": 12.3}, "Poder & Eleicoes": {"pct": 17.8}, "Seguranca & Mundo": {"pct": 21.3}}, "oeste": {"Justica & Instituicoes": {"pct": 17.6}, "Fe & Costumes": {"pct": 2.7}, "Economia & Bolso": {"pct": 12.9}, "Poder & Eleicoes": {"pct": 25.4}, "Seguranca & Mundo": {"pct": 28.1}}, "antagonista": {"Justica & Instituicoes": {"pct": 25.1}, "Fe & Costumes": {"pct": 2.6}, "Economia & Bolso": {"pct": 15.5}, "Poder & Eleicoes": {"pct": 38.3}, "Seguranca & Mundo": {"pct": 21.9}}, "oeste_fabrica": {"Justica & Instituicoes": {"pct": 7.1}, "Fe & Costumes": {"pct": 4.8}, "Economia & Bolso": {"pct": 11.3}, "Poder & Eleicoes": {"pct": 1.0}, "Seguranca & Mundo": {"pct": 9.0}}, "antagonista_fabrica": {"Justica & Instituicoes": {"pct": 7.4}, "Fe & Costumes": {"pct": 3.2}, "Economia & Bolso": {"pct": 17.2}, "Poder & Eleicoes": {"pct": 2.2}, "Seguranca & Mundo": {"pct": 6.4}}}, "camadas": {"18": {"n": 656, "abs": {"editorial": 493, "colunismo": 140, "comercial": 23}, "pct": {"editorial": 75.2, "colunismo": 21.3, "comercial": 3.5}}, "17": {"n": 699, "abs": {"editorial": 537, "colunismo": 136, "comercial": 26}, "pct": {"editorial": 76.8, "colunismo": 19.5, "comercial": 3.7}}}, "ele": {"gazeta": {"n18": 71, "tot18": 656, "pct18": 10.82, "n17": 129, "tot17": 699, "pct17": 18.45}, "folha": {"n18": 96, "tot18": 1340, "pct18": 7.16, "n17": 139, "tot17": 1473, "pct17": 9.44}, "estadao": {"n18": 75, "tot18": 1471, "pct18": 5.1, "n17": 146, "tot17": 1628, "pct17": 8.97}, "oglobo": {"n18": 126, "tot18": 2033, "pct18": 6.2, "n17": 308, "tot17": 2387, "pct17": 12.9}, "oeste": {"n18": 23, "tot18": 256, "pct18": 8.98, "n17": 79, "tot17": 351, "pct17": 22.51}, "antagonista": {"n18": 30, "tot18": 342, "pct18": 8.77, "n17": 37, "tot17": 299, "pct17": 12.37}, "oeste_fabrica": {"n18": 3, "tot18": 770, "pct18": 0.39, "n17": 8, "tot17": 778, "pct17": 1.03}, "antagonista_fabrica": {"n18": 2, "tot18": 407, "pct18": 0.49, "n17": 1, "tot17": 450, "pct17": 0.22}}, "ele_serie6": [{"dia": "2026-11-02", "gazeta": 10, "jorn6": 44}, {"dia": "2026-11-03", "gazeta": 19, "jorn6": 102}, {"dia": "2026-11-04", "gazeta": 14, "jorn6": 106}, {"dia": "2026-11-05", "gazeta": 12, "jorn6": 71}, {"dia": "2026-11-06", "gazeta": 11, "jorn6": 41}, {"dia": "2026-11-07", "gazeta": 0, "jorn6": 23}, {"dia": "2026-11-08", "gazeta": 5, "jorn6": 34}], "termos_prop": [["trump", 52, 196, 2.2], ["governo", 42, 157, 2.2], ["senado", 33, 120, 2.3], ["papa", 31, 27, 9.5], ["leao", 29, 30, 8.0], ["curitiba", 21, 3, 58.1], ["pena", 21, 67, 2.6], ["alcolumbre", 20, 47, 3.5], ["midterms", 18, 20, 7.5], ["mercado", 17, 63, 2.2], ["parana", 17, 6, 23.5], ["impeachment", 14, 35, 3.3], ["vorcaro", 13, 44, 2.5], ["congresso", 13, 49, 2.2], ["alerta", 13, 38, 2.8], ["moraes", 13, 29, 3.7], ["reeleicao", 12, 21, 4.7], ["estados", 12, 30, 3.3], ["direita", 12, 19, 5.2], ["republicanos", 11, 20, 4.6]], "termos_macro": [["lula", 387], ["brasil", 278], ["veja", 258], ["trump", 248], ["governo", 199], ["pode", 156], ["senado", 153], ["eleicoes", 150], ["flavio", 148], ["2026", 147], ["paraguai", 134], ["paulo", 131], ["presidente", 116], ["milhoes", 115], ["bolsonaro", 114], ["novo", 111], ["seguranca", 111], ["nova", 108], ["camara", 106], ["derrota", 103]], "termos_gap": [["video", 78], ["saiba", 62], ["confira", 54], ["serie", 50], ["mulher", 49], ["feira", 49], ["crusoe", 48], ["vivo", 46], ["assistir", 46], ["palmeiras", 43], ["copa", 42], ["prova", 39], ["escalacao", 39], ["dinheiro", 37], ["chuva", 36], ["globo", 36]], "gap_formato": {"video": 78, "voce": 31, "saiba": 62, "confira": 54, "assistir": 46}, "arvores": {"gazeta": [{"editoria": "mundo", "n": 183, "pct": 27.9}, {"editoria": "republica", "n": 123, "pct": 18.8}, {"editoria": "vozes", "n": 82, "pct": 12.5}, {"editoria": "economia", "n": 49, "pct": 7.5}, {"editoria": "opiniao", "n": 33, "pct": 5.0}, {"editoria": "brasil", "n": 30, "pct": 4.6}, {"editoria": "ideias", "n": 25, "pct": 3.8}, {"editoria": "parana", "n": 23, "pct": 3.5}, {"editoria": "vida-e-cidadania", "n": 21, "pct": 3.2}, {"editoria": "gpbc", "n": 21, "pct": 3.2}, {"editoria": "santa-catarina", "n": 13, "pct": 2.0}, {"editoria": "curitiba", "n": 7, "pct": 1.1}], "folha": [{"editoria": "geral", "n": 297, "pct": 22.2}, {"editoria": "colunas", "n": 242, "pct": 18.1}, {"editoria": "mundo", "n": 168, "pct": 12.5}, {"editoria": "cotidiano", "n": 137, "pct": 10.2}, {"editoria": "mercado", "n": 124, "pct": 9.3}, {"editoria": "ilustrada", "n": 93, "pct": 6.9}, {"editoria": "esporte", "n": 71, "pct": 5.3}, {"editoria": "poder", "n": 60, "pct": 4.5}, {"editoria": "equilibrioesaude", "n": 37, "pct": 2.8}, {"editoria": "opiniao", "n": 32, "pct": 2.4}, {"editoria": "educacao", "n": 25, "pct": 1.9}, {"editoria": "ciencia", "n": 18, "pct": 1.3}], "estadao": [{"editoria": "esportes", "n": 216, "pct": 14.7}, {"editoria": "tecmundo", "n": 184, "pct": 12.5}, {"editoria": "economia", "n": 153, "pct": 10.4}, {"editoria": "internacional", "n": 140, "pct": 9.5}, {"editoria": "einvestidor", "n": 133, "pct": 9.0}, {"editoria": "politica", "n": 121, "pct": 8.2}, {"editoria": "paladar", "n": 78, "pct": 5.3}, {"editoria": "brasil", "n": 71, "pct": 4.8}, {"editoria": "cultura", "n": 61, "pct": 4.1}, {"editoria": "sao-paulo", "n": 56, "pct": 3.8}, {"editoria": "opiniao", "n": 49, "pct": 3.3}, {"editoria": "emais", "n": 37, "pct": 2.5}], "oglobo": [{"editoria": "blogs", "n": 315, "pct": 15.5}, {"editoria": "economia", "n": 228, "pct": 11.2}, {"editoria": "mundo", "n": 221, "pct": 10.9}, {"editoria": "esportes", "n": 185, "pct": 9.1}, {"editoria": "rio", "n": 170, "pct": 8.4}, {"editoria": "ela", "n": 151, "pct": 7.4}, {"editoria": "cultura", "n": 145, "pct": 7.1}, {"editoria": "brasil", "n": 132, "pct": 6.5}, {"editoria": "politica", "n": 125, "pct": 6.1}, {"editoria": "patrocinado", "n": 118, "pct": 5.8}, {"editoria": "saude", "n": 94, "pct": 4.6}, {"editoria": "play", "n": 67, "pct": 3.3}], "oeste": [{"editoria": "politica", "n": 74, "pct": 28.9}, {"editoria": "mundo", "n": 62, "pct": 24.2}, {"editoria": "brasil", "n": 37, "pct": 14.5}, {"editoria": "economia", "n": 26, "pct": 10.2}, {"editoria": "videos", "n": 18, "pct": 7.0}, {"editoria": "no-ponto", "n": 12, "pct": 4.7}, {"editoria": "imprensa", "n": 10, "pct": 3.9}, {"editoria": "agronegocio", "n": 10, "pct": 3.9}, {"editoria": "tecnologia", "n": 4, "pct": 1.6}, {"editoria": "projetos-especiais-oeste", "n": 2, "pct": 0.8}, {"editoria": "curiosidades", "n": 1, "pct": 0.4}], "antagonista": [{"editoria": "geral", "n": 342, "pct": 100.0}], "oeste_fabrica": [{"editoria": "oestegeral", "n": 770, "pct": 100.0}], "antagonista_fabrica": [{"editoria": "entretenimento", "n": 326, "pct": 80.1}, {"editoria": "variedades", "n": 37, "pct": 9.1}, {"editoria": "turismo", "n": 26, "pct": 6.4}, {"editoria": "carros", "n": 10, "pct": 2.5}, {"editoria": "tecnologia", "n": 7, "pct": 1.7}, {"editoria": "esportes", "n": 1, "pct": 0.2}]}, "nuvens": {"gazeta": [{"t": "lula", "n": 64}, {"t": "trump", "n": 52}, {"t": "governo", "n": 42}, {"t": "brasil", "n": 40}, {"t": "senado", "n": 33}, {"t": "papa", "n": 31}, {"t": "flavio", "n": 29}, {"t": "leao", "n": 29}, {"t": "paraguai", "n": 26}, {"t": "curitiba", "n": 21}, {"t": "bolsonaro", "n": 21}, {"t": "pena", "n": 21}, {"t": "alcolumbre", "n": 20}, {"t": "pede", "n": 20}, {"t": "derrota", "n": 18}, {"t": "midterms", "n": 18}, {"t": "justica", "n": 17}, {"t": "pode", "n": 17}, {"t": "mercado", "n": 17}, {"t": "parana", "n": 17}, {"t": "eleicoes", "n": 16}, {"t": "2026", "n": 14}, {"t": "2027", "n": 14}, {"t": "impeachment", "n": 14}, {"t": "eleicao", "n": 13}, {"t": "vorcaro", "n": 13}, {"t": "congresso", "n": 13}, {"t": "novo", "n": 13}, {"t": "alerta", "n": 13}, {"t": "moraes", "n": 13}, {"t": "camara", "n": 12}, {"t": "reeleicao", "n": 12}, {"t": "estados", "n": 12}, {"t": "direita", "n": 12}], "folha": [{"t": "lula", "n": 91}, {"t": "trump", "n": 68}, {"t": "brasil", "n": 63}, {"t": "governo", "n": 44}, {"t": "paulo", "n": 39}, {"t": "eleicoes", "n": 37}, {"t": "flavio", "n": 33}, {"t": "pode", "n": 31}, {"t": "veja", "n": 29}, {"t": "deve", "n": 29}, {"t": "senado", "n": 28}, {"t": "morte", "n": 28}, {"t": "seguranca", "n": 28}, {"t": "derrota", "n": 28}, {"t": "bolsonaro", "n": 26}, {"t": "2027", "n": 24}, {"t": "presidente", "n": 24}, {"t": "nova", "n": 24}, {"t": "eleicao", "n": 23}, {"t": "democrata", "n": 21}, {"t": "novo", "n": 20}, {"t": "pena", "n": 20}, {"t": "camara", "n": 19}, {"t": "vitoria", "n": 19}, {"t": "fazenda", "n": 19}, {"t": "prisao", "n": 19}, {"t": "2026", "n": 19}, {"t": "paraguai", "n": 19}, {"t": "enem", "n": 18}, {"t": "ministerio", "n": 17}, {"t": "meio", "n": 17}, {"t": "policia", "n": 17}, {"t": "justica", "n": 17}, {"t": "globo", "n": 17}], "estadao": [{"t": "veja", "n": 102}, {"t": "brasil", "n": 62}, {"t": "lula", "n": 61}, {"t": "assistir", "n": 44}, {"t": "trump", "n": 42}, {"t": "paulo", "n": 40}, {"t": "milhoes", "n": 39}, {"t": "vivo", "n": 39}, {"t": "pode", "n": 38}, {"t": "escalacao", "n": 38}, {"t": "mercado", "n": 37}, {"t": "horario", "n": 37}, {"t": "governo", "n": 37}, {"t": "2026", "n": 32}, {"t": "entenda", "n": 31}, {"t": "confira", "n": 31}, {"t": "camara", "n": 30}, {"t": "fazer", "n": 29}, {"t": "novo", "n": 28}, {"t": "paraguai", "n": 27}, {"t": "semana", "n": 26}, {"t": "presidente", "n": 26}, {"t": "nova", "n": 26}, {"t": "cupom", "n": 25}, {"t": "eleicoes", "n": 24}, {"t": "resultado", "n": 24}, {"t": "lucro", "n": 23}, {"t": "serie", "n": 21}, {"t": "bolsonaro", "n": 21}, {"t": "senado", "n": 21}, {"t": "jogos", "n": 21}, {"t": "black", "n": 21}, {"t": "feira", "n": 21}, {"t": "banco", "n": 20}], "oglobo": [{"t": "veja", "n": 122}, {"t": "lula", "n": 96}, {"t": "brasil", "n": 86}, {"t": "entenda", "n": 83}, {"t": "eleicoes", "n": 63}, {"t": "enem", "n": 61}, {"t": "2026", "n": 61}, {"t": "trump", "n": 60}, {"t": "pode", "n": 57}, {"t": "video", "n": 51}, {"t": "nova", "n": 49}, {"t": "saiba", "n": 49}, {"t": "seguranca", "n": 49}, {"t": "governo", "n": 48}, {"t": "milhoes", "n": 45}, {"t": "presidente", "n": 40}, {"t": "flavio", "n": 40}, {"t": "2027", "n": 39}, {"t": "senado", "n": 38}, {"t": "meio", "n": 37}, {"t": "durante", "n": 35}, {"t": "novo", "n": 34}, {"t": "paraguai", "n": 34}, {"t": "morte", "n": 33}, {"t": "paulo", "n": 32}, {"t": "bolsonaro", "n": 31}, {"t": "derrota", "n": 31}, {"t": "brasileiros", "n": 30}, {"t": "volta", "n": 30}, {"t": "brasileiro", "n": 30}, {"t": "tres", "n": 30}, {"t": "mundo", "n": 29}, {"t": "primeira", "n": 29}, {"t": "morre", "n": 29}], "oeste": [{"t": "2026", "n": 19}, {"t": "lula", "n": 18}, {"t": "assista", "n": 17}, {"t": "brasil", "n": 15}, {"t": "camara", "n": 13}, {"t": "programa", "n": 12}, {"t": "oeste", "n": 12}, {"t": "senado", "n": 11}, {"t": "justica", "n": 10}, {"t": "paraguai", "n": 10}, {"t": "presidente", "n": 10}, {"t": "governo", "n": 10}, {"t": "prisao", "n": 10}, {"t": "paulo", "n": 9}, {"t": "vorcaro", "n": 8}, {"t": "milhoes", "n": 8}, {"t": "pedido", "n": 6}, {"t": "trump", "n": 6}, {"t": "eleicoes", "n": 6}, {"t": "penal", "n": 6}, {"t": "maioridade", "n": 6}, {"t": "eleicao", "n": 6}, {"t": "moraes", "n": 6}, {"t": "brasileira", "n": 6}, {"t": "pode", "n": 6}, {"t": "pede", "n": 6}, {"t": "alerta", "n": 6}, {"t": "seguranca", "n": 6}, {"t": "israel", "n": 6}, {"t": "novo", "n": 6}, {"t": "deixa", "n": 5}, {"t": "presidencia", "n": 5}, {"t": "policia", "n": 5}, {"t": "flavio", "n": 5}], "antagonista": [{"t": "lula", "n": 57}, {"t": "crusoe", "n": 48}, {"t": "flavio", "n": 23}, {"t": "senado", "n": 22}, {"t": "trump", "n": 20}, {"t": "governo", "n": 18}, {"t": "paraguai", "n": 18}, {"t": "prisao", "n": 15}, {"t": "maioridade", "n": 15}, {"t": "pede", "n": 14}, {"t": "penal", "n": 13}, {"t": "bolsonaro", "n": 12}, {"t": "brasil", "n": 12}, {"t": "bets", "n": 12}, {"t": "descobre", "n": 12}, {"t": "pena", "n": 12}, {"t": "presidencia", "n": 11}, {"t": "vorcaro", "n": 11}, {"t": "quer", "n": 10}, {"t": "camara", "n": 10}, {"t": "novo", "n": 10}, {"t": "alcolumbre", "n": 10}, {"t": "presidente", "n": 9}, {"t": "derrota", "n": 9}, {"t": "biblicos", "n": 8}, {"t": "desenhos", "n": 8}, {"t": "publica", "n": 8}, {"t": "defende", "n": 8}, {"t": "janones", "n": 7}, {"t": "defesa", "n": 7}, {"t": "pode", "n": 7}, {"t": "deve", "n": 7}, {"t": "fiscal", "n": 7}, {"t": "justica", "n": 6}], "oeste_fabrica": [{"t": "pode", "n": 133}, {"t": "podem", "n": 45}, {"t": "psicologia", "n": 42}, {"t": "voce", "n": 41}, {"t": "quase", "n": 37}, {"t": "vida", "n": 34}, {"t": "cidade", "n": 34}, {"t": "agua", "n": 33}, {"t": "metros", "n": 33}, {"t": "proverbio", "n": 32}, {"t": "cientistas", "n": 31}, {"t": "serve", "n": 31}, {"t": "casa", "n": 30}, {"t": "pessoas", "n": 28}, {"t": "algumas", "n": 25}, {"t": "segundo", "n": 23}, {"t": "mundo", "n": 23}, {"t": "espaco", "n": 23}, {"t": "reflexao", "n": 23}, {"t": "parece", "n": 22}, {"t": "dentro", "n": 22}, {"t": "filosofo", "n": 22}, {"t": "significa", "n": 22}, {"t": "consegue", "n": 22}, {"t": "maior", "n": 22}, {"t": "parte", "n": 21}, {"t": "sempre", "n": 20}, {"t": "durante", "n": 20}, {"t": "alguns", "n": 20}, {"t": "citacao", "n": 19}, {"t": "oceano", "n": 19}, {"t": "melhor", "n": 19}, {"t": "milhoes", "n": 18}, {"t": "adeus", "n": 18}], "antagonista_fabrica": [{"t": "descobre", "n": 83}, {"t": "pode", "n": 32}, {"t": "metros", "n": 26}, {"t": "agua", "n": 25}, {"t": "casa", "n": 24}, {"t": "familia", "n": 23}, {"t": "compra", "n": 21}, {"t": "cidade", "n": 20}, {"t": "durante", "n": 18}, {"t": "nova", "n": 16}, {"t": "vizinho", "n": 15}, {"t": "ponte", "n": 15}, {"t": "produtor", "n": 14}, {"t": "maior", "n": 14}, {"t": "comecou", "n": 14}, {"t": "veja", "n": 13}, {"t": "terra", "n": 13}, {"t": "terreno", "n": 13}, {"t": "carro", "n": 13}, {"t": "instala", "n": 13}, {"t": "dois", "n": 13}, {"t": "duas", "n": 12}, {"t": "hectares", "n": 12}, {"t": "casal", "n": 12}, {"t": "quatro", "n": 11}, {"t": "quase", "n": 11}, {"t": "morador", "n": 11}, {"t": "dono", "n": 11}, {"t": "milhoes", "n": 11}, {"t": "percebe", "n": 11}, {"t": "capital", "n": 10}, {"t": "centro", "n": 10}, {"t": "brasil", "n": 10}, {"t": "deixa", "n": 10}]}, "hist": [{"ed": 2, "rot": "13/07", "gz_ud": 115, "gz_fd": 54, "oe_pub_fd": 181, "oe_cor_fd": 54, "idx_pub": 3.4, "idx_cor": 1.0, "obs": []}, {"ed": 3, "rot": "20/07", "gz_ud": 127, "gz_fd": 41, "oe_pub_fd": 33, "oe_cor_fd": 33, "idx_pub": 0.8, "idx_cor": 0.8, "obs": []}, {"ed": 4, "rot": "27/07", "gz_ud": 156, "gz_fd": 46, "oe_pub_fd": 44, "oe_cor_fd": 44, "idx_pub": 1.0, "idx_cor": 1.0, "obs": []}, {"ed": 5, "rot": "03/08", "gz_ud": 155, "gz_fd": 52, "oe_pub_fd": 46, "oe_cor_fd": 46, "idx_pub": 0.9, "idx_cor": 0.9, "obs": []}, {"ed": 6, "rot": "10/08", "gz_ud": 151, "gz_fd": 58, "oe_pub_fd": 53, "oe_cor_fd": 53, "idx_pub": 0.9, "idx_cor": 0.9, "obs": []}, {"ed": 7, "rot": "17/08", "gz_ud": 147, "gz_fd": 72, "oe_pub_fd": 60, "oe_cor_fd": 60, "idx_pub": 0.8, "idx_cor": 0.8, "obs": []}, {"ed": 8, "rot": "24/08", "gz_ud": 143, "gz_fd": 54, "oe_pub_fd": 48, "oe_cor_fd": 48, "idx_pub": 0.9, "idx_cor": 0.9, "obs": []}, {"ed": 9, "rot": "31/08", "gz_ud": 146, "gz_fd": 48, "oe_pub_fd": 53, "oe_cor_fd": 53, "idx_pub": 1.1, "idx_cor": 1.1, "obs": []}, {"ed": 10, "rot": "07/09", "gz_ud": 149, "gz_fd": 41, "oe_pub_fd": 49, "oe_cor_fd": 49, "idx_pub": 1.2, "idx_cor": 1.2, "obs": ["Independência"]}, {"ed": 11, "rot": "14/09", "gz_ud": 143, "gz_fd": 48, "oe_pub_fd": 50, "oe_cor_fd": 50, "idx_pub": 1.0, "idx_cor": 1.0, "obs": []}, {"ed": 12, "rot": "21/09", "gz_ud": 136, "gz_fd": 41, "oe_pub_fd": 50, "oe_cor_fd": 50, "idx_pub": 1.2, "idx_cor": 1.2, "obs": []}, {"ed": 13, "rot": "28/09", "gz_ud": 131, "gz_fd": 166, "oe_pub_fd": 113, "oe_cor_fd": 113, "idx_pub": 0.7, "idx_cor": 0.7, "obs": []}, {"ed": 14, "rot": "05/10", "gz_ud": 126, "gz_fd": 42, "oe_pub_fd": 58, "oe_cor_fd": 58, "idx_pub": 1.4, "idx_cor": 1.4, "obs": []}, {"ed": 15, "rot": "12/10", "gz_ud": 126, "gz_fd": 46, "oe_pub_fd": 47, "oe_cor_fd": 47, "idx_pub": 1.0, "idx_cor": 1.0, "obs": ["N. Sra. Aparecida"]}, {"ed": 16, "rot": "19/10", "gz_ud": 127, "gz_fd": 89, "oe_pub_fd": 99, "oe_cor_fd": 99, "idx_pub": 1.1, "idx_cor": 1.1, "obs": []}, {"ed": 17, "rot": "26/10", "gz_ud": 123, "gz_fd": 42, "oe_pub_fd": 182, "oe_cor_fd": 46, "idx_pub": 4.3, "idx_cor": 1.1, "obs": []}, {"ed": 18, "rot": "02/11", "gz_ud": 128, "gz_fd": 47, "oe_pub_fd": 198, "oe_cor_fd": 47, "idx_pub": 4.2, "idx_cor": 1.0, "obs": ["Finados"]}], "cad_hist": [{"ed": 2, "ini": "2026-07-13", "fim": "2026-07-19", "gazeta": [115, 54], "folha": [46, 204], "estadao": [0, 0], "oglobo": [0, 0], "oeste": [40, 54], "antagonista": [1, 0]}, {"ed": 3, "ini": "2026-07-20", "fim": "2026-07-26", "gazeta": [127, 41], "folha": [294, 126], "estadao": [223, 132], "oglobo": [0, 0], "oeste": [83, 33], "antagonista": [8, 25]}, {"ed": 4, "ini": "2026-07-27", "fim": "2026-08-02", "gazeta": [156, 46], "folha": [209, 122], "estadao": [272, 127], "oglobo": [0, 0], "oeste": [78, 44], "antagonista": [63, 34]}, {"ed": 5, "ini": "2026-08-03", "fim": "2026-08-09", "gazeta": [155, 52], "folha": [219, 142], "estadao": [275, 130], "oglobo": [173, 174], "oeste": [84, 46], "antagonista": [41, 38]}, {"ed": 6, "ini": "2026-08-10", "fim": "2026-08-16", "gazeta": [151, 58], "folha": [231, 138], "estadao": [292, 140], "oglobo": [367, 188], "oeste": [83, 53], "antagonista": [54, 37]}, {"ed": 7, "ini": "2026-08-17", "fim": "2026-08-23", "gazeta": [147, 72], "folha": [265, 135], "estadao": [297, 138], "oglobo": [370, 187], "oeste": [83, 60], "antagonista": [53, 36]}, {"ed": 8, "ini": "2026-08-24", "fim": "2026-08-30", "gazeta": [143, 54], "folha": [234, 139], "estadao": [249, 134], "oglobo": [391, 188], "oeste": [70, 48], "antagonista": [56, 37]}, {"ed": 9, "ini": "2026-08-31", "fim": "2026-09-06", "gazeta": [146, 48], "folha": [246, 146], "estadao": [279, 158], "oglobo": [405, 236], "oeste": [80, 53], "antagonista": [58, 34]}, {"ed": 10, "ini": "2026-09-07", "fim": "2026-09-13", "gazeta": [149, 41], "folha": [251, 170], "estadao": [356, 180], "oglobo": [401, 211], "oeste": [98, 49], "antagonista": [56, 38]}, {"ed": 11, "ini": "2026-09-14", "fim": "2026-09-20", "gazeta": [143, 48], "folha": [235, 138], "estadao": [327, 159], "oglobo": [391, 198], "oeste": [90, 50], "antagonista": [52, 25]}, {"ed": 12, "ini": "2026-09-21", "fim": "2026-09-27", "gazeta": [136, 41], "folha": [231, 148], "estadao": [317, 145], "oglobo": [390, 172], "oeste": [96, 50], "antagonista": [49, 32]}, {"ed": 13, "ini": "2026-09-28", "fim": "2026-10-04", "gazeta": [131, 166], "folha": [244, 260], "estadao": [279, 240], "oglobo": [450, 536], "oeste": [90, 113], "antagonista": [51, 58]}, {"ed": 14, "ini": "2026-10-05", "fim": "2026-10-11", "gazeta": [126, 42], "folha": [242, 140], "estadao": [263, 145], "oglobo": [605, 174], "oeste": [87, 58], "antagonista": [47, 33]}, {"ed": 15, "ini": "2026-10-12", "fim": "2026-10-18", "gazeta": [126, 46], "folha": [243, 138], "estadao": [278, 147], "oglobo": [364, 194], "oeste": [90, 47], "antagonista": [48, 35]}, {"ed": 16, "ini": "2026-10-19", "fim": "2026-10-25", "gazeta": [127, 89], "folha": [235, 215], "estadao": [276, 195], "oglobo": [375, 429], "oeste": [83, 99], "antagonista": [47, 69]}, {"ed": 17, "ini": "2026-10-26", "fim": "2026-11-01", "gazeta": [123, 42], "folha": [243, 130], "estadao": [266, 150], "oglobo": [409, 171], "oeste": [52, 46], "antagonista": [49, 26]}, {"ed": 18, "ini": "2026-11-02", "fim": "2026-11-08", "gazeta": [128, 47], "folha": [231, 132], "estadao": [248, 164], "oglobo": [365, 194], "oeste": [40, 47], "antagonista": [56, 38]}], "aud": {"dias": ["19/10", "20/10", "21/10", "22/10", "23/10", "24/10", "25/10", "26/10", "27/10", "28/10", "29/10", "30/10", "31/10", "01/11", "02/11", "03/11", "04/11", "05/11", "06/11", "07/11", "08/11"], "uu": [534797, 414438, 424911, 559354, 483727, 587579, 748160, 620008, 561139, 541465, 376452, 355356, 290687, 305194, 345464, 343805, 362692, 379655, 274587, 275112, 330816], "pv": [951639, 764786, 784758, 949865, 830676, 979941, 1356626, 1160617, 1089435, 1044182, 756711, 692136, 525422, 520138, 590894, 644067, 671510, 655335, 506108, 479889, 542179], "novos": [109, 123, 135, 124, 145, 96, 97, 115, 117, 135, 113, 121, 54, 48, 52, 131, 133, 117, 118, 56, 52]}, "col_vs_mf": {"mf": [52, 131, 133, 117, 118, 56, 52], "col": [50, 131, 136, 117, 128, 47, 47]}, "sources": [["Google", 1331453], ["direct", 1187482], ["Google Discover", 685062], ["dark social", 316150], ["Facebook", 148238], ["bookmark", 70404], ["buy.tinypass.com", 65198], ["Google News", 50102], ["X (Twitter+x)", 46781], ["WhatsApp (3 fontes)", 31433], ["Bing", 17671], ["LinkedIn", 10114], ["ChatGPT", 4925]], "sections": [["Unknown (home/seções/sem tag)", 1294917, 277014], ["republica", 612719, 427799], ["mundo", 357650, 252826], ["economia", 262195, 201099], ["Brasil", 257853, 210801], ["ideias", 202397, 156264], ["Vida e Cidadania", 189032, 151478], ["turismo", 65164, 60051], ["Lúcio Vaz", 63837, 53843], ["editoriais", 59538, 47659]], "universos": [["home, seções e checkout", 1100171], ["peças novas (top-150)", 1387577], ["acervo (top-150)", 265674], ["não identificadas", 36446], ["cauda fora do top-150", 1300114]], "top_novas": [[163451, "07/11 19h03", "Defesa Civil orienta brasileiros a estocar água e alimentos para 72h", "Brasil"], [98489, "03/11 17h23", "Primeiro santo negro das Américas levitava e aparecia em dois lugares", "ideias"], [95027, "04/11 15h09", "Cleitinho questiona patrocínios e TCE-MG suspende contratos", "republica"], [65022, "04/11 19h32", "Parque brasileiro supera a Disney e está entre os três mais visitados", "turismo"], [56287, "02/11 13h11", "Record: Ministério da Justiça muda indicação de desenhos bíblicos", "Vida e Cidadania"], [34595, "05/11 20h49", "TSE aceita ação do Novo que pede cassação de Lula e Alckmin", "republica"], [32029, "08/11 13h05", "Gigante nacional do cimento será vendida para grupo chinês", "economia"], [31629, "03/11 11h29", "Governo Lula já sinaliza aumento da carga tributária em 2027", "economia"]], "duelos": {"16": {"oeste": 74.5, "folha": 23.5, "estadao": 40.0, "oglobo": 29.4, "antagonista": 33.3, "geral": 40.7}, "17": {"oeste": 46.9, "folha": 28.1, "estadao": 34.4, "oglobo": 27.7, "antagonista": 23.3, "geral": 31.8}, "18": {"oeste": 69.6, "folha": 22.0, "estadao": 53.5, "oglobo": 22.0, "antagonista": 24.5, "geral": 34.5}}, "matriz": {"gazeta": {"folha": 9, "estadao": 23, "oglobo": 11, "oeste": 16, "antagonista": 12}, "folha": {"gazeta": 32, "estadao": 78, "oglobo": 50, "oeste": 27, "antagonista": 16}, "estadao": {"gazeta": 20, "folha": 48, "oglobo": 43, "oeste": 34, "antagonista": 24}, "oglobo": {"gazeta": 39, "folha": 82, "estadao": 114, "oeste": 30, "antagonista": 29}, "oeste": {"gazeta": 7, "folha": 3, "estadao": 12, "oglobo": 7, "antagonista": 5}, "antagonista": {"gazeta": 37, "folha": 19, "estadao": 39, "oglobo": 22, "oeste": 22}}, "saldos": {"gazeta": {"pri": 71, "seg": 135}, "folha": {"pri": 203, "seg": 161}, "estadao": {"pri": 169, "seg": 266}, "oglobo": {"pri": 294, "seg": 133}, "oeste": {"pri": 34, "seg": 129}, "antagonista": {"pri": 139, "seg": 86}}, "oeste_hist": [["14–20/09", 75.5], ["21–27/09", 69.8], ["28/09–04/10", 64.5], ["05–11/10", 51.6], ["12–18/10", 64.6], ["19–25/10", 70.7], ["26/10–01/11", 12.8], ["02–08/11", 2.0]], "oeste_hist_jorn": [["14–20/09", 75.5], ["21–27/09", 69.8], ["28/09–04/10", 64.5], ["05–11/10", 51.6], ["12–18/10", 64.6], ["19–25/10", 70.7], ["26/10–01/11", 31.9], ["02–08/11", 7.8]], "oe_jorn_serie": [["Ed.14", 78.3, 0], ["Ed.15", 75.1, 0], ["Ed.16", 87.7, 0], ["Ed.17", 50.1, 1], ["Ed.18", 36.6, 3]]};
 
-new Chart(document.getElementById('eixos'),{type:'doughnut',
- data:{labels:['Sem eixo definido — noticiário corrente (103)','Brasil decente (23)','Brasil rico (9)','Brasil seguro (5)'],
- datasets:[{data:[103, 23, 9, 5],
-  backgroundColor:['#D8D4CB','#0F2237','#1E7F4F','#A63232'],borderWidth:2,borderColor:'#fff'}]},
- options:{maintainAspectRatio:false,cutout:'55%',plugins:{legend:{position:'bottom',labels:{boxWidth:10,font:{family:'Archivo',size:11},padding:8}}}}});
+const GZ='#0F2237', FO='#7A4E8C', OE='#C99B3F', ES='#3D5A80', AN='#8A6FB0', OG='#1E7F4F';
+const MUT='#8A93A3', GOLD='#C99B3F', ALERT='#A63232', INK='#0F2237';
+const NOMES={gazeta:'Gazeta',folha:'Folha',estadao:'Estadão',oglobo:'OGlobo',oeste:'Oeste',antagonista:'Antagonista',oeste_fabrica:'Oeste Fábrica',antagonista_fabrica:'Antagonista Fábrica'};
+const CORES={gazeta:GZ,folha:FO,estadao:ES,oglobo:OG,oeste:OE,antagonista:AN,oeste_fabrica:'#E0C98A',antagonista_fabrica:'#C0AEDB'};
+const F_MONO={family:'IBM Plex Mono',size:10}, F_ARCH={family:'Archivo',size:11};
+const LJ=['gazeta','folha','estadao','oglobo','oeste','antagonista'];
+
+const ORD=LJ.slice().sort((a,b)=>D.ele[b].pct18-D.ele[a].pct18);
+new Chart(document.getElementById('cShare'),{type:'bar',
+ data:{labels:ORD.map(v=>NOMES[v]),datasets:[
+  {label:'Ed. 17 · 26/10–01/11',data:ORD.map(v=>D.ele[v].pct17),backgroundColor:'#93A8C4',borderRadius:3},
+  {label:'Ed. 18 · 02–08/11',data:ORD.map(v=>D.ele[v].pct18),backgroundColor:INK,borderRadius:3}]},
+ options:{maintainAspectRatio:false,
+  plugins:{legend:{position:'bottom',labels:{boxWidth:11,font:F_ARCH}},
+   tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(2)+'% da produção'}}},
+  scales:{x:{grid:{display:false},ticks:{font:F_ARCH}},
+   y:{beginAtZero:true,grid:{color:'#F0EEE8'},
+    ticks:{font:F_MONO,callback:v=>v+'%'}}}}});
+
+new Chart(document.getElementById('cSerie'),{type:'line',
+ data:{labels:D.rotulos,datasets:[
+  {label:'Gazeta',data:D.ele_serie6.map(r=>r.gazeta),borderColor:GZ,backgroundColor:'rgba(15,34,55,.08)',
+   borderWidth:2.5,pointRadius:3,tension:.25,fill:true,yAxisID:'y'},
+  {label:'soma das seis linhas',data:D.ele_serie6.map(r=>r.jorn6),borderColor:GOLD,
+   borderWidth:2,pointRadius:3,tension:.25,borderDash:[5,4],yAxisID:'y2'}]},
+ options:{maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+  plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'line',font:F_ARCH}}},
+  scales:{x:{grid:{display:false},ticks:{font:{family:'IBM Plex Mono',size:10}}},
+   y:{beginAtZero:true,position:'left',grid:{color:'#F0EEE8'},
+    title:{display:true,text:'Gazeta',font:{family:'IBM Plex Mono',size:10}},ticks:{font:F_MONO}},
+   y2:{beginAtZero:true,position:'right',grid:{display:false},
+    title:{display:true,text:'mercado',font:{family:'IBM Plex Mono',size:10}},ticks:{font:F_MONO}}}}});
 </script>
 </body>
 </html>
