@@ -107,9 +107,6 @@
     <div class="periodo">janela de análise<b>02–08 nov 2026 · semana fechada</b>
       <span style="display:block;margin-top:4px">4 úteis + 1 feriado + 2 fds</span></div>
   </header>
-  <div class="recon" style="background:rgba(166,50,50,.07);border-color:rgba(166,50,50,.35);color:#7A2222">
-    <b>RETIFICAÇÃO — ED. 18.</b> O indicador de cadência da Revista Oeste foi corrigido nesta edição e a correção <b>vale para toda a série desde a Ed. 2</b>. Até aqui, o conteúdo de fábrica da Oeste (<code>/oestegeral/</code>) era contado como jornalismo em algumas janelas, o que inflava a cadência dela e distorcia o número de abertura do Cérebro. A classificação passa a ser feita por padrão de URL, não pelo rótulo da linha de coleta. <b>O índice de fim de semana Gazeta × Oeste nunca foi de 3x ou 4x: foi de ~1,0x em 17 das 17 edições apuradas.</b> O bloco 01 traz a série retificada.
-  </div>
   <div class="recon">
     <b>RECONSTRUÇÃO ESTRUTURAL.</b> Painel reconstruído sobre a linguagem de design aprovada (Radar de Concorrência V1 e Radar Gazeta V2), porque os arquivos da Ed. 17 não estavam disponíveis. Dados da janela 02–08/11/2026, apurados do zero. Nenhum percentual herdado de edição anterior.
   </div>
@@ -134,7 +131,7 @@
         <div class="l">o fosso de fim de semana — contra quem ele existe</div>
         <div class="num">4,1x</div>
         <p><b>No sábado e no domingo a Gazeta publica 47 peças por dia. O Globo publica 194</b> — 4,1x. O Estadão faz 164 (3,5x) e a Folha 132 (2,8x).</p>
-        <p><b>A Revista Oeste publica 47: exatamente o mesmo que a Gazeta.</b> O "4,2x contra a Oeste" das edições anteriores era conteúdo de fábrica contado como jornalismo. A série retificada mostra que esse índice ficou em ~1,0x nas 17 edições apuradas.</p>
+        <p><b>A Revista Oeste publica 47: exatamente o mesmo que a Gazeta.</b> Na série de 17 edições as duas se mantêm no mesmo patamar de fim de semana — a Oeste nunca foi o competidor a vigiar aqui.</p>
         <p style="margin-top:8px">E a prova de que não é falta de demanda: <b>a peça mais lida da semana saiu num sábado às 19h03</b>, com 163.451 page views — no dia de menor cadência da redação.</p>
       </div>
       <div class="panel">
@@ -150,7 +147,7 @@
     <div class="navcards">
       <a class="nc" href="radar-concorrencia-semanal.html">
         <div class="k">Painel 01 · semanal</div><h3>Radar de Concorrência</h3>
-        <p>Placar de cadência, a série retificada em 17 edições, mapa de calor horário, batalha de termos, share de tema e a camada de audiência da Marfeel com a decomposição de page view por universo.</p></a>
+        <p>Placar de cadência, a série histórica de 17 edições, mapa de calor horário, batalha de termos, share de tema e a camada de audiência da Marfeel com a decomposição de page view por universo.</p></a>
       <a class="nc" href="quem-pauta-quem-provas.html">
         <div class="k">Painel 02 · provas</div><h3>Quem Pauta Quem</h3>
         <p>Critério v3 completo: a matriz de quem chega primeiro entre as seis linhas jornalísticas, a evolução dos cinco duelos em três edições e as provas título a título, com horário e URL.</p></a>
@@ -169,7 +166,7 @@
     <div class="warn">
       <h3>⚠ Revista Oeste · o conteúdo de fábrica migrou de linha em 28/10</h3>
       <p>Até 27/10 o conteúdo <code>/oestegeral/</code> da Oeste era coletado numa linha própria, <code>oeste_fabrica</code>, com <code>tipo=fabrica</code>. <b>Em 28/10 ele passou a entrar na linha jornalística <code>oeste</code>, com <code>tipo=jornalismo</code>.</b> Nada deixou de ser coletado — mudou de rótulo, e a fazenda de conteúdo passou a ser contada como redação.</p>
-      <p style="margin-top:9px"><b>Consequência:</b> das 995 peças atribuídas à Oeste nesta janela, 739 são fábrica. O número de abertura do Cérebro — "47 contra 198" — media jornalismo contra fazenda de conteúdo. <b>A classificação passa a ser por padrão de URL, e a correção foi aplicada retroativamente a toda a série.</b> O Bloco 01-B do Radar de Concorrência mostra o antes e o depois nas 17 edições.</p>
+      <p style="margin-top:9px"><b>Consequência:</b> das 995 peças atribuídas à Oeste nesta janela, 739 são fábrica. <b>A classificação passa a ser por padrão de URL</b> (<code>/oestegeral/</code> e <code>/ladooa/</code>), não pelo endpoint de origem, e foi aplicada a toda a série histórica. A correção precisa entrar no coletor antes da Ed. 19.</p>
       <div class="chart sm" style="margin-top:12px"><canvas id="cOF"></canvas></div>
     </div>
 
@@ -217,7 +214,6 @@
           <tr><td>Usuários únicos</td><td class="num">3.050.301</td><td class="num">2.312.131</td><td class="lose">▼ −24,2%</td></tr>
           <tr><td>Peças publicadas (Gazeta)</td><td class="num">699</td><td class="num">656</td><td style="color:var(--muted)">▼ semana com feriado</td></tr>
           <tr><td>Cadência de fim de semana</td><td class="num">42/dia</td><td class="num">47/dia</td><td class="lose">▼ 4,1x atrás do OGlobo · empate com a Oeste</td></tr>
-          <tr style="background:#FBEFEF"><td><b>Índice fds Gazeta × Oeste</b> <small style="color:var(--alert)">retificado</small></td><td class="num">1,1x</td><td class="num"><b>1,0x</b></td><td style="color:var(--muted)">era publicado como 4,3x e 4,2x</td></tr>
           <tr><td>Cadência de dias úteis</td><td class="num">123/dia</td><td class="num">128/dia</td><td style="color:var(--muted)">▲ mas −17,9% desde a Ed. 4</td></tr>
           <tr style="background:#F6F1E4"><td><b>Taxa de pauta geral (v3)</b></td><td class="num">31,8%</td><td class="num"><b>34,5%</b></td><td class="win">▲ +2,7 pontos</td></tr>
           <tr><td>Gazeta × Oeste</td><td class="num">46,9%</td><td class="num">69,6%</td><td class="win">▲ +22,7 pontos</td></tr>
@@ -238,7 +234,7 @@
       <div class="panel">
         <h3 style="color:var(--alert)">Riscos</h3>
         <div class="src">EM ORDEM DE URGÊNCIA</div>
-        <p class="mini" style="margin-bottom:10px"><b>1 · O motor classificou fábrica como jornalismo por 12 dias</b> e o número de abertura foi para a diretoria errado — em algumas janelas, desde a Ed. 2. Corrigido aqui, mas a correção precisa entrar no coletor antes da Ed. 19.</p>
+        <p class="mini" style="margin-bottom:10px"><b>1 · O motor classifica fábrica como jornalismo</b> na linha da Revista Oeste desde 28/10. Corrigido na apuração por padrão de URL, mas a regra precisa entrar no coletor antes da Ed. 19, senão volta.</p>
         <p class="mini" style="margin-bottom:10px"><b>2 · A coleta de jornalismo da Oeste está falhando</b> — três dias zerados. Sem ela não há como validar a correção acima.</p>
         <p class="mini" style="margin-bottom:10px"><b>3 · O fosso real de fim de semana é maior do que se pensava</b>, e contra adversários maiores: 4,1x do OGlobo, 3,5x do Estadão, 2,8x da Folha. O alvo era o errado.</p>
         <p class="mini" style="margin-bottom:10px"><b>4 · A cadência de dias úteis caiu 17,9% desde a Ed. 4</b> — de 156 para 128 peças/dia, em queda contínua. Ninguém estava olhando para esse número.</p>
